@@ -103,8 +103,9 @@ data class ReceiverSettings(
     companion object {
         const val LANGUAGE_SYSTEM = "system"
         const val LANGUAGE_ZH = "zh"
+        const val LANGUAGE_ZH_TW = "zh-TW"
         const val LANGUAGE_EN = "en"
-        val LANGUAGES = listOf(LANGUAGE_SYSTEM, LANGUAGE_ZH, LANGUAGE_EN)
+        val LANGUAGES = listOf(LANGUAGE_SYSTEM, LANGUAGE_ZH_TW, LANGUAGE_ZH, LANGUAGE_EN)
         const val RESOLUTION_AUTO = "Auto"
         const val FRAME_RATE_AUTO = "Auto"
         val RESOLUTIONS = listOf(RESOLUTION_AUTO, "720p", "1080p")
@@ -218,10 +219,16 @@ class ReceiverSettingsStore(context: Context) {
  * needs nothing done.
  */
 object AppLanguage {
+    fun localeFor(language: String): java.util.Locale? = when (language) {
+        ReceiverSettings.LANGUAGE_SYSTEM -> null
+        ReceiverSettings.LANGUAGE_ZH -> java.util.Locale.SIMPLIFIED_CHINESE
+        ReceiverSettings.LANGUAGE_ZH_TW -> java.util.Locale.TRADITIONAL_CHINESE
+        else -> java.util.Locale.ENGLISH
+    }
+
     fun wrap(base: Context): Context {
         val language = ReceiverSettingsStore(base).load().language
-        if (language == ReceiverSettings.LANGUAGE_SYSTEM) return base
-        val locale = if (language == ReceiverSettings.LANGUAGE_ZH) java.util.Locale.SIMPLIFIED_CHINESE else java.util.Locale.ENGLISH
+        val locale = localeFor(language) ?: return base
         val config = android.content.res.Configuration(base.resources.configuration)
         config.setLocale(locale)
         return base.createConfigurationContext(config)

@@ -307,7 +307,8 @@ private fun ColumnScope.GeneralPage(
         ReceiverSettings.LANGUAGES,
         display = {
             when (it) {
-                ReceiverSettings.LANGUAGE_ZH -> "中文"
+                ReceiverSettings.LANGUAGE_ZH_TW -> "繁體中文"
+                ReceiverSettings.LANGUAGE_ZH -> "简体中文"
                 ReceiverSettings.LANGUAGE_EN -> "English"
                 else -> stringResource(R.string.language_system)
             }
