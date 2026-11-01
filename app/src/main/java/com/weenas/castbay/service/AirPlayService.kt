@@ -38,6 +38,24 @@ class AirPlayService : Service() {
         /** Whether the receiver is up, for [com.weenas.castbay.receiver.ReceiverStarter]. */
         @Volatile var isReceiving = false
             private set
+
+        @Volatile private var current: AirPlayService? = null
+
+        /** Puts the plain notification back after the music's media notification replaced it. */
+        fun restoreNotification(context: android.content.Context) {
+            val service = current
+            if (service == null || !service.running) {
+                // No receiver to own it (a debug build's test): the media notification just goes.
+                context.getSystemService(NotificationManager::class.java).cancel(NOTIFICATION_ID)
+                return
+            }
+            service.getSystemService(NotificationManager::class.java).notify(NOTIFICATION_ID, service.buildNotification(
+                service.getString(
+                    if (service.manager.isDiscoveryOnly) com.weenas.castbay.R.string.notification_discovery_only
+                    else com.weenas.castbay.R.string.notification_waiting
+                )
+            ))
+        }
     }
 
     private val manager by lazy { AirPlayManager.getInstance(this) }
@@ -68,6 +86,7 @@ class AirPlayService : Service() {
         super.onCreate()
         Diagnostics.init(this)
         Diagnostics.record("service", "Created")
+        current = this
         Diagnostics.receiverRunning(true)
         // Brings the receiver back once the device has a network again, e.g. a car waking up.
         com.weenas.castbay.receiver.WakeJobService.schedule(this)
@@ -122,6 +141,7 @@ class AirPlayService : Service() {
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onDestroy() {
+        if (current === this) current = null
         Diagnostics.record("service", "Destroyed" + if (running) " while running" else "")
         Diagnostics.receiverRunning(false)
         if (running) manager.stop()

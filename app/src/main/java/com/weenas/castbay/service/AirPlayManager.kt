@@ -194,6 +194,12 @@ class AirPlayManager private constructor(private val context: Context) {
     private val mediaSession = NowPlayingSession(context, onCommand = ::remoteControl)
     private val audioFocus = AudioFocus(context, onLost = ::onAudioFocusLost)
 
+    /** For [CarMediaService]; main thread only. */
+    fun mediaSessionToken() = mediaSession.token()
+
+    /** A media key from a notification button or [com.weenas.castbay.receiver.CarMediaButtonReceiver]. */
+    fun mediaKey(keyCode: Int) = mediaSession.handleKey(keyCode)
+
     /**
      * Another app started playing: music and video are paused, as other players pause for
      * CastBay (mirroring can't be, and plays on). Resuming on the phone takes the focus back.

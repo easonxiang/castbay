@@ -65,6 +65,23 @@
             android:exported="false"
             android:foregroundServiceType="mediaPlayback|connectedDevice" />
 
+        <!-- A media app to the system: car systems list these, show what they play and resume the last. -->
+        <service
+            android:name=".service.CarMediaService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.media.browse.MediaBrowserService" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name=".receiver.CarMediaButtonReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+        </receiver>
+
         <!-- Hands a downloaded update to Android's installer. -->
         <provider
             android:name="androidx.core.content.FileProvider"
