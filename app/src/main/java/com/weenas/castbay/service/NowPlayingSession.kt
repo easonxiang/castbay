@@ -105,13 +105,25 @@ class NowPlayingSession(
             val active = ensureSession()
             active.setMetadata(metadata(nowPlaying))
             active.setPlaybackState(playbackState(nowPlaying))
+            latest = nowPlaying
+            val wasActive = active.isActive
             active.isActive = true
             notify(nowPlaying, active)
             broadcastLegacy(nowPlaying)
+            if (!wasActive) {
+                // A display that attaches as the session becomes active may read before the metadata
+                // lands: send it again a moment later, and say so in Diagnostics.
+                Diagnostics.record("media", "Media session active: ${nowPlaying.title} / ${nowPlaying.artist}, cover ${lastBitmap != null}")
+                for (delay in REPUBLISH_MS) main.postDelayed({
+                    val current = latest
+                    if (active.isActive && current != null) active.setMetadata(metadata(current))
+                }, delay)
+            }
         }
     }
 
     private fun hide() {
+        latest = null
         session?.let {
             it.isActive = false
             it.setPlaybackState(PlaybackState.Builder().setActions(PlaybackState.ACTION_PLAY).setState(PlaybackState.STATE_NONE, 0, 0f).build())
@@ -126,6 +138,9 @@ class NowPlayingSession(
     }
 
     private var notified = false
+
+    /** The last thing shown, for the delayed metadata sends. Main thread only. */
+    private var latest: NowPlaying? = null
 
     /**
      * The service's foreground notification, as a media notification tied to the session: what
@@ -188,12 +203,23 @@ class NowPlayingSession(
     private var lastLegacyTitle: String? = null
 
     private fun metadata(nowPlaying: NowPlaying): MediaMetadata {
+        val title = nowPlaying.title ?: "AirPlay audio"
         val builder = MediaMetadata.Builder()
-            .putString(MediaMetadata.METADATA_KEY_TITLE, nowPlaying.title ?: "AirPlay audio")
+            .putString(MediaMetadata.METADATA_KEY_MEDIA_ID, "castbay-now-playing")
+            .putString(MediaMetadata.METADATA_KEY_TITLE, title)
             .putString(MediaMetadata.METADATA_KEY_ARTIST, nowPlaying.artist)
+            .putString(MediaMetadata.METADATA_KEY_ALBUM_ARTIST, nowPlaying.artist)
             .putString(MediaMetadata.METADATA_KEY_ALBUM, nowPlaying.album)
+            // What media UIs show for an item (the car's displays may read these, not the plain ones).
+            .putString(MediaMetadata.METADATA_KEY_DISPLAY_TITLE, title)
+            .putString(MediaMetadata.METADATA_KEY_DISPLAY_SUBTITLE, nowPlaying.artist)
+            .putString(MediaMetadata.METADATA_KEY_DISPLAY_DESCRIPTION, nowPlaying.album)
             .putLong(MediaMetadata.METADATA_KEY_DURATION, (nowPlaying.durationSec * 1000).toLong())
-        coverBitmap(nowPlaying.coverArt)?.let { builder.putBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART, it) }
+        coverBitmap(nowPlaying.coverArt)?.let {
+            builder.putBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART, it)
+                .putBitmap(MediaMetadata.METADATA_KEY_ART, it)
+                .putBitmap(MediaMetadata.METADATA_KEY_DISPLAY_ICON, it)
+        }
         return builder.build()
     }
 
@@ -230,6 +256,7 @@ class NowPlayingSession(
 
     private companion object {
         const val MAX_ART_SIZE = 512
+        val REPUBLISH_MS = listOf(1500L, 5000L)
         const val LEGACY_META = "com.android.music.metachanged"
         const val LEGACY_PLAYSTATE = "com.android.music.playstatechanged"
         const val IMMUTABLE = PendingIntent.FLAG_IMMUTABLE
