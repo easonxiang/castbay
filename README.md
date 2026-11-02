@@ -142,7 +142,7 @@ The website is built with [Astro](https://astro.build) from `web/` (Node 22.12 o
 - `web/src/layouts/`: the `<head>`, header, navigation and footer every page shares (`Page.astro`), and the layout of the Markdown pages (`Doc.astro`).
 - `web/src/i18n.ts`: the words the shared parts use in each language.
 - `web/src/content/releases/<en|zh>/<version>.md`: the release notes, shown on the changelog pages, used as the GitHub release notes, and, as plain text, in the app (About → What's New, from the latest ten versions in `latest.json`): keep each bullet one self-contained point. Add both before tagging a release (`vX.Y.Z`); the release workflow refuses a full release without them. Add the same points, shorter (500 characters at most), as `fastlane/metadata/android/<en-US|zh-CN>/changelogs/<versionCode>.txt`, which F-Droid shows. The changelog also lists each APK's SHA-256, fetched from GitHub when the site is built; with a Cloudflare deploy hook URL in the `CLOUDFLARE_DEPLOY_HOOK` secret, the release workflow rebuilds the site so a new release's appears at once. Each release also carries `CastBay-<version>-mapping.txt`, R8's name map: `retrace` (Android SDK command-line tools) turns a release build's obfuscated crash stack trace back into source names with it.
-- `web/public/`: styles, images, scripts, `robots.txt` and `sitemap.xml`, published as they are.
+- `web/public/`: styles, images, scripts, and `robots.txt`, published as they are.
 
 ```bash
 cd web
@@ -151,7 +151,7 @@ npm run dev        # preview at http://localhost:4321, updating as you edit
 npm run build      # build into dist/, as Cloudflare does
 ```
 
-Cloudflare builds and publishes the site from `web/` whenever `main` changes (`web/wrangler.jsonc`); CI checks that it builds. A new page also goes in `public/sitemap.xml`.
+Cloudflare builds and publishes the site from `web/` whenever `main` changes (`web/wrangler.jsonc`); CI checks that it builds. A new page also goes in `PAGES` (`web/src/i18n.ts`), which the sitemap (`web/src/pages/sitemap.xml.ts`) lists.
 
 `web/worker/index.js` answers `/api/*`: problem reports (R2 bucket `castbay-reports`) and opt-in usage statistics (D1 database `castbay-stats`). For the maintainer, behind Cloudflare Access (an email login):
 
