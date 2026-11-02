@@ -7,13 +7,17 @@ import { desktopReleases, releases } from '../releases';
 
 const git = (...args: string[]) => {
   try {
-    return execFileSync('git', args, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+    return execFileSync('git', args, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], timeout: 60_000 }).trim();
   } catch {
     return '';
   }
 };
 
-// A shallow clone dates every file to its one commit, which would be wrong: leave those out.
+// Cloudflare builds from a shallow clone, which dates every file to its one commit. Fetch the
+// history without file contents (about 10 s); if that fails, leave the git dates out.
+if (git('rev-parse', '--is-shallow-repository') === 'true') {
+  git('fetch', '--quiet', '--unshallow', '--filter=blob:none');
+}
 const fullHistory = git('rev-parse', '--is-shallow-repository') === 'false';
 
 /** The day [page]'s source in [lang] last changed, as YYYY-MM-DD, if git knows it. */
