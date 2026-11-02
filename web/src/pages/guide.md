@@ -18,7 +18,7 @@ intro: 'Everything about using CastBay, from installing it to each setting. For 
 
 ### 1. Get the APK
 
-The latest version is always at **castbay.weenas.com/apk** (the website's Download APK button); older ones are in the [changelog](/changelog). It is one APK for every device, 32-bit and 64-bit alike. CastBay needs Android 6.0 or later. It is also coming to F-Droid; see [where to get CastBay](/faq#where-can-i-get-castbay-and-can-i-switch-between-sources) before switching between them.
+The latest version is always at **castbay.weenas.com/apk** (the website's Download APK button); older ones are in the [changelog](/changelog). It is one APK for every device, 32-bit and 64-bit alike. CastBay needs Android 6.0 or later. It is also on [F-Droid](https://f-droid.org/packages/com.weenas.castbay/); see [where to get CastBay](/faq#where-can-i-get-castbay-and-can-i-switch-between-sources) before switching between them.
 
 ### 2. Put it on the device
 

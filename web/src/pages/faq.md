@@ -33,7 +33,7 @@ Each release is built by GitHub from the tagged source, not on anyone's computer
 Everything is on the [download page](/download), from two places:
 
 - **This website or GitHub** ([CastBay.apk](/apk), [releases](https://github.com/weenas/castbay/releases)): signed with CastBay's own key. CastBay checks for new versions and installs them from About. [Obtainium](https://github.com/ImranR98/Obtainium) can also follow the GitHub releases (same key, so they update each other).
-- **F-Droid** (submitted, under review): F-Droid builds CastBay from its source code itself and signs it with its own key; updates come through the F-Droid client, and CastBay doesn't check for updates there.
+- **[F-Droid](https://f-droid.org/packages/com.weenas.castbay/)**: F-Droid builds CastBay from its source code itself and signs it with its own key; updates come through the F-Droid client, usually a few days after each release, and CastBay doesn't check for updates there.
 
 Android only installs an update with the same signature as the app already installed, so **the F-Droid build and the others can't replace each other**: to switch between them, uninstall CastBay first (its settings and allowed devices are removed with it), then install from the other source. Switching between the website and GitHub needs no uninstall.
 

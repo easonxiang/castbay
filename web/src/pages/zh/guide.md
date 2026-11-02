@@ -18,7 +18,7 @@ intro: '从安装到每一个设置，映湾的完整用法。遇到问题可以
 
 ### 1. 下载 APK
 
-最新版始终在 **castbay.weenas.com/apk**（即官网的"下载 APK"按钮），旧版本在[更新日志](/zh/changelog)里。所有设备通用同一个 APK，32 位和 64 位都可以装。映湾需要 Android 6.0 及以上。映湾也即将上架 F-Droid，在不同渠道之间切换前请先看[这条说明](/zh/faq#在哪里可以下载映湾不同渠道之间能互相升级吗)。
+最新版始终在 **castbay.weenas.com/apk**（即官网的"下载 APK"按钮），旧版本在[更新日志](/zh/changelog)里。所有设备通用同一个 APK，32 位和 64 位都可以装。映湾需要 Android 6.0 及以上。映湾也已上架 [F-Droid](https://f-droid.org/packages/com.weenas.castbay/)，在不同渠道之间切换前请先看[这条说明](/zh/faq#在哪里可以下载映湾不同渠道之间能互相升级吗)。
 
 ### 2. 装到设备上
 

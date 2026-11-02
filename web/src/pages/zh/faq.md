@@ -33,7 +33,7 @@ Android 6.0 及以上的安卓设备都可以接收：电视、电视盒子、�
 所有版本都在<a href="/zh/download">下载页</a>，来自两个渠道：
 
 - **本网站或 GitHub**（[CastBay.apk](/apk)、[所有版本](https://github.com/weenas/castbay/releases)）：使用映湾自己的签名。映湾会自动检查新版本，在"关于"页里就能下载安装。也可以用 [Obtainium](https://github.com/ImranR98/Obtainium) 跟踪 GitHub 上的新版本（同一个签名，可以互相升级）。
-- **F-Droid**（已提交，审核中）：由 F-Droid 自己从源码编译并用 F-Droid 的签名发布；通过 F-Droid 客户端更新，映湾本身不会检查更新。
+- **[F-Droid](https://f-droid.org/packages/com.weenas.castbay/)**：由 F-Droid 自己从源码编译并用 F-Droid 的签名发布；通过 F-Droid 客户端更新，新版本一般在发布几天后上架，映湾本身不会检查更新。
 
 安卓只允许用签名相同的版本覆盖安装，所以**F-Droid 版和其他渠道的版本不能互相覆盖升级**：要换渠道，需要先卸载映湾（设置和已允许的设备会一并清除），再从另一个渠道安装。本网站和 GitHub 之间切换则不需要卸载。
 
