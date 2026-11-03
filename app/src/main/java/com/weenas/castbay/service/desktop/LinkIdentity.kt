@@ -5,9 +5,6 @@ import android.security.keystore.KeyProperties
 import java.math.BigInteger
 import java.security.KeyPairGenerator
 import java.security.KeyStore
-import java.security.MessageDigest
-import java.security.PrivateKey
-import java.security.cert.Certificate
 import java.security.cert.X509Certificate
 import java.security.spec.ECGenParameterSpec
 import java.util.Date
@@ -50,12 +47,4 @@ object LinkIdentity {
 
     fun certificate(): X509Certificate = ensure().getCertificate(ALIAS) as X509Certificate
 
-    fun privateKey(): PrivateKey = ensure().getKey(ALIAS, null) as PrivateKey
-
-    fun chain(): Array<Certificate> = ensure().getCertificateChain(ALIAS)
-
-    /** SHA-256 of the certificate's public key (SubjectPublicKeyInfo), lower-case hex. */
-    fun fingerprint(certificate: Certificate): String =
-        MessageDigest.getInstance("SHA-256").digest(certificate.publicKey.encoded)
-            .joinToString("") { "%02x".format(it) }
 }

@@ -1,6 +1,5 @@
 package com.weenas.castbay.util
 
-import android.app.ActivityManager
 import android.app.ApplicationExitInfo
 import android.content.Context
 import android.os.Build

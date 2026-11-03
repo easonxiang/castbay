@@ -52,26 +52,6 @@ class DlnaReceiver(context: Context) {
         events = null
     }
 
-    /**
-     * Accepts every command and only reports it, for trying the protocol against real apps
-     * before playback is wired up.
-     */
-    class LoggingTarget : DlnaRenderer.Target {
-        @Volatile private var status = DlnaRenderer.Status(DlnaState.STOPPED)
-
-        override fun open(url: String, media: DlnaMedia) {
-            Log.i(TAG, "Media: ${Log.personal(media.title ?: "(no title)")} · ${Log.personal(url)}")
-            status = DlnaRenderer.Status(DlnaState.STOPPED, volume = status.volume)
-        }
-        override fun play() { status = status.copy(state = DlnaState.PLAYING) }
-        override fun pause() { status = status.copy(state = DlnaState.PAUSED) }
-        override fun stop() { status = status.copy(state = DlnaState.STOPPED, positionSec = 0.0) }
-        override fun seek(positionSec: Double) { status = status.copy(positionSec = positionSec) }
-        override fun setVolume(percent: Int) { status = status.copy(volume = percent) }
-        override fun setMuted(muted: Boolean) { status = status.copy(muted = muted) }
-        override fun status() = status
-    }
-
     private companion object {
         const val TAG = "CastBayDlna"
         const val KEY_UUID = "uuid"

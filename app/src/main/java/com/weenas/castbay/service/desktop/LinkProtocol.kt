@@ -4,7 +4,6 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.io.DataInputStream
 import java.io.EOFException
-import java.io.InputStream
 import java.io.OutputStream
 import java.security.MessageDigest
 

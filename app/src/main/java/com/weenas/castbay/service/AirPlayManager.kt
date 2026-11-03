@@ -498,6 +498,10 @@ class AirPlayManager private constructor(private val context: Context) {
                 onError = ::onNativeError
             )) {
             currentError = context.getString(com.weenas.castbay.R.string.error_discovery)
+            // Failing again in an automatic retry: the remaining retries still come (the service
+            // stays in the foreground for them). A first start that fails is the service's to
+            // report: it stops, and a retry then would run without it.
+            if (autoRetries > 0) scheduleAutoRetry()
             currentState = AirPlayConnectionState.Error
             return false
         }
@@ -920,7 +924,7 @@ class AirPlayManager private constructor(private val context: Context) {
     private val knownDevices = KnownDevices(context)
 
     // CastBay Desktop (CastBay Link): the receiver side of a computer casting its screen.
-    @Volatile private var desktopSession: Any? = null
+    @Volatile private var desktopSession: com.weenas.castbay.service.desktop.LinkSession? = null
     @Volatile private var desktopSenderId = ""
 
     /** Starting and ending a desktop session (the decoder takes a while to stop) never overlap. */
@@ -988,7 +992,7 @@ class AirPlayManager private constructor(private val context: Context) {
         // H.265 only for a TV with a hardware decoder that has also shown it can decode a picture (see HevcSelfTest).
         override fun videoFormats() = if (desktopH265Works) listOf("h264", "h265") else listOf("h264")
 
-        override fun sessionStarted(session: Any, deviceId: String, name: String, width: Int, height: Int, fps: Int, h265: Boolean) {
+        override fun sessionStarted(session: com.weenas.castbay.service.desktop.LinkSession, deviceId: String, name: String, width: Int, height: Int, fps: Int, h265: Boolean) {
             Log.i(TAG, "Desktop sender: ${Log.personal(name)}, ${width}x$height, ${if (h265) "H.265" else "H.264"}")
             synchronized(desktopLock) {
                 // Another sender on screen (a second device taking over is allowed): it makes way.
@@ -1009,7 +1013,7 @@ class AirPlayManager private constructor(private val context: Context) {
 
         override fun video(data: ByteArray, presentationTimeUs: Long) = videoRenderer.render(data, presentationTimeUs)
 
-        override fun sessionEnded(session: Any) {
+        override fun sessionEnded(session: com.weenas.castbay.service.desktop.LinkSession) {
             synchronized(desktopLock) {
                 Log.d(TAG, "Desktop session ended (current: ${desktopSession === session})")
                 if (desktopSession !== session) return

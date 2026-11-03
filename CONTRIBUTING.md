@@ -18,6 +18,7 @@ Before opening a pull request:
 - `./gradlew assembleDebug :app:testDebugUnitTest` passes; for the website, `npm run build` in `web/`.
 - You tried the change on a device or an emulator: a remote (D-pad) and, where it matters, a touch screen. Screens should work on a 1080p TV (960×540 dp), a car display (about 1280×600 dp) and a tablet held upright.
 - New text the app shows is in both `app/src/main/res/values/strings.xml` (English) and `values-zh/strings.xml` (Chinese). If you can only write one, say so in the pull request.
+  The one exception is Stats for nerds (the playback statistics overlay): its labels ("decode … ms", "dropped …", source names) stay English on purpose, as in other players.
 
 ## Pull requests
 

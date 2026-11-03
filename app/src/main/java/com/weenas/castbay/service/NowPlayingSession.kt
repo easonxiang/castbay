@@ -19,6 +19,8 @@ class NowPlayingSession(
 ) {
     private val appContext = context.applicationContext
     private val main = Handler(Looper.getMainLooper())
+    // The title when the sender sends none, in the app's language (a change of it restarts the app's screens and service).
+    private val untitled by lazy { AppLanguage.wrap(appContext).getString(com.weenas.castbay.R.string.now_playing_untitled) }
 
     /** Main thread only. */
     private var session: MediaSession? = null
@@ -68,8 +70,8 @@ class NowPlayingSession(
         val builder = MediaMetadata.Builder()
             .putString(
                 MediaMetadata.METADATA_KEY_TITLE,
-                // The system shows it (e.g. the TV's now playing card), in the app's language.
-                nowPlaying.title ?: AppLanguage.wrap(appContext).getString(com.weenas.castbay.R.string.now_playing_untitled)
+                // The system shows it (e.g. the TV's now playing card).
+                nowPlaying.title ?: untitled
             )
             .putString(MediaMetadata.METADATA_KEY_ARTIST, nowPlaying.artist)
             .putString(MediaMetadata.METADATA_KEY_ALBUM, nowPlaying.album)
