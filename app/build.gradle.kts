@@ -5,12 +5,6 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
 }
 
-// The native AirPlay integration depends on a separately built UxPlay artifact.
-// Keep the UI app buildable until that integration is supplied.
-val enableNativeBuild = providers.gradleProperty("enableNativeBuild")
-    .map(String::toBoolean)
-    .orElse(false)
-
 // The commit a test build comes from, for its version name; "local" outside a git checkout
 // (e.g. building from the release's source archive).
 val gitCommit = providers.exec {
@@ -60,15 +54,6 @@ android {
         // with -Pcastbay.selfUpdate=false: the store updates the app, and doesn't allow it to.
         buildConfigField("boolean", "SELF_UPDATE", selfUpdate.toString())
         manifestPlaceholders["selfUpdate"] = selfUpdate.toString()
-
-        if (enableNativeBuild.get()) {
-            externalNativeBuild {
-                cmake {
-                    cppFlags("-std=c++17 -frtti -fexceptions")
-                    arguments("-DANDROID_STL=c++_shared")
-                }
-            }
-        }
     }
 
     // The release key comes from the environment (GitHub Actions secrets, or a local shell);
@@ -120,15 +105,6 @@ android {
         }
     }
 
-    if (enableNativeBuild.get()) {
-        externalNativeBuild {
-            cmake {
-                path = file("src/main/cpp/CMakeLists.txt")
-                version = "3.22.1"
-            }
-        }
-    }
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -163,33 +139,24 @@ kotlin {
 dependencies {
     implementation(project(":airplay"))
     implementation("androidx.core:core-ktx:1.19.1")
-    implementation("androidx.appcompat:appcompat:1.8.0")
 
     val composeBom = platform("androidx.compose:compose-bom:2026.09.00")
     implementation(composeBom)
     implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.activity:activity-compose:1.9.0")
     implementation("androidx.compose.material3:material3")
-    implementation("androidx.tv:tv-material:1.1.0")
-    implementation("androidx.tv:tv-foundation:1.0.0")
 
     implementation("androidx.media3:media3-exoplayer:1.11.1")
     implementation("androidx.media3:media3-exoplayer-hls:1.11.1")
     // DLNA apps may cast DASH (.mpd), which GetProtocolInfo offers.
     implementation("androidx.media3:media3-exoplayer-dash:1.11.1")
     implementation("androidx.media3:media3-ui:1.11.1")
-    implementation("androidx.media3:media3-session:1.11.1")
 
-    implementation("com.google.android.material:material:1.14.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.2")
-    implementation("androidx.lifecycle:lifecycle-service:2.8.2")
 
     implementation("com.google.code.gson:gson:2.14.0")
     // QR codes on the About screen (a TV can't easily open a link; a phone can scan one).
     implementation("com.google.zxing:core:3.5.4")
-
-    debugImplementation("androidx.compose.ui:ui-tooling")
 
     testImplementation("junit:junit:4.13.2")
     // Android's org.json is only stubbed in JVM unit tests.

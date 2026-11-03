@@ -120,16 +120,24 @@ castbay/
 │   ├── src/main/
 │   │   ├── java/com/weenas/castbay/
 │   │   │   ├── MainActivity.kt
-│   │   │   ├── service/       # Service lifecycle and bridge
+│   │   │   ├── service/       # Receiver lifecycle, AirPlay bridge, players, lyrics
+│   │   │   │   └── desktop/   # CastBay Link receiver (casts from CastBay Desktop)
+│   │   │   ├── dlna/          # DLNA renderer
 │   │   │   ├── ui/            # Compose UI screens
 │   │   │   ├── viewmodel/     # MVVM ViewModels
-│   │   │   └── receiver/      # BroadcastReceivers
-│   │   ├── cpp/              # C++ native code (CMake)
+│   │   │   ├── receiver/      # Boot, wake and start helpers
+│   │   │   └── util/          # Logging, diagnostics, reports, statistics
 │   │   └── res/              # Android resources
+│   ├── src/debug/          # Simulated AirPlay sender for tools/sim
 │   └── build.gradle.kts
 ├── airplay/                # Android library, JNI bridge, and native protocol build
+├── desktop/                # CastBay Desktop (Rust; Windows and Linux)
 ├── third_party/            # Pinned UxPlay, libplist, ALAC and OpenSSL submodules
+├── tools/                  # sim (drive the debug app over adb), link-send (test CastBay Link sender),
+│                           # device-stats.mjs (usage stats per model), build-openssl.sh, ci/
 ├── web/                    # castbay.weenas.com (Astro), built and published by Cloudflare
+├── fastlane/               # F-Droid store texts and changelogs
+├── docs/                   # Design notes and store recipes
 ├── branding/               # Logo and wordmark masters (SVG and PNG)
 └── README.md
 ```
