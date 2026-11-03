@@ -66,7 +66,11 @@ class NowPlayingSession(
 
     private fun metadata(nowPlaying: NowPlaying): MediaMetadata {
         val builder = MediaMetadata.Builder()
-            .putString(MediaMetadata.METADATA_KEY_TITLE, nowPlaying.title ?: "AirPlay audio")
+            .putString(
+                MediaMetadata.METADATA_KEY_TITLE,
+                // The system shows it (e.g. the TV's now playing card), in the app's language.
+                nowPlaying.title ?: AppLanguage.wrap(appContext).getString(com.weenas.castbay.R.string.now_playing_untitled)
+            )
             .putString(MediaMetadata.METADATA_KEY_ARTIST, nowPlaying.artist)
             .putString(MediaMetadata.METADATA_KEY_ALBUM, nowPlaying.album)
             .putLong(MediaMetadata.METADATA_KEY_DURATION, (nowPlaying.durationSec * 1000).toLong())

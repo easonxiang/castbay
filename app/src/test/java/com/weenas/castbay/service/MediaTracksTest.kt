@@ -15,6 +15,7 @@ class MediaTracksTest {
         assertEquals("Chinese · Commentary", label("zh", "Commentary"))
         assertEquals("Director's cut", label(null, "Director's cut"))
         assertEquals("Track 3", label("und", null, position = 2))
+        assertEquals("音轨 3", MediaTracks.label("und", null, 2, Locale.ENGLISH) { "音轨 $it" })
     }
 
     @Test
