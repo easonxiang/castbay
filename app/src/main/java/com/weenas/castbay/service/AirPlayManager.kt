@@ -595,17 +595,6 @@ class AirPlayManager private constructor(private val context: Context) {
         _stateCallbacks.forEach { it(state, currentStreamInfo, currentError) }
     }
 
-    fun onNativeStreamStarted(name: String, model: String, width: Int, height: Int, fps: Int,
-                              sampleRate: Int, channels: Int, isMirroring: Boolean) {
-        if (isMirroring && width > 0 && height > 0) {
-            videoRenderer.configure(width, height)
-        }
-        stopDlnaVideo()
-        currentStreamInfo = StreamInfo(name, model, width, height, fps, sampleRate, channels, isMirroring, true, sender = airPlaySender)
-        currentError = null
-        currentState = AirPlayConnectionState.Streaming
-    }
-
     fun onNativeStreamStopped() {
         // An AirPlay session that ended while a computer casts must not clear its screen.
         if (desktopCasting()) return
