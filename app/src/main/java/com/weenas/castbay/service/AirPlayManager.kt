@@ -378,12 +378,14 @@ class AirPlayManager private constructor(private val context: Context) {
     val videoPlayer: ExoPlayer? get() = hlsPlayer.player
     private val settingsStore = ReceiverSettingsStore(context)
 
-    private val _stateCallbacks = mutableListOf<(AirPlayConnectionState, StreamInfo, String?) -> Unit>()
+    // Added and removed on the main thread, called from protocol threads too.
+    private val _stateCallbacks = java.util.concurrent.CopyOnWriteArrayList<(AirPlayConnectionState, StreamInfo, String?) -> Unit>()
 
     /** A picture (mirroring, video) was on when the state last changed. */
     private var pictureOn = false
 
-    private var currentState: AirPlayConnectionState = AirPlayConnectionState.Idle
+    // Written from protocol threads too (a session ending), read on the main thread.
+    @Volatile private var currentState: AirPlayConnectionState = AirPlayConnectionState.Idle
         set(value) {
             val was = field
             field = value
@@ -423,7 +425,7 @@ class AirPlayManager private constructor(private val context: Context) {
     @Volatile private var airPlaySender = ""
     /** The AirPlay device ID of that sender: a different one is a takeover. */
     @Volatile private var airPlaySenderId = ""
-    private var currentError: String? = null
+    @Volatile private var currentError: String? = null
     /** The native AirPlay listener's port from the latest start; null when it didn't start. */
     @Volatile private var listenerPort: Int? = null
 
@@ -561,6 +563,7 @@ class AirPlayManager private constructor(private val context: Context) {
         Log.d(TAG, "Stopping AirPlay server")
         mainHandler.removeCallbacks(startupWatchdog)
         mainHandler.removeCallbacks(autoRetry)
+        retryScheduled = false
         nativeBridge.stop()
         hidePairingPin()
         discoveryAdvertiser.stop()
@@ -641,8 +644,9 @@ class AirPlayManager private constructor(private val context: Context) {
         audioRenderer.stop()
         hlsPlayer.stop()
         currentError = error
-        currentState = AirPlayConnectionState.Error
+        // Before the state: the service keeps itself in the foreground while a retry is coming.
         scheduleAutoRetry()
+        currentState = AirPlayConnectionState.Error
     }
 
     /**
@@ -660,6 +664,7 @@ class AirPlayManager private constructor(private val context: Context) {
 
     /** A TV nobody is watching (a car, a living room) starts again by itself, a few times, with growing waits. */
     private val autoRetry = Runnable {
+        retryScheduled = false
         if (currentState != AirPlayConnectionState.Error || autoRetries >= AUTO_RETRY_MAX) return@Runnable
         autoRetries++
         com.weenas.castbay.util.Diagnostics.record("startup", "Starting again by itself ($autoRetries of $AUTO_RETRY_MAX)")
@@ -668,9 +673,17 @@ class AirPlayManager private constructor(private val context: Context) {
         start(activeSettings)
     }
 
+    /**
+     * Whether the receiver will start again by itself after its error: the service stays in the
+     * foreground meanwhile, so the retry doesn't run in a process the system may end at any time.
+     */
+    @Volatile var retryScheduled = false
+        private set
+
     private fun scheduleAutoRetry() {
         mainHandler.removeCallbacks(autoRetry)
-        if (autoRetries < AUTO_RETRY_MAX) mainHandler.postDelayed(autoRetry, AUTO_RETRY_DELAY_MS * (autoRetries + 1))
+        retryScheduled = autoRetries < AUTO_RETRY_MAX
+        if (retryScheduled) mainHandler.postDelayed(autoRetry, AUTO_RETRY_DELAY_MS * (autoRetries + 1))
     }
 
     fun setVideoSurface(surface: Surface?) {

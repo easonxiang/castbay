@@ -46,18 +46,39 @@ class AirPlayService : Service() {
             field = value
             isReceiving = value
         }
+    private val mainHandler = android.os.Handler(android.os.Looper.getMainLooper())
+    /** The receiver failed and will start again by itself; the notification says so meanwhile. */
+    private var retrying = false
+    // State changes can come from protocol threads: handled on the main thread, like start and stop.
     private val stateCallback: (AirPlayConnectionState, StreamInfo, String?) -> Unit = { state, _, _ ->
-        if (running) {
-            when (state) {
-                AirPlayConnectionState.AdvertisingOnly -> getSystemService(NotificationManager::class.java)
-                    .notify(NOTIFICATION_ID, buildNotification(getString(com.weenas.castbay.R.string.notification_discoverable_only)))
-                AirPlayConnectionState.Error -> {
+        mainHandler.post { onStateChanged(state) }
+    }
+
+    private fun onStateChanged(state: AirPlayConnectionState) {
+        if (!running) return
+        val notifications = getSystemService(NotificationManager::class.java)
+        when (state) {
+            AirPlayConnectionState.AdvertisingOnly -> {
+                retrying = false
+                notifications.notify(NOTIFICATION_ID, buildNotification(getString(com.weenas.castbay.R.string.notification_discoverable_only)))
+            }
+            AirPlayConnectionState.Error -> {
+                if (manager.retryScheduled) {
+                    // Stays in the foreground for the retry (AirPlayManager.autoRetry).
+                    retrying = true
+                    notifications.notify(NOTIFICATION_ID, buildNotification(getString(com.weenas.castbay.R.string.notification_retrying)))
+                } else {
+                    retrying = false
                     running = false
                     removeForeground()
                     stopSelf()
                 }
-                else -> Unit
             }
+            AirPlayConnectionState.Discovering -> if (retrying) {
+                retrying = false
+                notifications.notify(NOTIFICATION_ID, buildNotification(getString(com.weenas.castbay.R.string.notification_waiting)))
+            }
+            else -> Unit
         }
     }
 
