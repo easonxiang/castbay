@@ -1,6 +1,8 @@
 package com.weenas.castbay.service
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Assert.assertNull
 import org.junit.Test
 
@@ -64,5 +66,27 @@ class LyricsTest {
         assertEquals(close, LyricsMatcher.best(listOf(short, unsynced, far, close), 268.5))
         assertNull(LyricsMatcher.best(listOf(short, far), 268.5))
         assertEquals(short, LyricsMatcher.best(listOf(unsynced, short), 0.0))
+    }
+
+    @Test
+    fun recognisesInstrumentalTitles() {
+        for (title in listOf("River Flows in You (Instrumental)", "晴天 (伴奏)", "菊次郎的夏天 纯音乐", "千本桜 (Off Vocal)", "Song - Inst.", "Song (Inst.)", "Song [Karaoke Version]")) {
+            assertTrue(title, Lyrics.isInstrumentalTitle(title))
+        }
+        for (title in listOf("爱上你是一个错 (伤感吉他版)", "晴天 钢琴版", "Instant Crush", "Institution", "抖音BGM", "光辉岁月 (Glorious Years)")) {
+            assertFalse(title, Lyrics.isInstrumentalTitle(title))
+        }
+    }
+
+    @Test
+    fun instrumentalOnlyWhenEveryFittingResultIsMarked() {
+        val sung = LyricsCandidate(211.0, "[00:01.00]a")
+        val instrumental = LyricsCandidate(211.0, null, instrumental = true)
+        val plain = LyricsCandidate(212.0, null)
+        val otherLength = LyricsCandidate(150.0, "[00:01.00]b")
+        assertEquals(instrumental, LyricsMatcher.best(listOf(instrumental, otherLength), 211.0))
+        assertEquals(sung, LyricsMatcher.best(listOf(instrumental, sung), 211.0))
+        assertNull(LyricsMatcher.best(listOf(instrumental, plain), 211.0))
+        assertEquals(instrumental, LyricsMatcher.best(listOf(instrumental, instrumental), 0.0))
     }
 }

@@ -277,6 +277,7 @@
     <string name="sender_kugou">Kugou Music</string>
     <string name="sender_kuwo">Kuwo Music</string>
     <string name="lyrics_none">No lyrics</string>
+    <string name="lyrics_instrumental">Instrumental</string>
     <!-- Help -->
     <string name="help">Help</string>
     <string name="help_more">More help: %1$s</string>

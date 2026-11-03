@@ -19,39 +19,43 @@ class LyricsClient(
     private val sleep: (Long) -> Unit = Thread::sleep
 ) {
     // The last songs looked up (plain JVM, so the client runs in unit tests).
-    private val cache = object : LinkedHashMap<String, Result>(16, 0.75f, true) {
-        override fun removeEldestEntry(eldest: MutableMap.MutableEntry<String, Result>) = size > CACHE_SIZE
+    private val cache = object : LinkedHashMap<String, LyricsResult>(16, 0.75f, true) {
+        override fun removeEldestEntry(eldest: MutableMap.MutableEntry<String, LyricsResult>) = size > CACHE_SIZE
     }
 
-    /** A cached lookup; [lyrics] is null when none were found. */
-    private data class Result(val lyrics: Lyrics?)
-
     /**
-     * The lyrics for a song, [LyricsResult.None] when the site has none, or [LyricsResult.Failed]
-     * when it could not be asked (busy or unreachable), which is worth trying again later.
+     * The lyrics for a song, [LyricsResult.Instrumental] when it has no words (by its title, without
+     * asking the site, or as the site marks it), [LyricsResult.None] when the site has none, or
+     * [LyricsResult.Failed] when it could not be asked (busy or unreachable), worth trying again later.
      */
     fun find(title: String, artist: String?, album: String?, durationSec: Double): LyricsResult {
+        if (Lyrics.isInstrumentalTitle(title)) return LyricsResult.Instrumental
         val key = listOf(title, artist.orEmpty(), durationSec.toInt().toString()).joinToString("\u0000")
-        synchronized(cache) { cache[key] }?.let { return it.lyrics?.let(LyricsResult::Found) ?: LyricsResult.None }
-        val lyrics = try {
+        synchronized(cache) { cache[key] }?.let { return it }
+        val result = try {
             lookUp(title, artist, album, durationSec)
         } catch (error: Exception) {
             // Not cached, so a later try asks again.
             Log.w(TAG, "Lyrics lookup failed for ${Log.personal(title)}: ${error.message}")
             return LyricsResult.Failed
         }
-        synchronized(cache) { cache[key] = Result(lyrics) }
-        Log.i(TAG, "Lyrics for ${Log.personal(title)} / ${Log.personal(artist.orEmpty())}: ${lyrics?.lines?.size?.let { "$it lines" } ?: "none"}")
-        return lyrics?.let(LyricsResult::Found) ?: LyricsResult.None
+        synchronized(cache) { cache[key] = result }
+        val outcome = when (result) {
+            is LyricsResult.Found -> "${result.lyrics.lines.size} lines"
+            LyricsResult.Instrumental -> "instrumental"
+            else -> "none"
+        }
+        Log.i(TAG, "Lyrics for ${Log.personal(title)} / ${Log.personal(artist.orEmpty())}: $outcome")
+        return result
     }
 
     /**
-     * Tries the exact match, a search, then a search with the title simplified. A step that
-     * fails does not stop the next ones; if none found lyrics and any failed, this throws, so
-     * the song is not remembered as having none.
+     * Tries the exact match, a search, then a search with the title simplified, until one finds
+     * lyrics or that the song is instrumental. A step that fails does not stop the next ones; if
+     * none found anything and any failed, this throws, so the song is not remembered as having none.
      */
-    private fun lookUp(title: String, artist: String?, album: String?, durationSec: Double): Lyrics? {
-        val steps = mutableListOf<() -> Lyrics?>()
+    private fun lookUp(title: String, artist: String?, album: String?, durationSec: Double): LyricsResult {
+        val steps = mutableListOf<() -> LyricsResult?>()
         // The exact match needs all four fields; search is looser.
         if (!artist.isNullOrBlank() && !album.isNullOrBlank() && durationSec > 0) {
             steps += { exact(title, artist, album, durationSec) }
@@ -67,28 +71,37 @@ class LyricsClient(
             }
         }
         failure?.let { throw it }
-        return null
+        return LyricsResult.None
     }
 
-    private fun exact(title: String, artist: String, album: String, durationSec: Double): Lyrics? {
+    private fun exact(title: String, artist: String, album: String, durationSec: Double): LyricsResult? {
         val body = get(
             "get",
             "track_name" to title, "artist_name" to artist, "album_name" to album,
             "duration" to durationSec.toInt().toString()
         ) ?: return null
-        return JSONObject(body).optString("syncedLyrics").takeIf { it.isNotBlank() }?.let(Lyrics::parseLrc)
+        return candidate(JSONObject(body)).toResult()
     }
 
-    private fun search(title: String, artist: String?, durationSec: Double): Lyrics? {
+    private fun search(title: String, artist: String?, durationSec: Double): LyricsResult? {
         val params = mutableListOf("track_name" to title)
         if (!artist.isNullOrBlank()) params += "artist_name" to artist
         val body = get("search", *params.toTypedArray()) ?: return null
         val results = JSONArray(body)
-        val candidates = (0 until results.length()).map { i ->
-            val item = results.getJSONObject(i)
-            LyricsCandidate(item.optDouble("duration", 0.0).takeUnless { it.isNaN() } ?: 0.0, item.optString("syncedLyrics").takeIf { it.isNotBlank() && it != "null" })
-        }
-        return LyricsMatcher.best(candidates, durationSec)?.syncedLrc?.let(Lyrics::parseLrc)
+        val candidates = (0 until results.length()).map { i -> candidate(results.getJSONObject(i)) }
+        return LyricsMatcher.best(candidates, durationSec)?.toResult()
+    }
+
+    private fun candidate(item: JSONObject) = LyricsCandidate(
+        item.optDouble("duration", 0.0).takeUnless { it.isNaN() } ?: 0.0,
+        item.optString("syncedLyrics").takeIf { it.isNotBlank() && it != "null" },
+        item.optBoolean("instrumental", false)
+    )
+
+    /** Lyrics, instrumental, or null (nothing usable: untimed text only). */
+    private fun LyricsCandidate.toResult(): LyricsResult? = when {
+        instrumental -> LyricsResult.Instrumental
+        else -> syncedLrc?.let(Lyrics::parseLrc)?.let(LyricsResult::Found)
     }
 
     /**
@@ -154,6 +167,8 @@ sealed interface LyricsResult {
     data class Found(val lyrics: Lyrics) : LyricsResult
     /** The site has none for this song. */
     data object None : LyricsResult
+    /** The song has no words (its title says so, or the site marks it). */
+    data object Instrumental : LyricsResult
     /** The site was busy or unreachable; asking again later may find them. */
     data object Failed : LyricsResult
 }

@@ -81,4 +81,21 @@ class LyricsClientTest {
         assertEquals(4000L, LyricsClient.retryWaitMs(null, 3))
         assertTrue(LyricsClient.isBusy(503) && LyricsClient.isBusy(429) && !LyricsClient.isBusy(500))
     }
+
+    @Test
+    fun anInstrumentalTitleIsNotLookedUp() {
+        assertEquals(LyricsResult.Instrumental, client.find("River Flows in You (Instrumental)", "Yiruma", null, 211.0))
+        assertTrue(requests.isEmpty())
+    }
+
+    @Test
+    fun theSiteMarksInstrumentalTracks() {
+        answer = { request ->
+            if (request.startsWith("get")) 200 to """{"duration":211.0,"instrumental":true,"syncedLyrics":null}""" else 404 to ""
+        }
+        assertEquals(LyricsResult.Instrumental, client.find("River Flows in You", "Yiruma", "First Love", 211.0))
+        assertEquals(1, requests.size)
+        answer = { 200 to """[{"duration":211.0,"instrumental":true,"syncedLyrics":null}]""" }
+        assertEquals(LyricsResult.Instrumental, client.find("Kiss the Rain", "Yiruma", null, 211.0))
+    }
 }

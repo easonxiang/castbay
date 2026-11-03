@@ -171,6 +171,10 @@ fun MirrorScreen(viewModel: AirPlayViewModel) {
                     value = LyricsLookup.Found(result.lyrics)
                     return@produceState
                 }
+                if (result == LyricsResult.Instrumental) {
+                    value = LyricsLookup.Instrumental
+                    return@produceState
+                }
                 value = LyricsLookup.None
                 if (result != LyricsResult.Failed || retries == LYRICS_RETRY_DELAYS_MS.size) return@produceState
                 delay(LYRICS_RETRY_DELAYS_MS[retries++])
@@ -237,7 +241,11 @@ fun MirrorScreen(viewModel: AirPlayViewModel) {
                         onSeek = if (stream.isDlna) viewModel::seekMusic else null,
                         lyrics = (lyrics as? LyricsLookup.Found)?.lyrics,
                         lyricsEnabled = settings.showLyrics,
-                        noLyrics = lyrics == LyricsLookup.None,
+                        lyricsNote = when (lyrics) {
+                            LyricsLookup.None -> stringResource(R.string.lyrics_none)
+                            LyricsLookup.Instrumental -> stringResource(R.string.lyrics_instrumental)
+                            else -> null
+                        },
                         modifier = contentModifier.offset { saverShift }
                     )
                 }
@@ -780,8 +788,8 @@ fun AudioPlayback(
      * the layout doesn't jump when a new song starts and again when its lyrics arrive.
      */
     lyricsEnabled: Boolean = false,
-    /** The song has no lyrics to show (not merely still being looked up). */
-    noLyrics: Boolean = false,
+    /** Shown faintly where lyrics go when the song has none ("No lyrics", "Instrumental"); null while looking up. */
+    lyricsNote: String? = null,
     modifier: Modifier = Modifier
 ) {
     val cover = remember(nowPlaying.coverArt) {
@@ -863,8 +871,8 @@ fun AudioPlayback(
                     } else {
                         // Blank while looking up; a faint note once it's known there are none.
                         Box(modifier = Modifier.height(lyricsHeight(contextLines)), contentAlignment = Alignment.CenterStart) {
-                            if (noLyrics) {
-                                Text(stringResource(R.string.lyrics_none), fontSize = 22.sp, color = Color.White.copy(alpha = 0.35f))
+                            if (lyricsNote != null) {
+                                Text(lyricsNote, fontSize = 22.sp, color = Color.White.copy(alpha = 0.35f))
                             }
                         }
                     }
@@ -1139,6 +1147,7 @@ private fun LyricsView(lyrics: Lyrics, positionSec: Double, contextLines: Int) {
 private sealed interface LyricsLookup {
     data object Pending : LyricsLookup
     data object None : LyricsLookup
+    data object Instrumental : LyricsLookup
     data class Found(val lyrics: Lyrics) : LyricsLookup
 }
 

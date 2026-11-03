@@ -47,6 +47,16 @@ data class Lyrics(val lines: List<Line>) {
             return sung.takeIf { lines -> lines.any { it.text.isNotEmpty() } }?.let(::Lyrics)
         }
 
+        // Words in a title that say the track has no singing. Kept to clear ones: "钢琴版",
+        // "吉他版" or "BGM" are often still sung.
+        private val INSTRUMENTAL_TITLE = Regex(
+            """纯音乐|純音樂|伴奏|instrumental|off[\s-]?vocal|karaoke|backing track|[(\[（【\-]\s*inst\.?\s*[)\]）】]?\s*$""",
+            RegexOption.IGNORE_CASE
+        )
+
+        /** Whether [title] says the track is instrumental ("Song (Instrumental)", "xx 纯音乐", "Song (Inst.)"). */
+        fun isInstrumentalTitle(title: String): Boolean = INSTRUMENTAL_TITLE.containsMatchIn(title)
+
         /**
          * A title without the decorations that keep lyric sites from matching, e.g.
          * "Song (Live)", "Song - Remastered 2011", "Song【官方MV】". Null when nothing changes.
@@ -63,18 +73,26 @@ data class Lyrics(val lines: List<Line>) {
 }
 
 /** A lyrics site's search result, reduced to what matching needs. */
-data class LyricsCandidate(val durationSec: Double, val syncedLrc: String?)
+data class LyricsCandidate(val durationSec: Double, val syncedLrc: String?, val instrumental: Boolean = false)
 
 object LyricsMatcher {
     /** How far a result's duration may be from the song's (different edits are longer or shorter). */
     const val MAX_DURATION_DIFF_SEC = 3.0
 
-    /** The synced result closest in length to [durationSec] (any synced one when it is unknown). */
+    /**
+     * The synced result closest in length to [durationSec] (any synced one when it is unknown).
+     * Failing that, an instrumental one when every result of about that length is marked
+     * instrumental (a sung version among them means the site just lacks its lyrics).
+     */
     fun best(candidates: List<LyricsCandidate>, durationSec: Double): LyricsCandidate? {
-        val synced = candidates.filter { !it.syncedLrc.isNullOrBlank() }
-        if (durationSec <= 0) return synced.firstOrNull()
-        return synced
-            .filter { it.durationSec <= 0 || kotlin.math.abs(it.durationSec - durationSec) <= MAX_DURATION_DIFF_SEC }
-            .minByOrNull { if (it.durationSec <= 0) MAX_DURATION_DIFF_SEC else kotlin.math.abs(it.durationSec - durationSec) }
+        val fitting = if (durationSec <= 0) candidates else candidates.filter {
+            it.durationSec <= 0 || kotlin.math.abs(it.durationSec - durationSec) <= MAX_DURATION_DIFF_SEC
+        }
+        val synced = fitting.filter { !it.instrumental && !it.syncedLrc.isNullOrBlank() }
+        if (synced.isNotEmpty()) {
+            if (durationSec <= 0) return synced.first()
+            return synced.minByOrNull { if (it.durationSec <= 0) MAX_DURATION_DIFF_SEC else kotlin.math.abs(it.durationSec - durationSec) }
+        }
+        return fitting.takeIf { it.isNotEmpty() && it.all(LyricsCandidate::instrumental) }?.first()
     }
 }

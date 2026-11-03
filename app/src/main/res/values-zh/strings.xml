@@ -279,6 +279,7 @@
     <string name="sender_kugou">酷狗音乐</string>
     <string name="sender_kuwo">酷我音乐</string>
     <string name="lyrics_none">暂无歌词</string>
+    <string name="lyrics_instrumental">纯音乐</string>
     <!-- Help -->
     <string name="help">帮助</string>
     <string name="help_more">更多帮助：%1$s</string>
