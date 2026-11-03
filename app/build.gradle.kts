@@ -86,6 +86,12 @@ android {
         }
     }
 
+    // Unit tests run code that logs through util.Log; Android's stubs then return defaults
+    // instead of throwing.
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+    }
+
     lint {
         // Calling an API newer than minSdk crashes on older TVs and cars (1.4.0 did on any key
         // before Android 12); lintVital, which CI and every release build run, stops on it.

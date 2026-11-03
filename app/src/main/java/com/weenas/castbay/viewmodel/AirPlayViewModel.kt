@@ -335,7 +335,7 @@ class AirPlayViewModel(application: Application) : AndroidViewModel(application)
         if (enabled && _crashNotice.value == CrashNotice.Ask) sendCrashReport()
     }
 
-    /** Synced lyrics for a song, or null; looked up online, so call off the main thread. */
+    /** Synced lyrics for a song (found, none, or failed for now); looked up online, so call off the main thread. */
     fun findLyrics(title: String, artist: String?, album: String?, durationSec: Double) =
         lyricsClient.find(title, artist, album, durationSec)
 

@@ -30,6 +30,7 @@ import com.weenas.castbay.service.DacpClient
 import com.weenas.castbay.service.NowPlaying
 import com.weenas.castbay.service.StatsFormat
 import com.weenas.castbay.service.Lyrics
+import com.weenas.castbay.service.LyricsResult
 import androidx.compose.runtime.produceState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -159,10 +160,21 @@ fun MirrorScreen(viewModel: AirPlayViewModel) {
                 return@produceState
             }
             delay(LYRICS_LOOKUP_DELAY_MS)
-            val found = withContext(Dispatchers.IO) {
-                viewModel.findLyrics(title, song.artist, song.album, song.durationSec)
+            // The site is sometimes busy for a while: shows "no lyrics" meanwhile and asks again
+            // later while the song plays (a new song restarts this).
+            var retries = 0
+            while (true) {
+                val result = withContext(Dispatchers.IO) {
+                    viewModel.findLyrics(title, song.artist, song.album, song.durationSec)
+                }
+                if (result is LyricsResult.Found) {
+                    value = LyricsLookup.Found(result.lyrics)
+                    return@produceState
+                }
+                value = LyricsLookup.None
+                if (result != LyricsResult.Failed || retries == LYRICS_RETRY_DELAYS_MS.size) return@produceState
+                delay(LYRICS_RETRY_DELAYS_MS[retries++])
             }
-            value = if (found != null) LyricsLookup.Found(found) else LyricsLookup.None
         }
         // The music screen's screen saver; the quick menu or another phone casting wakes it.
         // Scrolling lyrics don't burn in, and someone is probably reading them.
@@ -1140,6 +1152,8 @@ private fun lyricsHeight(contextLines: Int) = LYRIC_LINE_HEIGHT * (contextLines 
 private const val COMPACT_MUSIC_HEIGHT_DP = 600
 private const val SHORT_MUSIC_HEIGHT_DP = 500
 private const val LYRICS_LOOKUP_DELAY_MS = 1500L
+/** When a lookup failed (site busy or unreachable), how long to wait before each new try. */
+private val LYRICS_RETRY_DELAYS_MS = listOf(15_000L, 30_000L, 60_000L)
 
 private fun formatTime(seconds: Double): String {
     val total = seconds.toInt().coerceAtLeast(0)
