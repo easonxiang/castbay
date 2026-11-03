@@ -256,6 +256,7 @@
     <string name="notification_waiting">Waiting for AirPlay or DLNA casting</string>
     <string name="notification_discovery_only">Publishing AirPlay discovery</string>
     <string name="notification_discoverable_only">Discoverable only — streaming unavailable</string>
+    <string name="notification_retrying">Receiver failed to start, trying again</string>
 
     <!-- Errors shown on the waiting screen -->
     <string name="error_discovery_timeout">Local network discovery did not start in time</string>
