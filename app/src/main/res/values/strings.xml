@@ -278,6 +278,8 @@
     <string name="sender_kuwo">Kuwo Music</string>
     <string name="lyrics_none">No lyrics</string>
     <string name="lyrics_instrumental">Instrumental</string>
+    <string name="track_untitled">Track %1$d</string>
+    <string name="now_playing_untitled">AirPlay audio</string>
     <!-- Help -->
     <string name="help">Help</string>
     <string name="help_more">More help: %1$s</string>

@@ -76,8 +76,10 @@ fun QuickMenu(
         player?.addListener(listener)
         onDispose { player?.removeListener(listener) }
     }
-    val audioChoices = remember(tracks) { player?.let { MediaTracks.choices(it, C.TRACK_TYPE_AUDIO) }.orEmpty() }
-    val subtitleChoices = remember(tracks) { player?.let { MediaTracks.choices(it, C.TRACK_TYPE_TEXT) }.orEmpty() }
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val untitled: (Int) -> String = { context.getString(R.string.track_untitled, it) }
+    val audioChoices = remember(tracks) { player?.let { MediaTracks.choices(it, C.TRACK_TYPE_AUDIO, untitled) }.orEmpty() }
+    val subtitleChoices = remember(tracks) { player?.let { MediaTracks.choices(it, C.TRACK_TYPE_TEXT, untitled) }.orEmpty() }
 
     val firstItem = remember { FocusRequester() }
     val keys = usingKeys()

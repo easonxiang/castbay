@@ -16,7 +16,8 @@ data class TrackChoice(val label: String, val group: TrackGroup?, val index: Int
  */
 object MediaTracks {
     /** Supported tracks of [type] ([C.TRACK_TYPE_AUDIO] or [C.TRACK_TYPE_TEXT]); subtitles start with "Off". */
-    fun choices(player: Player, type: Int): List<TrackChoice> {
+    /** [untitled] names a track the stream gives no name or language, by its number from 1 ("Track 2"). */
+    fun choices(player: Player, type: Int, untitled: (Int) -> String = { "Track $it" }): List<TrackChoice> {
         val tracks = player.currentTracks.groups.filter { it.type == type }.flatMap { group ->
             (0 until group.length).filter(group::isTrackSupported).filterNot { index ->
                 group.getTrackFormat(index).let { isPlaceholderCaption(it.sampleMimeType, it.language) }
@@ -25,7 +26,7 @@ object MediaTracks {
             }
         }
         val choices = tracks.mapIndexed { position, (group, index, selected) ->
-            group.getFormat(index).let { TrackChoice(label(it.language, it.label, position), group, index, selected) }
+            group.getFormat(index).let { TrackChoice(label(it.language, it.label, position, untitled = untitled), group, index, selected) }
         }
         if (type != C.TRACK_TYPE_TEXT || choices.isEmpty()) return choices
         val off = TrackChoice("Off", null, 0, selected = choices.none { it.selected })
@@ -61,7 +62,13 @@ object MediaTracks {
     }
 
     /** "English", "Chinese · Commentary", or "Track 2" when the stream names nothing. */
-    fun label(languageTag: String?, name: String?, position: Int, displayLocale: Locale = Locale.getDefault()): String {
+    fun label(
+        languageTag: String?,
+        name: String?,
+        position: Int,
+        displayLocale: Locale = Locale.getDefault(),
+        untitled: (Int) -> String = { "Track $it" }
+    ): String {
         val language = languageTag
             ?.takeIf { it.isNotBlank() && it != C.LANGUAGE_UNDETERMINED }
             ?.let { Locale.forLanguageTag(it).getDisplayName(displayLocale) }
@@ -71,7 +78,7 @@ object MediaTracks {
             language != null && label != null && !label.equals(language, ignoreCase = true) -> "$language · $label"
             label != null -> label
             language != null -> language
-            else -> "Track ${position + 1}"
+            else -> untitled(position + 1)
         }
     }
 }
