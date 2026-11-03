@@ -61,6 +61,8 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           npm ci --no-fund --no-audit
+          # The Worker's checks of what /api/stats accepts (no network, a stand-in database).
+          npm test
           npm run build
 
   # Cloudflare builds main on its own, but has missed a push; once the website has built here
