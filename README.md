@@ -149,6 +149,7 @@ cd web
 npm install        # once
 npm run dev        # preview at http://localhost:4321, updating as you edit
 npm run build      # build into dist/, as Cloudflare does
+npm test           # the Worker's checks of /api/stats, as CI runs them
 ```
 
 Cloudflare builds and publishes the site from `web/` whenever `main` changes (`web/wrangler.jsonc`); CI checks that it builds. A new page also goes in `PAGES` (`web/src/i18n.ts`), which the sitemap (`web/src/pages/sitemap.xml.ts`) lists.
