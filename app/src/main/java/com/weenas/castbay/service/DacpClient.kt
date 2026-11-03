@@ -58,7 +58,6 @@ class DacpClient(context: Context) {
     }
 
     /** Whether commands can go to the sender now (its server has been found). */
-    fun isReady(): Boolean = synchronized(lock) { host != null && port != 0 && activeRemote != null }
 
     fun send(command: Command) {
         val endpoint = endpoint(command) ?: return later { send(command) }

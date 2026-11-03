@@ -28,13 +28,13 @@ interface LinkHost {
     fun videoFormats(): List<String>
 
     /** The picture size [width]x[height] is about to arrive, as H.265 or else H.264; called again when it changes. */
-    fun sessionStarted(session: Any, deviceId: String, name: String, width: Int, height: Int, fps: Int, h265: Boolean)
+    fun sessionStarted(session: LinkSession, deviceId: String, name: String, width: Int, height: Int, fps: Int, h265: Boolean)
 
     /** One access unit; false when the decoder dropped it and wants a key frame. */
     fun video(data: ByteArray, presentationTimeUs: Long): Boolean
 
     /** The session is over; [session] is what [sessionStarted] was given, so a replaced session's end is ignored. */
-    fun sessionEnded(session: Any)
+    fun sessionEnded(session: LinkSession)
 
     fun videoStats(): VideoStats?
 }

@@ -1,6 +1,5 @@
 package com.weenas.castbay.service.desktop
 
-import java.security.KeyStore
 import java.security.cert.X509Certificate
 import javax.net.ssl.KeyManagerFactory
 import javax.net.ssl.SSLContext
@@ -10,7 +9,7 @@ import javax.net.ssl.X509TrustManager
 /**
  * TLS for CastBay Link: mutual authentication with self-signed certificates on both sides.
  * The handshake accepts any client certificate; who the sender is gets decided afterwards by
- * its pinned fingerprint ([LinkIdentity.fingerprint]).
+ * its key's fingerprint, which LinkSession works out from the client certificate.
  */
 object LinkTls {
     /** Cipher suites worth offering: forward secrecy and an AEAD cipher, with EC keys. */

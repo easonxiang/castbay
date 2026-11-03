@@ -6,7 +6,7 @@ import java.util.Locale
 
 class MediaTracksTest {
     private fun label(language: String?, name: String?, position: Int = 0) =
-        MediaTracks.label(language, name, position, Locale.ENGLISH)
+        MediaTracks.label(language, name, position, Locale.ENGLISH) { "Track $it" }
 
     @Test
     fun namesTracksByLanguageAndLabel() {

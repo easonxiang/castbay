@@ -17,7 +17,7 @@ data class TrackChoice(val label: String, val group: TrackGroup?, val index: Int
 object MediaTracks {
     /** Supported tracks of [type] ([C.TRACK_TYPE_AUDIO] or [C.TRACK_TYPE_TEXT]); subtitles start with "Off". */
     /** [untitled] names a track the stream gives no name or language, by its number from 1 ("Track 2"). */
-    fun choices(player: Player, type: Int, untitled: (Int) -> String = { "Track $it" }): List<TrackChoice> {
+    fun choices(player: Player, type: Int, untitled: (Int) -> String): List<TrackChoice> {
         val tracks = player.currentTracks.groups.filter { it.type == type }.flatMap { group ->
             (0 until group.length).filter(group::isTrackSupported).filterNot { index ->
                 group.getTrackFormat(index).let { isPlaceholderCaption(it.sampleMimeType, it.language) }
@@ -67,7 +67,7 @@ object MediaTracks {
         name: String?,
         position: Int,
         displayLocale: Locale = Locale.getDefault(),
-        untitled: (Int) -> String = { "Track $it" }
+        untitled: (Int) -> String
     ): String {
         val language = languageTag
             ?.takeIf { it.isNotBlank() && it != C.LANGUAGE_UNDETERMINED }
