@@ -885,6 +885,20 @@ fn chinese() -> bool {
     }
 }
 
+/// Whether the tray icon can be made: on Linux it needs libayatana-appindicator3 or libappindicator3.
+#[cfg(target_os = "linux")]
+fn tray_available() -> bool {
+    ["libayatana-appindicator3.so.1", "libappindicator3.so.1", "libayatana-appindicator3.so", "libappindicator3.so"]
+        .iter()
+        // SAFETY: these libraries only set up GObject types when loaded.
+        .any(|name| unsafe { libloading::Library::new(name) }.is_ok())
+}
+
+#[cfg(not(target_os = "linux"))]
+fn tray_available() -> bool {
+    true
+}
+
 fn show_main(app: &AppHandle) {
     if let Some(window) = app.get_webview_window("main") {
         let _ = window.show();
@@ -1059,55 +1073,60 @@ fn main() {
                     }
                 });
             }
-            let [open_text, settings_text, switch_text, stop_text, about_text, quit_text] = tray_words(zh);
-            let open = MenuItem::with_id(app, "open", open_text, true, None::<&str>)?;
-            let settings_item = MenuItem::with_id(app, "settings", settings_text, true, None::<&str>)?;
-            let switch = Submenu::with_id(app, "switch", switch_text, false)?;
-            let stop = MenuItem::with_id(app, "stop", stop_text, false, None::<&str>)?;
-            let about_item = MenuItem::with_id(app, "about", about_text, true, None::<&str>)?;
-            let quit_item = MenuItem::with_id(app, "quit", quit_text, true, None::<&str>)?;
-            let menu = Menu::with_items(app, &[&open, &settings_item, &PredefinedMenuItem::separator(app)?, &switch, &stop, &PredefinedMenuItem::separator(app)?, &about_item, &quit_item])?;
-            let mut tray = TrayIconBuilder::new()
-                .tooltip("CastBay Desktop")
-                .menu(&menu)
-                .show_menu_on_left_click(false)
-                .on_menu_event(|app, event| match event.id.as_ref() {
-                    "open" => show_main(app),
-                    "settings" => {
-                        show_main(app);
-                        let _ = app.emit("tray", json!({"kind": "settings"}));
-                    }
-                    "about" => {
-                        show_main(app);
-                        let _ = app.emit("tray", json!({"kind": "about"}));
-                    }
-                    "stop" => stop_casting(app),
-                    "quit" => quit(app),
-                    other => {
-                        if let Some(index) = other.strip_prefix("switch:").and_then(|n| n.parse::<usize>().ok()) {
-                            tray_choose(app, index);
+            // Linux loads the tray library when the icon is made, and panics if it is missing.
+            if tray_available() {
+                let [open_text, settings_text, switch_text, stop_text, about_text, quit_text] = tray_words(zh);
+                let open = MenuItem::with_id(app, "open", open_text, true, None::<&str>)?;
+                let settings_item = MenuItem::with_id(app, "settings", settings_text, true, None::<&str>)?;
+                let switch = Submenu::with_id(app, "switch", switch_text, false)?;
+                let stop = MenuItem::with_id(app, "stop", stop_text, false, None::<&str>)?;
+                let about_item = MenuItem::with_id(app, "about", about_text, true, None::<&str>)?;
+                let quit_item = MenuItem::with_id(app, "quit", quit_text, true, None::<&str>)?;
+                let menu = Menu::with_items(app, &[&open, &settings_item, &PredefinedMenuItem::separator(app)?, &switch, &stop, &PredefinedMenuItem::separator(app)?, &about_item, &quit_item])?;
+                let mut tray = TrayIconBuilder::new()
+                    .tooltip("CastBay Desktop")
+                    .menu(&menu)
+                    .show_menu_on_left_click(false)
+                    .on_menu_event(|app, event| match event.id.as_ref() {
+                        "open" => show_main(app),
+                        "settings" => {
+                            show_main(app);
+                            let _ = app.emit("tray", json!({"kind": "settings"}));
                         }
-                    }
-                })
-                .on_tray_icon_event(|tray, event| {
-                    if let TrayIconEvent::Click { button: MouseButton::Left, button_state: MouseButtonState::Up, .. } = event {
-                        show_main(tray.app_handle());
-                    }
+                        "about" => {
+                            show_main(app);
+                            let _ = app.emit("tray", json!({"kind": "about"}));
+                        }
+                        "stop" => stop_casting(app),
+                        "quit" => quit(app),
+                        other => {
+                            if let Some(index) = other.strip_prefix("switch:").and_then(|n| n.parse::<usize>().ok()) {
+                                tray_choose(app, index);
+                            }
+                        }
+                    })
+                    .on_tray_icon_event(|tray, event| {
+                        if let TrayIconEvent::Click { button: MouseButton::Left, button_state: MouseButtonState::Up, .. } = event {
+                            show_main(tray.app_handle());
+                        }
+                    });
+                if let Some(icon) = app.default_window_icon() {
+                    tray = tray.icon(icon.clone());
+                }
+                tray.build(app)?;
+                app.manage(TrayItems { open, settings: settings_item, switch, stop, about: about_item, quit: quit_item });
+                app.manage(TraySources::default());
+                // Windows come and go: while a cast runs, the list in the tray menu is kept up to date.
+                let handle = app.handle().clone();
+                std::thread::spawn(move || loop {
+                    std::thread::sleep(Duration::from_secs(3));
+                    refresh_tray(&handle);
                 });
-            if let Some(icon) = app.default_window_icon() {
-                tray = tray.icon(icon.clone());
+            } else {
+                log(app.handle(), "no tray: the appindicator library is missing");
             }
-            tray.build(app)?;
-            app.manage(TrayItems { open, settings: settings_item, switch, stop, about: about_item, quit: quit_item });
-            app.manage(TraySources::default());
-            // Windows come and go: while a cast runs, the list in the tray menu is kept up to date.
-            let handle = app.handle().clone();
-            std::thread::spawn(move || loop {
-                std::thread::sleep(Duration::from_secs(3));
-                refresh_tray(&handle);
-            });
-            // Started with Windows: wait in the tray until the person opens it.
-            if !std::env::args().any(|a| a == "--minimized") {
+            // Started with Windows: wait in the tray until the person opens it. Without a tray the window stays open.
+            if !std::env::args().any(|a| a == "--minimized") || app.try_state::<TrayItems>().is_none() {
                 show_main(app.handle());
             }
             Ok(())
@@ -1116,7 +1135,8 @@ fn main() {
         .on_window_event(|window, event| {
             if let WindowEvent::CloseRequested { api, .. } = event {
                 let casting = window.state::<Casting>().stopper.lock().unwrap().is_some();
-                if casting {
+                // Without a tray a hidden window could not be opened again.
+                if casting && window.try_state::<TrayItems>().is_some() {
                     api.prevent_close();
                     let _ = window.hide();
                 }
