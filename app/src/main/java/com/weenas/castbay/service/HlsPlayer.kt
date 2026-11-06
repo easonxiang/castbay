@@ -11,6 +11,7 @@ import androidx.media3.common.PlaybackException
 import androidx.media3.common.Timeline
 import androidx.media3.common.Player
 import androidx.media3.common.Format
+import androidx.media3.exoplayer.DefaultLoadControl
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.trackselection.AdaptiveTrackSelection
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
@@ -196,6 +197,11 @@ class HlsPlayer(
             .setTrackSelector(DefaultTrackSelector(appContext, AdaptiveTrackSelection.Factory(
                 QUALITY_INCREASE_AFTER_MS, 25_000, 25_000, 0.7f
             )))
+            .setLoadControl(
+                DefaultLoadControl.Builder()
+                    .setTargetBufferBytes(bufferBudgetBytes(Runtime.getRuntime().maxMemory()))
+                    .build()
+            )
             .build().also {
             it.addListener(listener)
             it.addAnalyticsListener(statsListener)
@@ -398,6 +404,14 @@ class HlsPlayer(
         const val PROGRESS_INTERVAL_MS = 250L
     }
 }
+
+/**
+ * Bytes the player may buffer ahead: a quarter of the app's heap, between 8 and 128 MB. ExoPlayer's
+ * own limit (about 144 MB for video and sound) took a car head unit with a small heap out of
+ * memory within minutes of a 4 Mbit/s video. With room to spare the 50 s time limit comes first.
+ */
+internal fun bufferBudgetBytes(maxHeapBytes: Long): Int =
+    (maxHeapBytes / 4).coerceIn(8L shl 20, 128L shl 20).toInt()
 
 /** Media3's MIME type for an HLS or DASH [mimeType] (any case); null otherwise, to infer the format from the URL. */
 internal fun adaptiveMimeType(mimeType: String?): String? = when (mimeType?.trim()?.lowercase()) {

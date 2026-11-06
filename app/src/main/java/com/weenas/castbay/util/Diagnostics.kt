@@ -1,5 +1,6 @@
 package com.weenas.castbay.util
 
+import android.app.ActivityManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
@@ -144,9 +145,19 @@ object Diagnostics {
             "Android" to "${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT}), ${Build.DISPLAY}",
             "Screen" to "${metrics.widthPixels}×${metrics.heightPixels} px, ${config.screenWidthDp}×${config.screenHeightDp} dp, " +
                 "density ${metrics.density}" + if (touch) ", touch screen" else "",
+            "Memory" to memoryInfo(context),
             "App" to "${AppVersion.name(context)} (${context.packageName})",
             "Up for" to "${SystemClock.elapsedRealtime() / 60_000} min, boot #${bootCount() ?: "?"}",
         )
+    }
+
+    /** The device's RAM and how much of it this app may use, to read out-of-memory crashes by. */
+    private fun memoryInfo(context: Context): String {
+        val activities = context.getSystemService(ActivityManager::class.java)
+        val total = ActivityManager.MemoryInfo().also { activities.getMemoryInfo(it) }.totalMem
+        val heap = Runtime.getRuntime().maxMemory()
+        return "RAM ${"%.1f".format(Locale.US, total / 1e9)} GB" +
+            (if (activities.isLowRamDevice) " (low-RAM device)" else "") + ", app heap ${heap shr 20} MB"
     }
 
     private fun bootCount(): Int? = appContext?.let {
