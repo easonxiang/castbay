@@ -406,12 +406,14 @@ class HlsPlayer(
 }
 
 /**
- * Bytes the player may buffer ahead: a quarter of the app's heap, between 8 and 128 MB. ExoPlayer's
- * own limit (about 144 MB for video and sound) took a car head unit with a small heap out of
- * memory within minutes of a 4 Mbit/s video. With room to spare the 50 s time limit comes first.
+ * Bytes the player may buffer ahead on a small heap (under 128 MB): a quarter of it, at least 8 MB.
+ * ExoPlayer's own limit (about 144 MB for video and sound) took a car head unit with a small heap
+ * out of memory within minutes of a 4 Mbit/s video. Larger heaps keep that default
+ * ([C.LENGTH_UNSET]): on the Sony (192 MB) a 48 MB cap held only about 10 s of 40 Mbit/s 4K, and
+ * the quality kept dropping to 1080p, since it may drop whenever less than 25 s is buffered.
  */
 internal fun bufferBudgetBytes(maxHeapBytes: Long): Int =
-    (maxHeapBytes / 4).coerceIn(8L shl 20, 128L shl 20).toInt()
+    if (maxHeapBytes >= 128L shl 20) C.LENGTH_UNSET else (maxHeapBytes / 4).coerceAtLeast(8L shl 20).toInt()
 
 /** Media3's MIME type for an HLS or DASH [mimeType] (any case); null otherwise, to infer the format from the URL. */
 internal fun adaptiveMimeType(mimeType: String?): String? = when (mimeType?.trim()?.lowercase()) {

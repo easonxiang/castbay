@@ -1,5 +1,6 @@
 package com.weenas.castbay.service
 
+import androidx.media3.common.C
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -7,17 +8,19 @@ class BufferBudgetTest {
     private val mb = 1L shl 20
 
     @Test
-    fun aQuarterOfTheHeap() {
-        assertEquals((48 * mb).toInt(), bufferBudgetBytes(192 * mb))
+    fun aSmallHeapBuffersAQuarterOfIt() {
+        assertEquals((12 * mb).toInt(), bufferBudgetBytes(48 * mb))
+        assertEquals((24 * mb).toInt(), bufferBudgetBytes(96 * mb))
     }
 
     @Test
-    fun aSmallHeapStillBuffersSomething() {
+    fun aTinyHeapStillBuffersSomething() {
         assertEquals((8 * mb).toInt(), bufferBudgetBytes(24 * mb))
     }
 
     @Test
-    fun aLargeHeapIsCapped() {
-        assertEquals((128 * mb).toInt(), bufferBudgetBytes(1024 * mb))
+    fun aLargeHeapKeepsExoPlayersDefault() {
+        assertEquals(C.LENGTH_UNSET, bufferBudgetBytes(128 * mb))
+        assertEquals(C.LENGTH_UNSET, bufferBudgetBytes(192 * mb))
     }
 }
