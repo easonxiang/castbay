@@ -49,6 +49,12 @@ class AirPlayService : Service() {
     private val mainHandler = android.os.Handler(android.os.Looper.getMainLooper())
     /** The receiver failed and will start again by itself; the notification says so meanwhile. */
     private var retrying = false
+    /**
+     * The newest start request. Stopping by it keeps a start that is still queued: stopping
+     * without one destroys the service under it, and Android 8 and 9 then crash the app because
+     * that start never reached startForeground (a car whose clock jumps at boot, CB-RY6CBX).
+     */
+    private var lastStartId = 0
     // State changes can come from protocol threads: handled on the main thread, like start and stop.
     private val stateCallback: (AirPlayConnectionState, StreamInfo, String?) -> Unit = { state, _, _ ->
         mainHandler.post { onStateChanged(state) }
@@ -71,7 +77,7 @@ class AirPlayService : Service() {
                     retrying = false
                     running = false
                     removeForeground()
-                    stopSelf()
+                    stopSelf(lastStartId)
                 }
             }
             AirPlayConnectionState.Discovering -> if (retrying) {
@@ -97,6 +103,7 @@ class AirPlayService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        lastStartId = startId
         Diagnostics.record("service", "Start command ${intent?.action ?: "(restart)"}" + if (running) ", already running" else "")
         if (intent?.action == ACTION_STOP) {
             if (running) manager.stop()
