@@ -1,0 +1,5 @@
+• Traditional Chinese.
+• No more out-of-memory crashes with video links on low-memory car units.
+• No crash after a clock jump at start-up on Android 8 and 9.
+• The receiver stays running while it retries.
+• Lyrics: instrumental tracks, and retries when LRCLIB is busy.
