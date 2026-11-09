@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -12 128 128" role="img" aria-label="映湾 CASTBAY symbol dark">
+<defs><linearGradient id="outer" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E5DAFF"/><stop offset="1" stop-color="#CDBDF5"/></linearGradient><linearGradient id="middle" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D0B6F5"/><stop offset="1" stop-color="#AE8BE8"/></linearGradient><linearGradient id="inner" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B286E2"/><stop offset="1" stop-color="#9264CF"/></linearGradient><linearGradient id="base" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9E74DB"/><stop offset="1" stop-color="#BD99ED"/></linearGradient></defs>
+<g fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M17 28C42-3 86-3 111 28" stroke="url(#outer)" stroke-width="11"/>
+  <path d="M32 44C48 23 80 23 96 44" stroke="url(#middle)" stroke-width="11"/>
+  <path d="M49 57C56 47 72 47 79 57" stroke="url(#inner)" stroke-width="10"/>
+  <path d="M18 60c13 11 28 18 46 18s33-7 46-18" stroke="url(#base)" stroke-width="11"/>
+  <path d="M18 60v22c0 8 6 14 14 14h64c8 0 14-6 14-14V60" stroke="url(#base)" stroke-width="11"/>
+</g>
+</svg>
