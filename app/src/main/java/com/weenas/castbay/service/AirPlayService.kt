@@ -22,6 +22,9 @@ class AirPlayService : Service() {
         const val CHANNEL_ID = "castbay_channel"
         const val NOTIFICATION_ID = 1
         private const val TAG = "CastBayService"
+        /** How often the service looks whether the day's update check is due (UpdateChecker asks at most once a day). */
+        private const val UPDATE_CHECK_POLL_MS = 6L * 60 * 60 * 1000
+        private const val FIRST_UPDATE_CHECK_DELAY_MS = 60_000L
 
         /** Tried in turn; see [enterForeground]. */
         private val FOREGROUND_TYPES = listOf(
@@ -88,6 +91,28 @@ class AirPlayService : Service() {
         }
     }
 
+    /**
+     * The once-a-day update check, from the receiver itself: a car or a TV box that nobody opens
+     * the screen on would never ask otherwise. The request is the one the app's screen makes (the
+     * time of the last answer is shared, so one device asks once a day); it follows the same
+     * setting and is off in store builds.
+     */
+    private val updateCheck = object : Runnable {
+        override fun run() {
+            if (!running) return
+            val settings = ReceiverSettingsStore(this@AirPlayService).load()
+            if (com.weenas.castbay.BuildConfig.SELF_UPDATE && settings.checkUpdates) {
+                val context = applicationContext
+                kotlin.concurrent.thread(name = "CastBay-update-check") {
+                    runCatching {
+                        UpdateChecker(context, com.weenas.castbay.util.AppVersion.name(context)) { settings.testVersions }.check()
+                    }.onFailure { Log.w(TAG, "Background update check failed: ${it.message}") }
+                }
+            }
+            mainHandler.postDelayed(this, UPDATE_CHECK_POLL_MS)
+        }
+    }
+
     // Its notification in the language chosen in Settings.
     override fun attachBaseContext(newBase: android.content.Context) = super.attachBaseContext(AppLanguage.wrap(newBase))
 
@@ -137,6 +162,8 @@ class AirPlayService : Service() {
             return START_NOT_STICKY
         }
         running = true
+        mainHandler.removeCallbacks(updateCheck)
+        mainHandler.postDelayed(updateCheck, FIRST_UPDATE_CHECK_DELAY_MS)
         getSystemService(NotificationManager::class.java)
             .notify(NOTIFICATION_ID, buildNotification(
                 getString(
@@ -152,6 +179,7 @@ class AirPlayService : Service() {
     override fun onDestroy() {
         Diagnostics.record("service", "Destroyed" + if (running) " while running" else "")
         Diagnostics.receiverRunning(false)
+        mainHandler.removeCallbacks(updateCheck)
         if (running) manager.stop()
         manager.unregisterStateCallback(stateCallback)
         super.onDestroy()
