@@ -15,6 +15,11 @@
 // anything else is refused). POST /api/stats/delete {id}: deletes an installation's rows, sent
 // when statistics are turned off. A daily cron deletes rows older than a year.
 //
+// GET /latest.json (the apps' once-a-day update check) is served from the static assets as
+// before; the Worker only adds one to a per-day, per-version counter in D1 (update_checks: no
+// address, no identifier). It counts every app, whether or not statistics are on; a failure to
+// count never changes the answer.
+//
 // GET /api/stats/summary: totals for the private /stats page. Cloudflare Access guards both
 // (only the allowed emails get in); this also checks Access's signed token itself, so the
 // totals stay private even if the Access application were removed by mistake.
@@ -30,8 +35,12 @@ const GOOGLE_VERIFICATION = 'google-site-verification: google4a41bd36656ece7a.ht
 const ALPHABET = '0123456789ABCDEFGHJKMNPQRSTVWXYZ';
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    if (url.pathname === '/latest.json' && (request.method === 'GET' || request.method === 'HEAD')) {
+      if (request.method === 'GET') ctx.waitUntil(countUpdateCheck(request, env));
+      return env.ASSETS.fetch(request);
+    }
     if (url.pathname === GOOGLE_VERIFICATION_PATH && (request.method === 'GET' || request.method === 'HEAD')) {
       return new Response(request.method === 'HEAD' ? null : GOOGLE_VERIFICATION, {
         headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=3600' },
@@ -61,14 +70,35 @@ export default {
     await env.STATS.batch([
       env.STATS.prepare("DELETE FROM daily WHERE day < date('now', '-365 days')"),
       env.STATS.prepare("DELETE FROM desktop_daily WHERE day < date('now', '-365 days')"),
+      env.STATS.prepare("DELETE FROM update_checks WHERE day < date('now', '-365 days')"),
     ]);
   },
 };
 
+const relayAddresses = (env) => (env.RELAY_IPS ?? '').split(',').map((ip) => ip.trim()).filter(Boolean);
+
+// The apps send "CastBay/<version> (https://github.com/weenas/castbay)". Only a release version
+// is kept as it is (test builds and anything else count as 'other'), so the table stays small.
+const RELEASE_AGENT = /^CastBay\/(\d{1,3}\.\d{1,3}\.\d{1,3}(?:-(?:beta|rc)[0-9.]{0,8})?)(?:[ ;(]|$)/;
+
+/** One more update check for today, from this app version, directly or through the relay. */
+async function countUpdateCheck(request, env) {
+  try {
+    const match = RELEASE_AGENT.exec(request.headers.get('User-Agent') ?? '');
+    const via = relayAddresses(env).includes(request.headers.get('CF-Connecting-IP') ?? '') ? 'relay' : 'web';
+    await env.STATS.prepare(
+      `INSERT INTO update_checks (day, app, via, hits) VALUES (date('now'), ?, ?, 1)
+       ON CONFLICT (day, app, via) DO UPDATE SET hits = hits + 1`,
+    ).bind(match ? match[1] : 'other', via).run();
+  } catch (error) {
+    // Counting is best effort (e.g. before the table exists): never fail the update check for it.
+  }
+}
+
 /** The sender's address, for the rate limits only: the device's, also through the relay. */
 function clientAddress(request, env) {
   const address = request.headers.get('CF-Connecting-IP') ?? 'unknown';
-  const relays = (env.RELAY_IPS ?? '').split(',').map((ip) => ip.trim()).filter(Boolean);
+  const relays = relayAddresses(env);
   const forwarded = request.headers.get('X-CastBay-Client-IP');
   if (relays.includes(address) && forwarded && /^[0-9a-fA-F.:]{2,45}$/.test(forwarded)) return forwarded;
   return address;
@@ -300,6 +330,18 @@ async function summary(env) {
   });
   out.reports = reports;
   out.desktop = await desktopSummary(env, since);
+  // The once-a-day update checks (every app, statistics on or not), when the table exists.
+  try {
+    const [perDay, byApp] = await env.STATS.batch([
+      env.STATS.prepare(`SELECT day AS key, sum(hits) AS n FROM update_checks WHERE app <> 'other' AND day >= ${since} GROUP BY day ORDER BY day`),
+      env.STATS.prepare(`SELECT app AS key, sum(hits) AS n FROM update_checks WHERE app <> 'other' AND day >= date('now', '-7 days') GROUP BY app ORDER BY n DESC LIMIT 20`),
+    ]);
+    out.checksPerDay = perDay.results;
+    out.checksByApp = byApp.results;
+  } catch (error) {
+    out.checksPerDay = [];
+    out.checksByApp = [];
+  }
   return json(out, 200);
 }
 
