@@ -95,5 +95,29 @@ const broken = { ...env, STATS: { prepare() { throw new Error('no such table: up
 r = await latest(agent('1.10.0'), { environment: broken });
 check('a failing count does not fail the check', r.status, 200);
 check('and the answer is the same', await r.text(), '{"version":"1.10.0"}');
+
+// The daily cron reads GitHub's download counters.
+const asset = (name, n) => ({ name, download_count: n });
+globalThis.fetch = async () => new Response(JSON.stringify([
+  { tag_name: 'v1.10.0', draft: false, assets: [asset('CastBay-1.10.0.apk', 300), asset('CastBay.apk', 200), asset('CastBay-1.10.0-mapping.txt', 7)] },
+  { tag_name: 'desktop-v0.1.8', draft: false, assets: [asset('a.msi', 90), asset('a.zip', 80), asset('a.deb', 70), asset('a.tar.gz', 5)] },
+  { tag_name: 'v9.9.9', draft: true, assets: [asset('x.apk', 1)] },
+  { tag_name: 'bad tag!', draft: false, assets: [] },
+]));
+before2 = rows.length;
+await worker.scheduled({}, env);
+const written = rows.slice(before2).filter((r) => r.sql.includes('release_downloads') && r.sql.startsWith('INSERT'));
+check('two releases written (no draft, no odd tag)', written.length, 2);
+check('apk downloads summed', written[0].args.join(), 'v1.10.0,500,0');
+check('installers summed', written[1].args.join(), 'desktop-v0.1.8,0,240');
+check('old rows deleted too', rows.slice(before2).some((r) => r.sql.includes('DELETE FROM release_downloads')), true);
+globalThis.fetch = async () => { throw new Error('offline'); };
+let threw = false;
+try { await worker.scheduled({}, env); } catch { threw = true; }
+check('GitHub unreachable does not fail the cron', threw, false);
+globalThis.fetch = async () => new Response('rate limited', { status: 403 });
+before2 = rows.length;
+await worker.scheduled({}, env);
+check('a refusal writes no downloads', rows.slice(before2).filter((r) => r.sql.startsWith('INSERT')).length, 0);
 console.log(failed ? `${failed} FAILED` : 'all passed');
 process.exit(failed ? 1 : 0);

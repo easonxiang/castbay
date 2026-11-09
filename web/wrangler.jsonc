@@ -4,7 +4,7 @@
 // the Worker (worker/index.js) (and /latest.json, which it only counts), which keeps reports sent from the app in the R2 bucket
 // castbay-reports (created by hand, with a rule deleting objects after 90 days) and opt-in usage
 // statistics in the D1 database castbay-stats (schema: migrations/, applied by hand with
-// `npx wrangler d1 migrations apply castbay-stats --remote`; a daily cron deletes year-old rows).
+// `npx wrangler d1 migrations apply castbay-stats --remote`; a daily cron deletes year-old rows and reads GitHub's download counters; an optional secret GITHUB_TOKEN lifts the API's rate limit).
 {
   "name": "castbay",
   "main": "worker/index.js",

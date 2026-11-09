@@ -20,6 +20,9 @@
 // address, no identifier). It counts every app, whether or not statistics are on; a failure to
 // count never changes the answer.
 //
+// The daily cron also reads GitHub's download counters for the releases' files (release_downloads),
+// so /stats can show downloads per day (the counters only grow; a day's downloads are the difference).
+//
 // GET /api/stats/summary: totals for the private /stats page. Cloudflare Access guards both
 // (only the allowed emails get in); this also checks Access's signed token itself, so the
 // totals stay private even if the Access application were removed by mistake.
@@ -71,9 +74,31 @@ export default {
       env.STATS.prepare("DELETE FROM daily WHERE day < date('now', '-365 days')"),
       env.STATS.prepare("DELETE FROM desktop_daily WHERE day < date('now', '-365 days')"),
       env.STATS.prepare("DELETE FROM update_checks WHERE day < date('now', '-365 days')"),
+      env.STATS.prepare("DELETE FROM release_downloads WHERE day < date('now', '-730 days')"),
     ]);
+    await snapshotDownloads(env);
   },
 };
+
+/** Today's download counters of the releases' files, from GitHub's public API (best effort; tried again tomorrow). */
+async function snapshotDownloads(env) {
+  try {
+    const headers = { 'User-Agent': 'castbay-worker (https://castbay.weenas.com)', Accept: 'application/vnd.github+json' };
+    if (env.GITHUB_TOKEN) headers.Authorization = `Bearer ${env.GITHUB_TOKEN}`;
+    const response = await fetch('https://api.github.com/repos/weenas/castbay/releases?per_page=100', { headers });
+    if (!response.ok) return;
+    const releases = await response.json();
+    const total = (release, pattern) => release.assets.filter((a) => pattern.test(a.name)).reduce((sum, a) => sum + (a.download_count || 0), 0);
+    const statements = releases
+      .filter((r) => !r.draft && /^[A-Za-z0-9._-]{1,40}$/.test(r.tag_name))
+      .map((r) => env.STATS.prepare(
+        "INSERT OR REPLACE INTO release_downloads (day, tag, apk, installers) VALUES (date('now'), ?, ?, ?)",
+      ).bind(r.tag_name, total(r, /\.apk$/), total(r, /\.(msi|zip|deb)$/)));
+    if (statements.length) await env.STATS.batch(statements);
+  } catch (error) {
+    // The numbers are only for /stats.
+  }
+}
 
 const relayAddresses = (env) => (env.RELAY_IPS ?? '').split(',').map((ip) => ip.trim()).filter(Boolean);
 
@@ -341,6 +366,22 @@ async function summary(env) {
   } catch (error) {
     out.checksPerDay = [];
     out.checksByApp = [];
+  }
+  // Downloads per day: the difference between two days' readings of GitHub's counters.
+  try {
+    const readings = (await env.STATS.prepare(
+      `SELECT day, sum(apk) AS apk, sum(installers) AS installers FROM release_downloads
+       WHERE day >= date('now', '-31 days') GROUP BY day ORDER BY day`,
+    ).all()).results;
+    out.apkPerDay = [];
+    out.installersPerDay = [];
+    for (let i = 1; i < readings.length; i++) {
+      out.apkPerDay.push({ key: readings[i].day, n: Math.max(0, readings[i].apk - readings[i - 1].apk) });
+      out.installersPerDay.push({ key: readings[i].day, n: Math.max(0, readings[i].installers - readings[i - 1].installers) });
+    }
+  } catch (error) {
+    out.apkPerDay = [];
+    out.installersPerDay = [];
   }
   return json(out, 200);
 }
