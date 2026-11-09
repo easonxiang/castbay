@@ -135,7 +135,6 @@
 
     <!-- About -->
     <string name="about">關於</string>
-    <string name="about_version">版本 %1$s</string>
     <string name="about_website">官網</string>
     <string name="about_privacy">隱私權政策</string>
     <string name="about_source">原始碼</string>
@@ -321,4 +320,18 @@
     <string name="setting_confirm_note">裝置第一次投放時，需要在電視上允許，然後在裝置上重新投放。</string>
     <string name="help_access_title">誰可以投放</string>
     <string name="help_access">在設定 → 連線 → 投放驗證中選擇：\n• 在電視上確認：新裝置第一次投放時，電視會詢問是否允許。允許後，請從裝置重新投放。\n• PIN 碼：新裝置第一次投放時，請在裝置上輸入電視顯示的 4 位數 PIN 碼。\n• 密碼：每台裝置都需輸入設定中的密碼。\nApp 內建的投放按鈕（DLNA）無法輸入 PIN 碼或密碼。選擇上述任一方式後，手機首次從 App 投放時，電視都會詢問是否允許。\n在「曾投放的裝置」中，可以封鎖個別裝置或移除全部裝置。</string>
+    <string name="connecting_from">正在連線 %1$s…</string>
+    <string name="consent_title">願意幫 CastBay 變得更好嗎？</string>
+    <string name="consent_stats">匿名統計：%1$s</string>
+    <string name="consent_errors">錯誤報告：%1$s</string>
+    <string name="consent_note">預設關閉，開啟後才會傳送，不包含名稱、歌名、網址或位址。詳見「關於 → 隱私權政策」，隨時可在設定中變更。</string>
+    <string name="consent_done">完成</string>
+    <string name="lyrics_instrumental">純音樂</string>
+    <string name="notification_retrying">接收器啟動失敗，正在重試</string>
+    <string name="now_playing_untitled">AirPlay 音訊</string>
+    <string name="track_untitled">音軌 %1$d</string>
+    <string name="setting_open_on_cast">投放時自動開啟</string>
+    <string name="setting_open_on_cast_note">有裝置開始鏡像或播放影片時，如果電視停在主畫面、其他應用程式或螢幕保護程式，會自動喚醒電視並開啟 CastBay。需要允許 CastBay「顯示在其他應用程式上層」（開啟開關會跳到對應的設定頁）。電視沒有這個設定頁時，可以用電腦授權：adb shell appops set com.weenas.castbay SYSTEM_ALERT_WINDOW allow</string>
+    <string name="open_on_cast_toast">請在電視上開啟 CastBay 查看投放內容</string>
+    <string name="open_on_cast_off_toast">有裝置正在投放，但 CastBay 不在畫面上。可在 設定 → 播放 → 投放時自動開啟 中開啟自動開啟</string>
 </resources>

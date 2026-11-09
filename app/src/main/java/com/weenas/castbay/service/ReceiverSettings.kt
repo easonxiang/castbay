@@ -105,7 +105,7 @@ data class ReceiverSettings(
         const val LANGUAGE_ZH = "zh"
         const val LANGUAGE_ZH_TW = "zh-TW"
         const val LANGUAGE_EN = "en"
-        val LANGUAGES = listOf(LANGUAGE_SYSTEM, LANGUAGE_ZH_TW, LANGUAGE_ZH, LANGUAGE_EN)
+        val LANGUAGES = listOf(LANGUAGE_SYSTEM, LANGUAGE_ZH, LANGUAGE_ZH_TW, LANGUAGE_EN)
         const val RESOLUTION_AUTO = "Auto"
         const val FRAME_RATE_AUTO = "Auto"
         val RESOLUTIONS = listOf(RESOLUTION_AUTO, "720p", "1080p")
