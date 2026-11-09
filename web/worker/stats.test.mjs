@@ -51,5 +51,8 @@ check('both tables named', rows.slice(before).map((r) => r.sql.includes('desktop
 const android = { id: good.id, day, app: '1.8.8', android: '14', sdk: 34, maker: 'Sony', model: 'XR', screen: '1080p', device: 'tv', touch: false, lang: 'en', counts: { 'cast.airplay.mirror': 1 }, settings: { access: 'open' } };
 check('an Android summary', await post('api/stats', android), 200);
 check('into daily', /INTO daily /.test(rows.at(-1).sql), true);
+// A language with a region (Traditional Chinese, a future pt-BR) is a setting value too.
+check('a zh-TW language setting', await post('api/stats', { ...android, settings: { access: 'open', language: 'zh-TW' } }), 200);
+check('kept as zh-TW', rows.at(-1).args.at(-2).includes('"language":"zh-TW"'), true);
 console.log(failed ? `${failed} FAILED` : 'all passed');
 process.exit(failed ? 1 : 0);

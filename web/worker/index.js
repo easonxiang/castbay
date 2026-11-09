@@ -190,7 +190,7 @@ function validDesktopStats(b) {
   if (!b.settings || typeof b.settings !== 'object') return null;
   for (const [key, value] of Object.entries(b.settings)) {
     if (!DESKTOP_SETTINGS.includes(key)) return null;
-    if (typeof value === 'boolean' || (typeof value === 'string' && /^[A-Za-z0-9_. ]{1,20}$/.test(value))) settings[key] = value;
+    if (typeof value === 'boolean' || (typeof value === 'string' && /^[A-Za-z0-9_. -]{1,20}$/.test(value))) settings[key] = value;
     else return null;
   }
   return { id: b.id, day: b.day, app: b.app, os: b.os, osVersion: b.osVersion, arch: b.arch, session: b.session,
@@ -224,7 +224,7 @@ function validStats(b) {
   if (!b.settings || typeof b.settings !== 'object') return null;
   for (const [key, value] of Object.entries(b.settings)) {
     if (!SETTINGS.includes(key)) return null;
-    if (typeof value === 'boolean' || (typeof value === 'string' && /^[A-Za-z0-9_. ]{1,20}$/.test(value))) settings[key] = value;
+    if (typeof value === 'boolean' || (typeof value === 'string' && /^[A-Za-z0-9_. -]{1,20}$/.test(value))) settings[key] = value;
     else return null;
   }
   return { id: b.id, day: b.day, app: b.app, android: b.android, sdk: b.sdk, maker: b.maker, model: b.model,

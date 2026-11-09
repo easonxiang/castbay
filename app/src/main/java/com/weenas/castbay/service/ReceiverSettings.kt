@@ -105,6 +105,11 @@ data class ReceiverSettings(
         const val LANGUAGE_ZH = "zh"
         const val LANGUAGE_ZH_TW = "zh-TW"
         const val LANGUAGE_EN = "en"
+        /**
+         * The languages offered in Settings, as BCP 47 tags, each with its values-* folder
+         * (values-pt-rBR for "pt-BR"). A translation from Weblate is added here once it is
+         * mostly done; until then the system language still picks it up.
+         */
         val LANGUAGES = listOf(LANGUAGE_SYSTEM, LANGUAGE_ZH, LANGUAGE_ZH_TW, LANGUAGE_EN)
         const val RESOLUTION_AUTO = "Auto"
         const val FRAME_RATE_AUTO = "Auto"
@@ -223,7 +228,18 @@ object AppLanguage {
         ReceiverSettings.LANGUAGE_SYSTEM -> null
         ReceiverSettings.LANGUAGE_ZH -> java.util.Locale.SIMPLIFIED_CHINESE
         ReceiverSettings.LANGUAGE_ZH_TW -> java.util.Locale.TRADITIONAL_CHINESE
+        in ReceiverSettings.LANGUAGES -> java.util.Locale.forLanguageTag(language)
         else -> java.util.Locale.ENGLISH
+    }
+
+    /** A language's name in that language, as the list in Settings shows it ("日本語", "Deutsch"). */
+    fun nativeName(language: String): String = when (language) {
+        ReceiverSettings.LANGUAGE_ZH -> "简体中文"
+        ReceiverSettings.LANGUAGE_ZH_TW -> "繁體中文"
+        else -> {
+            val locale = java.util.Locale.forLanguageTag(language)
+            locale.getDisplayName(locale).replaceFirstChar { it.titlecase(locale) }
+        }
     }
 
     fun wrap(base: Context): Context {
