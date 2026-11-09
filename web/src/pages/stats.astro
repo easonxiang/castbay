@@ -43,6 +43,8 @@ import Page from '../layouts/Page.astro';
   };
   var SECTIONS = [
     ['perDay', '每天的设备数'],
+    ['checksPerDay', '每天的更新检查（所有用户，约等于每天打开过应用的设备）'],
+    ['checksByApp', '更新检查，近 7 天（按版本，所有用户）'],
     ['casts', '投屏方式', function (k) { return k.indexOf('cast.') === 0; }],
     ['lengths', '投屏时长', function (k) { return k.indexOf('length.') === 0; }],
     ['mirror', '镜像分辨率和编码', function (k) { return k.indexOf('mirror.') === 0; }],
