@@ -26,4 +26,14 @@ class AppLanguageTest {
         assertNull(AppLanguage.localeFor(ReceiverSettings.LANGUAGE_SYSTEM))
         assertEquals(Locale.ENGLISH, AppLanguage.localeFor(ReceiverSettings.LANGUAGE_EN))
     }
+
+    @Test
+    fun languagesAreNamedInThemselves() {
+        assertEquals("简体中文", AppLanguage.nativeName("zh"))
+        assertEquals("繁體中文", AppLanguage.nativeName("zh-TW"))
+        assertEquals("English", AppLanguage.nativeName("en"))
+        // Languages that come later from Weblate, once added to ReceiverSettings.LANGUAGES.
+        assertEquals("日本語", AppLanguage.nativeName("ja"))
+        assertEquals("Deutsch", AppLanguage.nativeName("de"))
+    }
 }
