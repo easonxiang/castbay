@@ -15,6 +15,7 @@
   <a href="https://castbay.weenas.com/compatibility"><img src="https://img.shields.io/badge/Android-6.0%2B-3DDC84?logo=android&amp;logoColor=white" alt="Android 6.0+"></a>
   <a href="https://castbay.weenas.com/desktop-guide"><img src="https://img.shields.io/badge/Desktop-Windows%20%7C%20Linux-0078D4?logo=tauri&amp;logoColor=white" alt="Desktop: Windows, Linux"></a>
   <a href="https://github.com/weenas/castbay/commits/main"><img src="https://img.shields.io/github/last-commit/weenas/castbay" alt="Last commit"></a>
+  <a href="https://hosted.weblate.org/engage/castbay/"><img src="https://hosted.weblate.org/widget/castbay/svg-badge.svg" alt="Translation status"></a>
   <a href="https://scorecard.dev/viewer/?uri=github.com/weenas/castbay"><img src="https://api.scorecard.dev/projects/github.com/weenas/castbay/badge" alt="OpenSSF Scorecard"></a>
 </p>
 
