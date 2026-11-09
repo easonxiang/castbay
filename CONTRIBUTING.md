@@ -30,7 +30,13 @@ Before opening a pull request:
 
 ## Translations
 
-The app is in English and Chinese. To add a language, copy `values/strings.xml` to `values-<code>/strings.xml` (for example `values-ja`) and translate it; keep placeholders such as `%1$s` and escape apostrophes (`\'`).
+The Android app is in English, Simplified Chinese and Traditional Chinese. Translations are done on [Hosted Weblate](https://hosted.weblate.org/engage/castbay/): sign in, pick a language (or start a new one) and translate in the browser. Weblate keeps the translations up to date as strings are added and sends them here as pull requests, which a maintainer merges once CI passes.
+
+- Leave placeholders such as `%1$s` and `%2$d` as they are; their order in the sentence can change. Weblate and the unit tests (`TranslationsTest`) check them.
+- Keep the product names AirPlay, DLNA, CastBay Link and CastBay as they are.
+- A string not translated yet shows in English, so a partial translation is fine. Once a language is mostly done, it is added to the language list in Settings (`ReceiverSettings.LANGUAGES`, one line); until then the app uses it when it is the system language.
+
+You can also edit `app/src/main/res/values-<code>/strings.xml` directly (for example `values-ja`, or `values-pt-rBR` for Brazilian Portuguese) and open a pull request; escape apostrophes (`\'`). CastBay Desktop is translated in its code for now (English and Chinese).
 
 ## License
 
