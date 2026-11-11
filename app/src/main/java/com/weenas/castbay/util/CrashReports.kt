@@ -24,6 +24,7 @@ object CrashReports {
     // The log lines kept with a crash; the report adds no more than LogReport's limit anyway.
     private const val LOG_LINES = 800
     private const val MAX_TRACE_CHARS = 60_000
+    private const val MAX_TOMBSTONE_BYTES = 4 * 1024 * 1024
     private val timeFormat = SimpleDateFormat("MM-dd HH:mm:ss", Locale.US)
     private val installed = AtomicBoolean(false)
     private val sending = AtomicBoolean(false)
@@ -51,9 +52,13 @@ object CrashReports {
             else -> return
         }
         if (pending(context) != null) return
-        val trace = if (exit.reason == ApplicationExitInfo.REASON_ANR) {
-            runCatching { exit.traceInputStream?.bufferedReader()?.use { it.readText() } }.getOrNull()
-        } else null
+        val trace = when (exit.reason) {
+            ApplicationExitInfo.REASON_ANR ->
+                runCatching { exit.traceInputStream?.bufferedReader()?.use { it.readText() } }.getOrNull()
+            // The tombstone (a protobuf): only its signal and the crashing thread's frames are kept.
+            else -> runCatching { exit.traceInputStream?.use { readUpTo(it, MAX_TOMBSTONE_BYTES) } }.getOrNull()
+                ?.let(NativeCrashTrace::summarize)
+        }
         save(context, buildString {
             appendLine("$kind at ${timeFormat.format(Date(exit.timestamp))}: ${exit.description.orEmpty()}")
             if (trace != null) {
@@ -87,6 +92,17 @@ object CrashReports {
         } finally {
             sending.set(false)
         }
+    }
+
+    private fun readUpTo(input: java.io.InputStream, limit: Int): ByteArray {
+        val out = java.io.ByteArrayOutputStream()
+        val buffer = ByteArray(8192)
+        while (out.size() < limit) {
+            val n = input.read(buffer, 0, minOf(buffer.size, limit - out.size()))
+            if (n < 0) break
+            out.write(buffer, 0, n)
+        }
+        return out.toByteArray()
     }
 
     private fun crashText(thread: Thread, error: Throwable): String = buildString {
