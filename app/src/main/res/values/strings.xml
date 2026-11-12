@@ -132,9 +132,9 @@
     <string name="setting_stats">Show playback stats</string>
     <string name="setting_picture">Picture</string>
     <string name="setting_lyrics">Show lyrics for music</string>
-    <string name="menu_vinyl">Spinning cover</string>
-    <string name="setting_vinyl_spin">Turn the cover like a vinyl record</string>
-    <string name="setting_vinyl_spin_note">The album cover becomes a record that turns while music plays and stops when it is paused. Off by default on devices with little memory.</string>
+    <string name="menu_cover_spin">Spinning cover</string>
+    <string name="setting_cover_spin">Spin the cover</string>
+    <string name="setting_cover_spin_note">The album cover turns, round, while music plays and stops when it is paused. Off by default on devices with little memory.</string>
     <string name="setting_lyrics_note">Looks up lyrics on lrclib.net by the song\'s title and artist.</string>
     <string name="setting_open_on_cast">Open When Casting</string>
     <string name="setting_open_on_cast_note">Opens CastBay when a device starts mirroring or playing a video while another app, the home screen or the screen saver is showing (the TV is woken up). Needs "Display over other apps" for CastBay (this opens its settings page). If your TV has no such page, a computer can grant it: adb shell appops set com.weenas.castbay SYSTEM_ALERT_WINDOW allow</string>
