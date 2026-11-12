@@ -128,9 +128,9 @@
     <string name="setting_stats">顯示播放統計資訊</string>
     <string name="setting_picture">畫面</string>
     <string name="setting_lyrics">播放音樂時顯示歌詞</string>
-    <string name="menu_vinyl">封面旋轉</string>
-    <string name="setting_vinyl_spin">封面像黑膠唱片一樣旋轉</string>
-    <string name="setting_vinyl_spin_note">專輯封面變成一張唱片，播放音樂時轉動，暫停時停下。記憶體很小的裝置預設關閉。</string>
+    <string name="menu_cover_spin">封面旋轉</string>
+    <string name="setting_cover_spin">封面旋轉</string>
+    <string name="setting_cover_spin_note">專輯封面變成圓形，播放音樂時轉動，暫停時停下。記憶體很小的裝置預設關閉。</string>
     <string name="setting_lyrics_note">會把歌名和歌手傳送到 lrclib.net 查詢歌詞。</string>
     <string name="setting_append_tv_name">在名稱後加上電視名稱</string>
     <string name="setting_append_tv_name_note">手機上顯示為：%1$s</string>
