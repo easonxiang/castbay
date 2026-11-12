@@ -797,7 +797,9 @@ fun AudioPlayback(
     coverTurns: Boolean = true,
     modifier: Modifier = Modifier
 ) {
-    val cover = remember(nowPlaying.coverArt) {
+    // By what the picture holds: a sender sends the cover again (as new bytes of the same picture)
+    // when it pauses, and that is neither a new picture nor a new song.
+    val cover = remember(nowPlaying.coverArt?.contentHashCode()) {
         nowPlaying.coverArt?.let { BitmapFactory.decodeByteArray(it, 0, it.size)?.asImageBitmap() }
     }
     // Ticks the progress between the sender's (infrequent) reports.
@@ -833,7 +835,8 @@ fun AudioPlayback(
             verticalAlignment = Alignment.CenterVertically
         ) {
             if (spinCover && cover != null) {
-                SpinningCover(cover, spinning = coverTurns && nowPlaying.playing, size = coverSize,
+                SpinningCover(cover, songKey = Triple(nowPlaying.title, nowPlaying.artist, nowPlaying.album),
+                    spinning = coverTurns && nowPlaying.playing, size = coverSize,
                     contentDescription = stringResource(R.string.cover_art))
             } else Box(
                 modifier = Modifier
@@ -1082,7 +1085,7 @@ private val PLAY_BUTTON_SIZE = 80.dp
  */
 @Composable
 private fun MusicBackdrop(coverArt: ByteArray?) {
-    val backdrop by produceState<Backdrop.Result?>(null, coverArt) {
+    val backdrop by produceState<Backdrop.Result?>(null, coverArt?.contentHashCode()) {
         value = coverArt?.let { cover -> withContext(Dispatchers.Default) { Backdrop.fromCover(cover) } }
     }
     // Remembered: this recomposes with every progress tick, and a fresh wrapper each time made

@@ -267,8 +267,10 @@ class SimulatedSender private constructor(context: Context) {
             Log.i(TAG, if (value) "Music paused" else "Music resumed")
             if (value) {
                 paused = true
-                // An iPhone pausing tells the receiver to drop what it has queued.
+                // An iPhone pausing tells the receiver to drop what it has queued, and sends the
+                // cover again (the same picture, as new bytes).
                 bridge.onAudioFlush()
+                bridge.audioInfo.onCoverArt(cover(title))
             } else {
                 bridge.audioInfo.onProgress(position.toDouble() / RATE, seconds.toDouble())
                 synchronized(lock) {
