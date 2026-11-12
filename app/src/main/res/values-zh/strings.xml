@@ -134,6 +134,7 @@
     <string name="setting_stats">显示播放统计信息</string>
     <string name="setting_picture">画面</string>
     <string name="setting_lyrics">播放音乐时显示歌词</string>
+    <string name="menu_vinyl">封面旋转</string>
     <string name="setting_vinyl_spin">封面像黑胶唱片一样旋转</string>
     <string name="setting_vinyl_spin_note">专辑封面变成一张唱片，播放音乐时转动，暂停时停下。内存很小的设备默认关闭。</string>
     <string name="setting_lyrics_note">会把歌名和歌手发送到 lrclib.net 查询歌词。</string>

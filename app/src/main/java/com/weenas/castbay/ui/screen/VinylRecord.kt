@@ -23,7 +23,10 @@ import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.PathFillType
 import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asAndroidBitmap
@@ -66,6 +69,9 @@ class VinylSpin {
         private const val STOPPED_BELOW = 0.5f
     }
 }
+
+/** The cover's circle is this much of the record's radius: the picture is the main part, the vinyl a thin ring round it. */
+private const val LABEL_RATIO = 0.84f
 
 /** The angle is updated about 30 times a second: enough for this speed, half the work of every frame. */
 private const val SPIN_FRAME_MS = 30L
@@ -112,9 +118,15 @@ fun VinylRecord(cover: ImageBitmap, spinning: Boolean, size: Dp, contentDescript
                 },
             )
         }
-        // The glint: two soft bands across the record that do not turn with it.
+        // The glint: two soft bands across the vinyl ring (not over the cover) that do not turn with it.
         Canvas(modifier = Modifier.fillMaxSize()) {
-            drawCircle(
+            val ring = Path().apply {
+                fillType = PathFillType.EvenOdd
+                addOval(Rect(center, this@Canvas.size.minDimension / 2f))
+                addOval(Rect(center, this@Canvas.size.minDimension / 2f * LABEL_RATIO))
+            }
+            drawPath(
+                path = ring,
                 brush = Brush.sweepGradient(
                     0f to Color.Transparent, 0.07f to Color.White.copy(alpha = 0.10f), 0.14f to Color.Transparent,
                     0.5f to Color.Transparent, 0.57f to Color.White.copy(alpha = 0.10f), 0.64f to Color.Transparent,
@@ -125,7 +137,7 @@ fun VinylRecord(cover: ImageBitmap, spinning: Boolean, size: Dp, contentDescript
     }
 }
 
-/** The record as a bitmap of [size] pixels: black vinyl with fine grooves, [cover] as its label, and a spindle hole. */
+/** The record as a bitmap of [size] pixels: [cover] as a big round label, a thin ring of black vinyl with fine grooves round it. */
 internal fun renderRecord(cover: Bitmap, size: Int): Bitmap {
     val out = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
     val canvas = AndroidCanvas(out)
@@ -133,19 +145,19 @@ internal fun renderRecord(cover: Bitmap, size: Int): Bitmap {
     val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     paint.color = 0xFF0E0E0E.toInt()
     canvas.drawCircle(radius, radius, radius, paint)
-    // Grooves: thin rings, every fifth a little brighter (the gaps between tracks).
+    // Grooves: fine rings on the vinyl, every fourth a little brighter (the gaps between tracks).
     paint.style = Paint.Style.STROKE
     paint.strokeWidth = maxOf(1f, size / 520f)
     var ring = 0
-    var r = radius * 0.46f
-    while (r < radius * 0.97f) {
-        paint.color = if (ring % 5 == 0) 0x2AFFFFFF else 0x12FFFFFF
+    var r = radius * (LABEL_RATIO + 0.025f)
+    while (r < radius * 0.985f) {
+        paint.color = if (ring % 4 == 0) 0x2AFFFFFF else 0x14FFFFFF
         canvas.drawCircle(radius, radius, r, paint)
-        r += radius * 0.017f
+        r += radius * 0.014f
         ring++
     }
     // The label: the cover, centred and cropped to a circle.
-    val labelRadius = radius * 0.38f
+    val labelRadius = radius * LABEL_RATIO
     val scale = (2 * labelRadius) / minOf(cover.width, cover.height)
     val shader = BitmapShader(cover, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
     shader.setLocalMatrix(Matrix().apply {
@@ -158,13 +170,5 @@ internal fun renderRecord(cover: Bitmap, size: Int): Bitmap {
     paint.color = 0xFF050505.toInt()
     paint.strokeWidth = maxOf(2f, size / 200f)
     canvas.drawCircle(radius, radius, labelRadius, paint)
-    // The spindle hole.
-    paint.style = Paint.Style.FILL
-    paint.color = 0xFF0B0B0B.toInt()
-    canvas.drawCircle(radius, radius, radius * 0.045f, paint)
-    paint.style = Paint.Style.STROKE
-    paint.strokeWidth = maxOf(1f, size / 400f)
-    paint.color = 0x55FFFFFF
-    canvas.drawCircle(radius, radius, radius * 0.045f, paint)
     return out
 }
