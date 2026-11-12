@@ -154,6 +154,9 @@ fun QuickMenu(
                 MenuItem(stringResource(R.string.menu_lyrics), stringResource(if (settings.showLyrics) R.string.on else R.string.off), onClick = used {
                     viewModel.updateSettings { it.copy(showLyrics = !it.showLyrics) }
                 })
+                MenuItem(stringResource(R.string.menu_vinyl), stringResource(if (settings.vinylSpin) R.string.on else R.string.off), onClick = used {
+                    viewModel.updateSettings { it.copy(vinylSpin = !it.vinylSpin) }
+                })
             }
             if (player != null && audioChoices.size > 1) {
                 MenuItem(stringResource(R.string.menu_audio), audioChoices.firstOrNull { it.selected }?.label ?: stringResource(R.string.auto), onClick = used {
