@@ -269,6 +269,11 @@ private fun ColumnScope.PlaybackPage(settings: ReceiverSettings, viewModel: AirP
     }
     Text(stringResource(R.string.setting_lyrics_note), color = Color.Gray, fontSize = 14.sp)
     CardDivider()
+    SwitchSetting(stringResource(R.string.setting_vinyl_spin), settings.vinylSpin) { enabled ->
+        viewModel.updateSettings { it.copy(vinylSpin = enabled) }
+    }
+    Text(stringResource(R.string.setting_vinyl_spin_note), color = Color.Gray, fontSize = 14.sp)
+    CardDivider()
     val context = LocalContext.current
     SwitchSetting(stringResource(R.string.setting_open_on_cast), settings.openOnCast) { enabled ->
         viewModel.updateSettings { it.copy(openOnCast = enabled) }
