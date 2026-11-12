@@ -74,18 +74,19 @@ private const val RIM_COLOR = 0xD9FFFFFF.toInt()
 private const val MIN_FRAME_SECONDS = 0.014f
 
 /**
- * The album cover as a round picture with a thin white rim, turning while [spinning]. The picture
+ * The album cover as a round picture with a thin white rim, turning while [spinning]; [songKey] tells songs apart. The picture
  * is drawn once (a bitmap, off the main thread) and each frame only turns that layer.
  */
 @Composable
-fun SpinningCover(cover: ImageBitmap, spinning: Boolean, size: Dp, contentDescription: String?) {
+fun SpinningCover(cover: ImageBitmap, songKey: Any?, spinning: Boolean, size: Dp, contentDescription: String?) {
     val sizePx = with(LocalDensity.current) { size.roundToPx() }
     val picture by produceState<ImageBitmap?>(null, cover, sizePx) {
         value = withContext(Dispatchers.Default) { renderRoundCover(cover.asAndroidBitmap(), sizePx).asImageBitmap() }
     }
-    // A new song starts from the top; the angle is read only while drawing, so turning never recomposes.
-    val spin = remember(cover) { CoverSpin() }
-    val angle = remember(cover) { mutableFloatStateOf(0f) }
+    // A new song starts from the top; the cover arriving (again) for the same song does not move
+    // the angle, nor does pausing. The angle is read only while drawing, so turning never recomposes.
+    val spin = remember(songKey) { CoverSpin() }
+    val angle = remember(songKey) { mutableFloatStateOf(0f) }
     val resolver = LocalContext.current.contentResolver
     // The system's "remove animations" setting (also what a tester's scale 0 means).
     val animationsOn = remember { Settings.Global.getFloat(resolver, Settings.Global.ANIMATOR_DURATION_SCALE, 1f) != 0f }
