@@ -148,11 +148,18 @@ class AirPlayViewModel(application: Application) : AndroidViewModel(application)
         }
         Diagnostics.record("app", "Asking the service to start the receiver")
         try {
-            ContextCompat.startForegroundService(
-                app,
-                Intent(app, com.weenas.castbay.service.AirPlayService::class.java)
-                    .setAction(com.weenas.castbay.service.AirPlayService.ACTION_START)
-            )
+            val intent = Intent(app, com.weenas.castbay.service.AirPlayService::class.java)
+                .setAction(com.weenas.castbay.service.AirPlayService.ACTION_START)
+            // The screen is showing, so a plain start is allowed, and it has no deadline: a
+            // startForegroundService() the service doesn't answer within about 10 s crashes the
+            // app, which a slow TV (1 GB, just booted) does take that long to create it
+            // (CB-DWTW6P). The service goes into the foreground itself, as before. Not allowed
+            // (the app is in the background after all): the foreground start.
+            try {
+                app.startService(intent)
+            } catch (notAllowed: IllegalStateException) {
+                ContextCompat.startForegroundService(app, intent)
+            }
         } catch (error: Exception) {
             Diagnostics.record("app", "The service could not be asked: ${error.javaClass.simpleName}: ${error.message}")
         }
