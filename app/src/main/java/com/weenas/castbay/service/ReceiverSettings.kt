@@ -37,6 +37,8 @@ data class ReceiverSettings(
     val pictureMode: String = PICTURE_FIT,
     /** Look up and show synced lyrics for AirPlay music (sends the song's title to lrclib.net). */
     val showLyrics: Boolean = false,
+    /** Turn the album cover as a vinyl record while music plays (off by default on low-memory devices). */
+    val vinylSpin: Boolean = true,
     /** Open the app's screen when a picture starts while it is not on screen (needs "Display over other apps"). */
     val openOnCast: Boolean = false,
     /** The app's language: [LANGUAGE_SYSTEM] (the TV's), [LANGUAGE_ZH] or [LANGUAGE_EN]. */
@@ -87,7 +89,7 @@ data class ReceiverSettings(
         withoutLiveSettings() != previous.withoutLiveSettings()
 
     private fun withoutLiveSettings() = copy(
-        showStats = false, pictureMode = PICTURE_FIT, showLyrics = false, openOnCast = false, language = LANGUAGE_SYSTEM, checkUpdates = true, testVersions = false,
+        showStats = false, pictureMode = PICTURE_FIT, showLyrics = false, vinylSpin = true, openOnCast = false, language = LANGUAGE_SYSTEM, checkUpdates = true, testVersions = false,
         sendErrorReports = false, screenSaver = SCREEN_SAVER_BURN_IN
     )
 
@@ -150,6 +152,9 @@ class ReceiverSettingsStore(context: Context) {
 
     private val tvName = DeviceName.tvName(context.applicationContext)
 
+    // A record turning all the time is extra work for a weak device: off until the person turns it on.
+    private val lowMemory = context.applicationContext.getSystemService(android.app.ActivityManager::class.java)?.isLowRamDevice == true
+
     fun load() = ReceiverSettings(
         deviceName = preferences.getString("device_name", DeviceName.BRAND).orEmpty().ifBlank { DeviceName.BRAND },
         appendTvName = preferences.getBoolean("append_tv_name", true),
@@ -172,6 +177,7 @@ class ReceiverSettingsStore(context: Context) {
         pictureMode = preferences.getString("picture_mode", null)
             ?.takeIf { it in ReceiverSettings.PICTURE_MODES } ?: ReceiverSettings.PICTURE_FIT,
         showLyrics = preferences.getBoolean("show_lyrics", false),
+        vinylSpin = preferences.getBoolean("vinyl_spin", !lowMemory),
         openOnCast = preferences.getBoolean("open_on_cast", false),
         language = preferences.getString("language", null)
             ?.takeIf { it in ReceiverSettings.LANGUAGES } ?: ReceiverSettings.LANGUAGE_SYSTEM,
@@ -207,6 +213,7 @@ class ReceiverSettingsStore(context: Context) {
             .putBoolean("show_stats", settings.showStats)
             .putString("picture_mode", settings.pictureMode)
             .putBoolean("show_lyrics", settings.showLyrics)
+            .putBoolean("vinyl_spin", settings.vinylSpin)
             .putBoolean("open_on_cast", settings.openOnCast)
             .putString("language", settings.language)
             .putBoolean("check_updates", settings.checkUpdates)

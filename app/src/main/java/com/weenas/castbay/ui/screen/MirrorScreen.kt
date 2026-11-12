@@ -240,6 +240,9 @@ fun MirrorScreen(viewModel: AirPlayViewModel) {
                         onSeek = if (stream.isDlna) viewModel::seekMusic else null,
                         lyrics = (lyrics as? LyricsLookup.Found)?.lyrics,
                         lyricsEnabled = settings.showLyrics,
+                        vinyl = settings.vinylSpin,
+                        // Not while the screen saver dims or blanks the screen.
+                        coverTurns = saver.level == SaverLevel.AWAKE,
                         lyricsNote = when (lyrics) {
                             LyricsLookup.None -> stringResource(R.string.lyrics_none)
                             LyricsLookup.Instrumental -> stringResource(R.string.lyrics_instrumental)
@@ -789,6 +792,9 @@ fun AudioPlayback(
     lyricsEnabled: Boolean = false,
     /** Shown faintly where lyrics go when the song has none ("No lyrics", "Instrumental"); null while looking up. */
     lyricsNote: String? = null,
+    /** The cover is a vinyl record ([VinylRecord]) that turns while the music plays and [coverTurns]. */
+    vinyl: Boolean = false,
+    coverTurns: Boolean = true,
     modifier: Modifier = Modifier
 ) {
     val cover = remember(nowPlaying.coverArt) {
@@ -826,7 +832,10 @@ fun AudioPlayback(
                 .padding(start = 56.dp, end = 56.dp, top = if (short) MUSIC_BADGE_CLEARANCE * 0.8f else 0.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Box(
+            if (vinyl && cover != null) {
+                VinylRecord(cover, spinning = coverTurns && nowPlaying.playing, size = coverSize,
+                    contentDescription = stringResource(R.string.cover_art))
+            } else Box(
                 modifier = Modifier
                     .size(coverSize)
                     .shadow(24.dp, RoundedCornerShape(16.dp))
