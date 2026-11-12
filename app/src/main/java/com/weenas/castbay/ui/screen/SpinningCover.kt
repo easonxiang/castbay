@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlin.math.exp
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
 /**
@@ -68,8 +67,11 @@ class CoverSpin {
 private const val RIM_RATIO = 0.008f
 private const val RIM_COLOR = 0xD9FFFFFF.toInt()
 
-/** The angle is updated about 30 times a second: enough for this speed, half the work of every frame. */
-private const val SPIN_FRAME_MS = 30L
+/**
+ * The angle moves on every screen frame (60 a second; a 120 Hz screen skips every other): at 30
+ * updates a second, spaced unevenly by the delay and the next frame, the turning looked jerky.
+ */
+private const val MIN_FRAME_SECONDS = 0.014f
 
 /**
  * The album cover as a round picture with a thin white rim, turning while [spinning]. The picture
@@ -92,9 +94,11 @@ fun SpinningCover(cover: ImageBitmap, spinning: Boolean, size: Dp, contentDescri
         if (!turning && spin.speed == 0f) return@LaunchedEffect
         var last = withFrameNanos { it }
         while (true) {
-            delay(SPIN_FRAME_MS)
             val now = withFrameNanos { it }
-            val moving = spin.step((now - last) / 1_000_000_000f, turning)
+            val seconds = (now - last) / 1_000_000_000f
+            if (seconds < MIN_FRAME_SECONDS) continue
+            // A long gap (the screen was busy or off) is not a jump of the angle.
+            val moving = spin.step(minOf(seconds, 0.1f), turning)
             last = now
             angle.floatValue = spin.angle
             if (!moving) break
