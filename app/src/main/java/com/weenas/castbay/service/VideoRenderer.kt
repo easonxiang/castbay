@@ -11,6 +11,7 @@ import android.os.SystemClock
 import android.os.HandlerThread
 import com.weenas.castbay.util.Diagnostics
 import com.weenas.castbay.util.Log
+import com.weenas.castbay.util.SessionSummary
 import android.view.Surface
 import java.util.ArrayDeque
 
@@ -56,6 +57,10 @@ class VideoRenderer(
     private val freeInputs = ArrayDeque<Int>()
     private var droppedFrames = 0L
     private var renderedFrames = 0L
+    // For the line written when a session ends (SessionSummary).
+    private var receivedFrames = 0L
+    private var receivedBytes = 0L
+    private var firstFrameAtMs = 0L
 
     // For the stats overlay.
     private val inputRate = RateMeter()
@@ -114,6 +119,8 @@ class VideoRenderer(
         if (accessUnit.isEmpty()) return false
         inputRate.record(accessUnit.size)
         synchronized(lock) {
+            if (receivedFrames++ == 0L) firstFrameAtMs = SystemClock.elapsedRealtime()
+            receivedBytes += accessUnit.size
             val nal = scanNals(accessUnit)
 
             if (nal.hasParameterSets && !nal.hasSlice) {
@@ -210,6 +217,19 @@ class VideoRenderer(
 
     fun stop() {
         synchronized(lock) {
+            if (receivedFrames > 0) {
+                val summary = SessionSummary.video(
+                    seconds = (SystemClock.elapsedRealtime() - firstFrameAtMs) / 1000.0,
+                    codec = StatsFormat.codecName(mimeType), width = frameWidth, height = frameHeight, decoder = decoderName,
+                    received = receivedFrames, bytes = receivedBytes, rendered = renderedFrames, dropped = droppedFrames,
+                    keyFrames = keyFramesSeen, longestKeyGap = longestKeyGap,
+                )
+                Log.i(TAG, summary)
+                Diagnostics.record("video", summary)
+            }
+            receivedFrames = 0
+            receivedBytes = 0
+            firstFrameAtMs = 0
             releaseCodecLocked()
             releasePlaceholderLocked()
             width = 0

@@ -71,6 +71,8 @@ std::string g_password;
 std::atomic<int> g_open_connections{0};
 /* The sender's last volume (AirPlay dB), reported back as the receiver's initial volume. */
 std::atomic<float> g_volume_db{0.0f};
+/* The sender ended its stream with a TEARDOWN (UxPlay's video_reset for it), as opposed to just closing the connection. */
+std::atomic<bool> g_sender_tore_down{false};
 /* Whether H.265 mirroring was offered (feature bit 42); see nativeStart. */
 std::atomic<bool> g_h265_enabled{false};
 
@@ -166,7 +168,8 @@ void connectionStopped(void *) {
         if (open > 1) dropOrphanedReverseSoon();
         return;
     }
-    LOGI("AirPlay sender disconnected");
+    LOGI("AirPlay sender disconnected%s", g_sender_tore_down.exchange(false)
+        ? " after it ended its stream (TEARDOWN)" : " (the connection closed without a TEARDOWN)");
     castbay::dispatchSessionEnd();
 }
 
@@ -183,8 +186,21 @@ void onVideoStop(void *) {
     callStatic(g_on_video_stop);
 }
 
+const char *resetTypeName(reset_type_t type) {
+    switch (type) {
+    case RESET_TYPE_NOHOLD: return "a new sender took over";
+    case RESET_TYPE_RTP_SHUTDOWN: return "the sender stopped mirroring";
+    case RESET_TYPE_HLS_SHUTDOWN: return "the sender stopped its video";
+    case RESET_TYPE_HLS_EOS: return "a video came to its end";
+    case RESET_TYPE_ON_VIDEO_PLAY: return "a video starts";
+    case RESET_TYPE_RTP_TO_HLS_TEARDOWN: return "mirroring gives way to a video";
+    }
+    return "?";
+}
+
 void videoReset(void *cls, reset_type_t type) {
-    LOGI("AirPlay video reset (type %d)", static_cast<int>(type));
+    LOGI("AirPlay video reset (type %d: %s)", static_cast<int>(type), resetTypeName(type));
+    if (type == RESET_TYPE_RTP_SHUTDOWN || type == RESET_TYPE_RTP_TO_HLS_TEARDOWN) g_sender_tore_down = true;
     switch (type) {
     case RESET_TYPE_NOHOLD:
         // A new sender took over: UxPlay is dropping the old connections. End the old
