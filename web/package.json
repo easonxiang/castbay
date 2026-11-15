@@ -9,8 +9,8 @@
     "test": "node worker/stats.test.mjs"
   },
   "dependencies": {
-    "@astrojs/markdown-satteri": "^0.4.6",
+    "@astrojs/markdown-satteri": "^0.4.9",
     "@astrojs/rss": "^4.0.19",
-    "astro": "^7.4.7"
+    "astro": "^7.4.11"
   }
 }
