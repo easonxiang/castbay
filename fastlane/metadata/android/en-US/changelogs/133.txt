@@ -1,0 +1,2 @@
+• Preserve the correct screen and state when switching between AirPlay, desktop casting, and DLNA.
+• Restore the music screen when audio resumes after AirPlay video ends.
