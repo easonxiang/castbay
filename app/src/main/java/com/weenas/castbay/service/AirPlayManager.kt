@@ -603,22 +603,36 @@ class AirPlayManager private constructor(private val context: Context) {
     }
 
     fun onNativeStreamStopped() {
-        // An AirPlay session that ended while a computer casts must not clear its screen.
-        if (desktopCasting()) return
         lastHeartbeatAtMs = 0L
-        videoRenderer.stop()
         audioRenderer.stop()
+        // An AirPlay session that ended while a computer casts must stop its old music, but
+        // must not clear the desktop's picture or media state.
+        if (desktopCasting()) {
+            nowPlaying = NowPlaying()
+            dacp.clear()
+            mediaSession.update(null)
+            return
+        }
+        // An AirPlay session ending must not clear a DLNA video or music session.
+        if (dlnaOnScreen()) return
+        videoRenderer.stop()
         nowPlaying = NowPlaying()
         dacp.clear()
         mediaSession.update(null)
-        // An AirPlay session ending (e.g. a phone that was only probing) leaves DLNA video playing.
-        if (dlnaOnScreen()) return
         hlsPlayer.stop()
+        videoSource = null
         currentStreamInfo = StreamInfo()
         currentState = AirPlayConnectionState.Discovering
     }
 
     private fun onNativeConnectionStarted() {
+        // UxPlay reports a socket connection before it asks [admitSender] whether the sender may
+        // cast. Keep the current picture and state while takeover is disabled; a rejected sender
+        // must not replace a desktop (or other) session with a false Connecting screen.
+        if (currentState == AirPlayConnectionState.Streaming && !activeSettings.allowTakeover) {
+            Log.i(TAG, "Keeping the current cast while an AirPlay sender is checked")
+            return
+        }
         endedFromTv = false
         currentError = null
         // A new sender's first poll mustn't be told about a video that finished before it came.
@@ -710,8 +724,15 @@ class AirPlayManager private constructor(private val context: Context) {
             // Resumed after another app took the focus (no-op while CastBay holds it).
             audioFocus.acquire()
         }
-        if (currentState == AirPlayConnectionState.Connecting || videoSource == VideoSource.DLNA) {
+        // An AirPlay video can stop while its sender keeps the same RTSP session open and resumes
+        // music. The video-stop callback returns the UI to Discovering, so recognize the resumed
+        // PCM as a new audio stream while that AirPlay source is still active.
+        if (currentState == AirPlayConnectionState.Connecting ||
+            videoSource == VideoSource.DLNA ||
+            (currentState == AirPlayConnectionState.Discovering && videoSource == VideoSource.AIRPLAY)
+        ) {
             stopDlnaVideo()
+            videoSource = null
             currentStreamInfo = StreamInfo(isAudioOnly = true, sender = airPlaySender, nowPlaying = nowPlaying)
             currentState = AirPlayConnectionState.Streaming
             mediaSession.update(nowPlaying)
