@@ -31,6 +31,12 @@ data class ReceiverSettings(
     val dlnaEnabled: Boolean = true,
     /** CastBay Desktop: computers casting with the CastBay Link protocol. */
     val desktopEnabled: Boolean = true,
+    /**
+     * Start the receiver when the device boots, so it is ready like an Apple TV without
+     * opening the app. Off: it only starts when opened (#399 — e.g. another DLNA receiver
+     * on the same TV would otherwise show up twice in senders' cast lists).
+     */
+    val startOnBoot: Boolean = true,
     /** Show a "stats for nerds" overlay (codec, resolution, bitrate, ...) while playing. */
     val showStats: Boolean = false,
     /** How mirroring and AirPlay video fill the screen: [PICTURE_FIT], [PICTURE_FILL] or [PICTURE_STRETCH]. */
@@ -90,7 +96,7 @@ data class ReceiverSettings(
 
     private fun withoutLiveSettings() = copy(
         showStats = false, pictureMode = PICTURE_FIT, showLyrics = false, coverSpin = true, openOnCast = false, language = LANGUAGE_SYSTEM, checkUpdates = true, testVersions = false,
-        sendErrorReports = false, screenSaver = SCREEN_SAVER_BURN_IN
+        sendErrorReports = false, screenSaver = SCREEN_SAVER_BURN_IN, startOnBoot = true
     )
 
     /** Frames per second senders may mirror at. "Auto" is 60: TVs decode in hardware. */
@@ -173,6 +179,7 @@ class ReceiverSettingsStore(context: Context) {
         allowTakeover = preferences.getBoolean("allow_takeover", false),
         dlnaEnabled = preferences.getBoolean("dlna_enabled", true),
         desktopEnabled = preferences.getBoolean("desktop_enabled", true),
+        startOnBoot = preferences.getBoolean("start_on_boot", true),
         showStats = preferences.getBoolean("show_stats", false),
         pictureMode = preferences.getString("picture_mode", null)
             ?.takeIf { it in ReceiverSettings.PICTURE_MODES } ?: ReceiverSettings.PICTURE_FIT,
@@ -208,8 +215,7 @@ class ReceiverSettingsStore(context: Context) {
             .putBoolean("allow_takeover", settings.allowTakeover)
             .putBoolean("dlna_enabled", settings.dlnaEnabled)
             .putBoolean("desktop_enabled", settings.desktopEnabled)
-            // Receiving can no longer be turned off (Back twice on the home screen quits).
-            .remove("start_on_boot")
+            .putBoolean("start_on_boot", settings.startOnBoot)
             .putBoolean("show_stats", settings.showStats)
             .putString("picture_mode", settings.pictureMode)
             .putBoolean("show_lyrics", settings.showLyrics)

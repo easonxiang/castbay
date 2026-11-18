@@ -8,7 +8,8 @@ import com.weenas.castbay.util.Diagnostics
 /**
  * Starts the receiver when the device boots, so it is ready like an Apple TV, and when the
  * system clock is set, which is how cars (which sleep rather than boot) usually wake: they
- * sync the time. Both broadcasts reach apps that aren't running.
+ * sync the time. Both broadcasts reach apps that aren't running. Unless "Start on boot" is
+ * off in Settings — then nothing starts until the app is opened ([ReceiverStarter]).
  */
 class BootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
