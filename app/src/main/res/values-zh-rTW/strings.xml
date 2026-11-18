@@ -88,6 +88,8 @@
     <string name="setting_test_versions">接收測試版本</string>
     <string name="setting_test_versions_note">有測試版（標示 beta）發布時，也會提示更新，協助驗證修正。測試版可能較不穩定，下一個正式版會取代它。會向 GitHub 查詢，不會傳送這台電視的任何資訊。</string>
     <string name="setting_check_updates_note">每天向 castbay.weenas.com（或 GitHub）查詢一次最新版本號，不會傳送這台電視的任何資訊。</string>
+    <string name="setting_start_on_boot">開機自啟</string>
+    <string name="setting_start_on_boot_note">開啟後，電視開機後不用打開映灣就能投屏。關閉後，只有打開映灣時才會開始接收。</string>
     <string name="setting_error_reports">自動傳送錯誤報告</string>
     <string name="setting_error_reports_note">CastBay意外結束後，下次啟動時自動傳送問題報告，內容包含錯誤資訊與應用程式近期紀錄；歌名、裝置名稱及網址會先移除。關閉此選項時，每次都會先詢問你。</string>
     <string name="setting_usage_stats">傳送匿名使用統計</string>

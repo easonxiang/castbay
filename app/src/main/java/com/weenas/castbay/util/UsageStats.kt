@@ -162,6 +162,7 @@ object UsageStats {
                 .put("resolution", settings.resolution)
                 .put("codec", settings.videoCodec)
                 .put("dlna", settings.dlnaEnabled)
+                .put("startOnBoot", settings.startOnBoot)
                 .put("lyrics", settings.showLyrics)
                 .put("stats", settings.showStats)
                 .put("picture", settings.pictureMode)

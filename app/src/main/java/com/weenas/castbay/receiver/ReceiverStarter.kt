@@ -5,13 +5,16 @@ import android.content.Intent
 import androidx.core.content.ContextCompat
 import com.weenas.castbay.BuildConfig
 import com.weenas.castbay.service.AirPlayService
+import com.weenas.castbay.service.ReceiverSettingsStore
 import com.weenas.castbay.util.Diagnostics
 import com.weenas.castbay.util.Log
 
 /**
  * Starts the receiver from the background (a boot, a car waking, a network job) unless it is
  * already up, and records how that went on the Diagnostics screen: Android 12 and later refuse
- * some background starts of a foreground service.
+ * some background starts of a foreground service. The only callers are [BootReceiver] and
+ * [WakeJobService]; opening the app starts the receiver another way, so turning
+ * "Start on boot" off in Settings only stops these background starts.
  */
 object ReceiverStarter {
     private const val TAG = "CastBayStart"
@@ -19,6 +22,11 @@ object ReceiverStarter {
     fun start(context: Context, why: String) {
         if (AirPlayService.isReceiving) {
             Diagnostics.record("start", "$why: already receiving")
+            return
+        }
+        // The user turned auto-start off: only opening the app starts the receiver.
+        if (!ReceiverSettingsStore(context).load().startOnBoot) {
+            Diagnostics.record("start", "$why: start on boot is off")
             return
         }
         // A debug build beside the release app waits to be opened for a test.
