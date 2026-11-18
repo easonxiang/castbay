@@ -178,7 +178,7 @@ function json(value, status, headers = {}) {
 
 // Every counter the app may send (UsageStats.kt); anything else refuses the whole summary.
 const COUNTER = /^(cast\.(airplay|dlna)\.(mirror|music|video)|length\.(under1m|1to10m|over10m)|mirror\.(2160p|1440p|1080p|720p|smaller)\.(h264|h265)|fail\.(receiver|decoder|video))$/;
-const SETTINGS = ['access', 'resolution', 'codec', 'dlna', 'lyrics', 'stats', 'picture', 'language', 'updates', 'errorReports'];
+const SETTINGS = ['access', 'resolution', 'codec', 'dlna', 'lyrics', 'stats', 'picture', 'language', 'updates', 'errorReports', 'startOnBoot'];
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 const MAX_STATS_BYTES = 8 * 1024;
 

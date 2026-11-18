@@ -60,7 +60,7 @@ policy's "Problem reports" section and `app/.../util/LogReport.kt`.
 | Cast length, in bands | under 1 min / 1–10 min / over 10 min | Not exact times |
 | Mirroring resolution and codec | 1080p H.264, hardware decoder | Decoder support |
 | Failures, by kind | connection failed 1, decoder error 0 | Where it breaks |
-| Settings in use | verification: PIN; lyrics on | Which options matter |
+| Settings in use | verification: PIN; lyrics on; start on boot: on/off | Which options matter |
 
 ### Never sent
 
