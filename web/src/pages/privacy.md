@@ -92,7 +92,7 @@ It is kept and read as the TV app's reports are (see above): over HTTPS to this 
 | How long casts lasted, in three bands | under 1 minute 2, 1–10 minutes 1, over 10 minutes 1 |
 | Mirroring resolution class and codec | 1080p H.264: 3 |
 | Failures, by kind | receiver 0, video decoder 1, video playback 0 |
-| Settings in use | casting verification: PIN; DLNA on; lyrics off; resolution: Auto |
+| Settings in use | casting verification: PIN; DLNA on; lyrics off; resolution: Auto; start on boot: on |
 
 Never sent: device names (the TV's or a phone's), song or video titles, links, network or hardware addresses, the Wi-Fi name, your location, exact times of casts, passwords or PINs. The website keeps one row per installation and day in its database (Cloudflare D1) and does not store your network's address; rows are deleted after a year. Only the developer can read them, to see which devices and Android versions to support and where CastBay fails. **Turning the switch off** stops counting, forgets the ID and asks the website to delete everything sent under it.
 

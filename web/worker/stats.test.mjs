@@ -49,9 +49,10 @@ check('the delete covers both tables', await post('api/stats/delete', { id: good
 check('two statements', rows.length - before, 2);
 check('both tables named', rows.slice(before).map((r) => r.sql.includes('desktop_daily')).sort().join(), 'false,true');
 // An Android summary still goes to its own table.
-const android = { id: good.id, day, app: '1.8.8', android: '14', sdk: 34, maker: 'Sony', model: 'XR', screen: '1080p', device: 'tv', touch: false, lang: 'en', counts: { 'cast.airplay.mirror': 1 }, settings: { access: 'open' } };
+const android = { id: good.id, day, app: '1.8.8', android: '14', sdk: 34, maker: 'Sony', model: 'XR', screen: '1080p', device: 'tv', touch: false, lang: 'en', counts: { 'cast.airplay.mirror': 1 }, settings: { access: 'open', startOnBoot: true } };
 check('an Android summary', await post('api/stats', android), 200);
 check('into daily', /INTO daily /.test(rows.at(-1).sql), true);
+check('the start-on-boot setting is kept', rows.at(-1).args.at(-2).includes('"startOnBoot":true'), true);
 // A language with a region (Traditional Chinese, a future pt-BR) is a setting value too.
 check('a zh-TW language setting', await post('api/stats', { ...android, settings: { access: 'open', language: 'zh-TW' } }), 200);
 check('kept as zh-TW', rows.at(-1).args.at(-2).includes('"language":"zh-TW"'), true);
