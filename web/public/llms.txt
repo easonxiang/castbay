@@ -1,0 +1,21 @@
+# CastBay
+
+> CastBay is a free, open-source AirPlay and DLNA receiver for Android TV, TV boxes, car displays and tablets (Android 6.0+). No account, no ads, no time limit, no third-party analytics. It does not support Google Cast (Chromecast) or Miracast.
+
+- [Home](https://castbay.weenas.com/)
+- [Download](https://castbay.weenas.com/download/)
+- [User guide](https://castbay.weenas.com/guide/)
+- [FAQ](https://castbay.weenas.com/faq/)
+- [CastBay vs AirScreen, Lebo and Dangbei](https://castbay.weenas.com/compare/)
+- [Compatibility](https://castbay.weenas.com/compatibility/)
+- [Changelog](https://castbay.weenas.com/changelog/)
+- [Privacy policy](https://castbay.weenas.com/privacy/)
+- [Source code](https://github.com/weenas/castbay)
+- [F-Droid listing](https://f-droid.org/packages/com.weenas.castbay)
+
+## Key facts
+
+- Free, open source (GPL-3.0-or-later), no ads, no account, no time limit.
+- Receives AirPlay from iPhone, iPad and Mac; DLNA casts from apps (Bilibili, iQiyi, NetEase Cloud Music and others); screen and window casting from Windows/Linux via CastBay Desktop.
+- Does not support Google Cast (Chromecast) or Miracast.
+- Available from this website, GitHub releases, and F-Droid (version 1.10.0 listed).
