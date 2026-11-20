@@ -1,7 +1,7 @@
 // The words the shared header and footer use, and where each page lives in each language.
 export type Lang = 'en' | 'zh';
 /** Every public page, each in English and Chinese; the sitemap lists them all. */
-export const PAGES = ['index', 'download', 'guide', 'desktop-guide', 'tech', 'faq', 'changelog', 'compatibility', 'feedback', 'privacy'] as const;
+export const PAGES = ['index', 'download', 'guide', 'desktop-guide', 'tech', 'faq', 'changelog', 'compatibility', 'compare', 'feedback', 'privacy'] as const;
 export type PageName = (typeof PAGES)[number];
 
 export const BASE_URL = 'https://castbay.weenas.com';
@@ -23,6 +23,7 @@ export const strings = {
     tech: 'How it works',
     changelog: 'Changelog',
     compatibility: 'Compatibility',
+    compare: 'Compare',
     feedback: 'Feedback',
     privacy: 'Privacy',
     releases: 'Releases',
@@ -45,6 +46,7 @@ export const strings = {
     tech: '技术原理',
     changelog: '更新日志',
     compatibility: '兼容性',
+    compare: '对比',
     feedback: '反馈',
     privacy: '隐私政策',
     releases: '版本下载',

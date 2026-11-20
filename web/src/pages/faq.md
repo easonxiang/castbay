@@ -12,6 +12,10 @@ intro: 'Not answered here? See the <a href="/guide">user guide</a>, or <a href="
 
 ## Getting started
 
+### Is CastBay free? Are there ads or a time limit?
+
+Yes, it is free, with no ads, no time limit and no account. CastBay is open source (GPL-3.0-or-later). There is no paid version and no subscription. The only things that leave your TV are the ones you choose: lyrics lookups (song title and artist to lrclib.net) and problem reports you upload yourself. See the [privacy policy](/privacy).
+
 ### Which devices are supported?
 
 Android devices on Android 6.0 or later receive: TVs, TV boxes, car displays and tablets, worked with a remote or a touch screen. They receive from iPhone, iPad and Mac (AirPlay), from the cast button of apps (DLNA) and from Windows and Linux computers (CastBay Desktop). Tested on Xiaomi (Android 6), TCL (Android 9) and Sony (Android 12) TVs, a Google TV Streamer and a BYD DiLink 5.0 car display (Android 12); see the [compatibility list](/compatibility).
