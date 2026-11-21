@@ -17,9 +17,10 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
-    # Creating the release and uploading its files.
+    # Creating the release and uploading its files, and signing them with Sigstore.
     permissions:
       contents: write
+      id-token: write # keyless signing with Sigstore (Fulcio/Rekor)
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -141,6 +142,38 @@ jobs:
           } >> "$notes"
           echo "NOTES_FILE=$notes" >> "$GITHUB_ENV"
 
+      # Sigstore (keyless) signatures for the release files, so anyone can check a download
+      # came from this workflow: each file gets a <file>.sigstore.json bundle next to it.
+      # OpenSSF Scorecard's Signed-Releases check reads these from the release's assets;
+      # GitHub's own artifact attestations do not count (they live in the attestation
+      # store, not the release), so they are not used here.
+      - name: Install cosign
+        uses: sigstore/cosign-installer@7e8b541eb2e61bf99390e1afd4be13a184e9ebc5 # v3.10.1
+        with:
+          cosign-release: 'v2.6.5'
+
+      - name: Sign the release files with Sigstore
+        run: |
+          files=("$RUNNER_TEMP/CastBay-$VERSION.apk" "$RUNNER_TEMP/CastBay-$VERSION-source.tar.gz" "$RUNNER_TEMP/CastBay-$VERSION-mapping.txt")
+          if [ "$PRERELEASE" != true ]; then
+            cp "$RUNNER_TEMP/CastBay-$VERSION.apk" "$RUNNER_TEMP/CastBay.apk"
+            files+=("$RUNNER_TEMP/CastBay.apk")
+          fi
+          for f in "${files[@]}"; do
+            cosign sign-blob --yes --bundle "$f.sigstore.json" "$f"
+          done
+          # How to check a download: appended to the release notes (NOTES_FILE).
+          {
+            echo '## Signatures'
+            echo
+            echo 'Every file above has a Sigstore bundle next to it (for example `CastBay-'"$VERSION"'.apk.sigstore.json`), signed by this workflow. Check one with:'
+            echo
+            echo '```'
+            echo "cosign verify-blob --bundle CastBay-$VERSION.apk.sigstore.json --certificate-identity-regexp 'https://github.com/weenas/castbay/.github/workflows/release.yml@refs/tags/v.*' --certificate-oidc-issuer 'https://token.actions.githubusercontent.com' CastBay-$VERSION.apk"
+            echo '```'
+            echo
+          } >> "$NOTES_FILE"
+
       - name: Publish the release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -150,9 +183,10 @@ jobs:
             kind=--prerelease
           else
             kind=--latest
-            cp "$RUNNER_TEMP/CastBay-$VERSION.apk" "$RUNNER_TEMP/CastBay.apk"
             files+=("$RUNNER_TEMP/CastBay.apk")
           fi
+          # The Sigstore bundles made in the previous step.
+          for f in "${files[@]}"; do files+=("$f.sigstore.json"); done
           gh release create "$GITHUB_REF_NAME" "${files[@]}" \
             --title "CastBay $VERSION" \
             "$kind" \
