@@ -61,6 +61,19 @@ target_compile_options(plist PRIVATE
 # and its dns_sd/ and mdnsd/ publishers by Kotlin NsdManager via dnssd_android.c).
 set(UXPLAY_LIB ${UXPLAY_ROOT}/lib)
 file(GLOB UXPLAY_SRC ${UXPLAY_LIB}/*.c)
+# Apply the Android stop wakeup to a build-local copy of UxPlay's listener.
+set(HTTPD_WORK_DIR "${CMAKE_CURRENT_BINARY_DIR}/uxplay-httpd")
+set(HTTPD_STOP_PATCH "${CMAKE_CURRENT_SOURCE_DIR}/httpd-stop-wakeup.patch")
+set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${HTTPD_STOP_PATCH}")
+configure_file("${UXPLAY_LIB}/httpd.c" "${HTTPD_WORK_DIR}/httpd.c" COPYONLY)
+find_package(Git REQUIRED)
+execute_process(
+    COMMAND "${GIT_EXECUTABLE}" apply --no-index "${HTTPD_STOP_PATCH}"
+    WORKING_DIRECTORY "${HTTPD_WORK_DIR}"
+    COMMAND_ERROR_IS_FATAL ANY
+)
+list(REMOVE_ITEM UXPLAY_SRC ${UXPLAY_LIB}/httpd.c)
+list(APPEND UXPLAY_SRC "${HTTPD_WORK_DIR}/httpd.c")
 # raop_ext.c includes raop.c and adds helpers that need its private state.
 list(REMOVE_ITEM UXPLAY_SRC ${UXPLAY_LIB}/raop.c)
 file(GLOB PLAYFAIR_SRC ${UXPLAY_LIB}/playfair/*.c)

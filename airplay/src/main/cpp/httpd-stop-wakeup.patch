@@ -1,0 +1,75 @@
+--- a/httpd.c
++++ b/httpd.c
+@@ -47,7 +47,11 @@
+ };
+ typedef struct http_connection_s http_connection_t;
+
++#include <sys/eventfd.h>
++#include <unistd.h>
++
+ struct httpd_s {
++    int stop_fd;
+     logger_t *logger;
+     httpd_callbacks_t callbacks;
+     int max_connections;
+@@ -165,4 +169,5 @@
+         return NULL;
+     }
+
++    httpd->stop_fd = -1;
+     httpd->nohold = (nohold ? 1 : 0);
+@@ -199,6 +204,7 @@
+ {
+     if (httpd) {
+         httpd_stop(httpd);
++        if (httpd->stop_fd >= 0) close(httpd->stop_fd);
+         free(httpd->connections);
+         free(httpd);
+     }
+@@ -416,7 +422,12 @@
+             }
+         }
+
++        if (httpd->stop_fd >= 0) {
++            FD_SET(httpd->stop_fd, &rfds);
++            if (nfds <= httpd->stop_fd) nfds = httpd->stop_fd + 1;
++        }
+         nfds_set = select(nfds, &rfds, NULL, NULL, &tv);
++        if (nfds_set > 0 && httpd->stop_fd >= 0 && FD_ISSET(httpd->stop_fd, &rfds)) break;
+         if (nfds_set == 0) {
+             /* Timeout happened */
+             continue;
+@@ -693,6 +704,15 @@
+     }
+     logger_log(httpd->logger, LOGGER_INFO, "Initialized server socket(s)");
+
++    // The stop descriptor is private to this listener and survives until the worker joins.
++    if (httpd->stop_fd < 0) {
++        httpd->stop_fd = eventfd(0, EFD_CLOEXEC | EFD_NONBLOCK);
++        if (httpd->stop_fd >= FD_SETSIZE) {
++            close(httpd->stop_fd);
++            httpd->stop_fd = -1;
++        }
++    }
++
+     /* Set values correctly and create new thread */
+     httpd->running = 1;
+     httpd->joined = 0;
+@@ -729,9 +749,17 @@
+     httpd->running = 0;
+     MUTEX_UNLOCK(httpd->run_mutex);
+
++    if (httpd->stop_fd >= 0) {
++        // If the signal fails, select() still has its original timeout.
++        eventfd_write(httpd->stop_fd, 1);
++    }
+     THREAD_JOIN(httpd->thread);
+
+     MUTEX_LOCK(httpd->run_mutex);
++    if (httpd->stop_fd >= 0) {
++        close(httpd->stop_fd);
++        httpd->stop_fd = -1;
++    }
+     httpd->joined = 1;
+     MUTEX_UNLOCK(httpd->run_mutex);
+ }
