@@ -9,6 +9,7 @@ import java.net.Socket
 import java.net.SocketException
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import java.util.concurrent.RejectedExecutionException
 
 /**
  * The renderer's HTTP side: device and service descriptions, SOAP control and GENA
@@ -21,6 +22,8 @@ class DlnaHttpServer(
 ) {
     private var server: ServerSocket? = null
     private var workers: ExecutorService? = null
+    private val lifecycleLock = Any()
+    private var accepting = false
 
     val port: Int get() = server?.localPort ?: 0
 
@@ -36,11 +39,14 @@ class DlnaHttpServer(
                 bind(java.net.InetSocketAddress(0))
             }
         }
-        server = socket
         val pool = Executors.newCachedThreadPool { runnable ->
             Thread(runnable, "DLNA-http").apply { isDaemon = true }
         }
-        workers = pool
+        synchronized(lifecycleLock) {
+            server = socket
+            workers = pool
+            accepting = true
+        }
         Thread({
             while (!socket.isClosed) {
                 val client = try {
@@ -48,17 +54,34 @@ class DlnaHttpServer(
                 } catch (error: SocketException) {
                     break
                 }
-                pool.execute { serve(client) }
+                val dispatched = synchronized(lifecycleLock) {
+                    if (!accepting || workers !== pool) {
+                        false
+                    } else {
+                        try {
+                            pool.execute { serve(client) }
+                            true
+                        } catch (_: RejectedExecutionException) {
+                            false
+                        }
+                    }
+                }
+                // stop() may win the race after accept() returns. Never let a rejected
+                // connection escape the accept thread or leave its socket open.
+                if (!dispatched) runCatching { client.close() }
             }
         }, "DLNA-http-accept").apply { isDaemon = true }.start()
         return socket.localPort
     }
 
     fun stop() {
-        runCatching { server?.close() }
-        server = null
-        workers?.shutdownNow()
-        workers = null
+        synchronized(lifecycleLock) {
+            accepting = false
+            runCatching { server?.close() }
+            server = null
+            workers?.shutdownNow()
+            workers = null
+        }
     }
 
     private fun serve(client: Socket) {
