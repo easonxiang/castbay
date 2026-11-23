@@ -83,6 +83,7 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
+import com.weenas.castbay.ui.settingValueLabel
 import kotlinx.coroutines.delay
 import androidx.media3.common.Player
 import androidx.media3.ui.AspectRatioFrameLayout
@@ -134,6 +135,13 @@ fun MirrorScreen(viewModel: AirPlayViewModel) {
         val contentFocus = remember(kind) { FocusRequester() }
         LaunchedEffect(kind, menuOpen) {
             if (!menuOpen) contentFocus.requestFocus()
+        }
+        var pictureNotice by remember(kind) { mutableStateOf<String?>(null) }
+        LaunchedEffect(pictureNotice) {
+            if (pictureNotice != null) {
+                delay(2000)
+                pictureNotice = null
+            }
         }
         BackHandler(enabled = menuOpen) { menuOpen = false }
         // Back leaves casting only when pressed twice, so a stray press doesn't cut it off.
@@ -279,12 +287,26 @@ fun MirrorScreen(viewModel: AirPlayViewModel) {
                         .padding(horizontal = 28.dp, vertical = 14.dp)
                 )
             }
+            pictureNotice?.let { mode ->
+                Text(
+                    stringResource(R.string.picture_mode_notice, settingValueLabel(mode)),
+                    color = Color.White,
+                    fontSize = 20.sp,
+                    modifier = Modifier
+                        .align(Alignment.TopCenter)
+                        .padding(top = 24.dp)
+                        .clip(RoundedCornerShape(24.dp))
+                        .background(Color(0xCC000000))
+                        .padding(horizontal = 24.dp, vertical = 10.dp)
+                )
+            }
             if (menuOpen) {
                 QuickMenu(
                     viewModel = viewModel,
                     hasPicture = kind != StreamKind.AUDIO,
                     player = if (kind == StreamKind.VIDEO) viewModel.videoPlayer else null,
                     onDismiss = { menuOpen = false },
+                    onPictureModeChanged = { pictureNotice = it },
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
                         .padding(horizontal = 48.dp, vertical = 32.dp)
@@ -393,6 +415,13 @@ fun DiscoveringScreen(viewModel: AirPlayViewModel, lastError: String? = null) {
         // Text's default style has a fixed 24 sp line height, so larger text that may wrap sets
         // its own (in sp: an em line height in the theme crashed text fields' label animation).
         Text(stringResource(R.string.waiting_title), color = Color.White, fontSize = 28.sp, lineHeight = 36.sp)
+        Spacer(modifier = Modifier.height(6.dp))
+        Text(
+            stringResource(R.string.waiting_quick_menu_hint),
+            color = Color(0xB3FFFFFF),
+            fontSize = 16.sp,
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center
+        )
         if (lastError != null) {
             // Why the last AirPlay video stopped, e.g. the TV couldn't reach the video site.
             Spacer(modifier = Modifier.height(16.dp))

@@ -16,6 +16,8 @@
 
     <!-- Home and status screens -->
     <string name="waiting_title">Waiting for a connection…</string>
+    <string name="waiting_quick_menu_hint">While casting, press ↓ on the remote to open the quick menu.</string>
+    <string name="picture_mode_notice">Picture mode: %1$s</string>
     <string name="starting">Starting…</string>
     <string name="stopping">Stopping…</string>
     <string name="advertising_only_title">CastBay is visible on the local network</string>

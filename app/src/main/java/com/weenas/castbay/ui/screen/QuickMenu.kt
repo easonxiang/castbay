@@ -62,6 +62,7 @@ fun QuickMenu(
     hasPicture: Boolean,
     player: Player?,
     onDismiss: () -> Unit,
+    onPictureModeChanged: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val settings by viewModel.settings.collectAsState()
@@ -145,9 +146,9 @@ fun QuickMenu(
             if (hasPicture) {
                 MenuItem(stringResource(R.string.menu_picture), settingValueLabel(settings.pictureMode), onClick = used {
                     val modes = ReceiverSettings.PICTURE_MODES
-                    viewModel.updateSettings {
-                        it.copy(pictureMode = modes[(modes.indexOf(it.pictureMode) + 1) % modes.size])
-                    }
+                    val nextMode = modes[(modes.indexOf(viewModel.settings.value.pictureMode) + 1) % modes.size]
+                    viewModel.updateSettings { it.copy(pictureMode = nextMode) }
+                    onPictureModeChanged(nextMode)
                 })
             }
             if (!hasPicture) {

@@ -17,6 +17,8 @@
 
     <!-- Home and status screens -->
     <string name="waiting_title">等待投屏连接…</string>
+    <string name="waiting_quick_menu_hint">投屏时，按遥控器 ↓ 打开快捷菜单。</string>
+    <string name="picture_mode_notice">画面模式：%1$s</string>
     <string name="starting">启动中…</string>
     <string name="stopping">停止中…</string>
     <string name="advertising_only_title">映湾已在局域网中可见</string>
