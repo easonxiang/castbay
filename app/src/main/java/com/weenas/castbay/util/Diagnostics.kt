@@ -189,6 +189,7 @@ object Diagnostics {
         }
     }
 
+    // Batching keeps writes off the input path, but process death can lose the last unwritten batch.
     private fun scheduleWriteLocked() {
         if (!loaded || writeScheduled) return
         writeScheduled = true

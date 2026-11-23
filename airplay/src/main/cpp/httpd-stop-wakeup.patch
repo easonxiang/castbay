@@ -1,3 +1,5 @@
+Target UxPlay commit: e3599e8c40ff1abe62146ba8a3e51c937bcf2524
+
 --- a/httpd.c
 +++ b/httpd.c
 @@ -47,7 +47,11 @@
@@ -39,14 +41,17 @@
          if (nfds_set == 0) {
              /* Timeout happened */
              continue;
-@@ -693,6 +704,15 @@
+@@ -693,6 +704,18 @@
      }
      logger_log(httpd->logger, LOGGER_INFO, "Initialized server socket(s)");
 
 +    // The stop descriptor is private to this listener and survives until the worker joins.
 +    if (httpd->stop_fd < 0) {
 +        httpd->stop_fd = eventfd(0, EFD_CLOEXEC | EFD_NONBLOCK);
-+        if (httpd->stop_fd >= FD_SETSIZE) {
++        if (httpd->stop_fd < 0) {
++            logger_log(httpd->logger, LOGGER_WARNING, "Could not create HTTP stop wakeup: %s", strerror(errno));
++        } else if (httpd->stop_fd >= FD_SETSIZE) {
++            logger_log(httpd->logger, LOGGER_WARNING, "HTTP stop wakeup fd exceeds select capacity");
 +            close(httpd->stop_fd);
 +            httpd->stop_fd = -1;
 +        }
