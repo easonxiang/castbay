@@ -12,6 +12,8 @@ import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 
 /**
  * A short history of what happened to the app, kept on the device and shown on the
@@ -32,6 +34,8 @@ object Diagnostics {
     @Volatile private var appContext: Context? = null
     private val events = ArrayDeque<Event>()
     private var loaded = false
+    private val writer = Executors.newSingleThreadScheduledExecutor()
+    private var writeScheduled = false
 
     /** Remembers the context (any) and notes this process's start, with how long the device has been up. */
     fun init(context: Context) {
@@ -116,7 +120,7 @@ object Diagnostics {
         loadLocked()
         events.addLast(Event(System.currentTimeMillis(), kind, text))
         while (events.size > MAX_EVENTS) events.removeFirst()
-        saveLocked()
+        scheduleWriteLocked()
     }
 
     /** Newest first. */
@@ -130,7 +134,8 @@ object Diagnostics {
     fun clear() {
         events.clear()
         loaded = true
-        saveLocked()
+        // The same writer orders the clear after any snapshot already being saved.
+        writer.execute(::writeSnapshot)
     }
 
     fun format(event: Event): String = "${timeFormat.format(Date(event.atMs))}  ${event.kind}  ${event.text}"
@@ -184,11 +189,20 @@ object Diagnostics {
         }
     }
 
-    private fun saveLocked() {
+    private fun scheduleWriteLocked() {
+        if (!loaded || writeScheduled) return
+        writeScheduled = true
+        writer.schedule({
+            synchronized(this) { writeScheduled = false }
+            writeSnapshot()
+        }, 250, TimeUnit.MILLISECONDS)
+    }
+
+    private fun writeSnapshot() {
         val context = appContext ?: return
-        if (!loaded) return
+        val snapshot = synchronized(this) { events.toList() }
         val array = JSONArray()
-        events.forEach { array.put(JSONObject().put("t", it.atMs).put("k", it.kind).put("x", it.text)) }
+        snapshot.forEach { array.put(JSONObject().put("t", it.atMs).put("k", it.kind).put("x", it.text)) }
         context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit().putString(KEY_EVENTS, array.toString()).apply()
     }
 }

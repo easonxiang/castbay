@@ -61,7 +61,6 @@ private enum class SettingsTab { CONNECTION, MIRRORING, PLAYBACK, GENERAL }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(viewModel: AirPlayViewModel) {
-    val settings by viewModel.settings.collectAsState()
     // Kept across the recreation a language change causes, so the General page stays open.
     var tab by rememberSaveable { mutableStateOf(SettingsTab.CONNECTION) }
     // Starts on the tabs: no page scrolls, and no text field opens the keyboard. After a
@@ -118,6 +117,7 @@ fun SettingsScreen(viewModel: AirPlayViewModel) {
                     Text(stringResource(it), color = Color.Gray, fontSize = 14.sp, modifier = Modifier.padding(start = 8.dp, bottom = 10.dp))
                 }
                 SettingsCard {
+                    val settings by viewModel.settings.collectAsState()
                     when (tab) {
                         SettingsTab.CONNECTION -> ConnectionPage(settings, viewModel)
                         SettingsTab.MIRRORING -> MirroringPage(settings, viewModel)
@@ -225,7 +225,7 @@ private fun KnownDevicesSetting(viewModel: AirPlayViewModel) {
 /** Each Auto names what it gives on this TV with the other settings. */
 @Composable
 private fun ColumnScope.MirroringPage(settings: ReceiverSettings, viewModel: AirPlayViewModel) {
-    val autoResolution = remember(settings) {
+    val autoResolution = remember(viewModel, settings.videoCodec) {
         viewModel.mirroringProfile(settings.copy(resolution = ReceiverSettings.RESOLUTION_AUTO))
     }
     val resolutionAuto = stringResource(R.string.auto_with, "${autoResolution.height}p")
@@ -246,7 +246,7 @@ private fun ColumnScope.MirroringPage(settings: ReceiverSettings, viewModel: Air
     ) { viewModel.updateSettings { current -> current.copy(frameRate = it) } }
     CardDivider()
     // H.265 only for 4K mirroring, on a 4K screen with a hardware HEVC decoder.
-    val autoCodec = remember(settings) {
+    val autoCodec = remember(viewModel, settings.resolution) {
         viewModel.mirroringProfile(settings.copy(videoCodec = ReceiverSettings.CODEC_AUTO))
     }
     val codecAuto = stringResource(R.string.auto_with, if (autoCodec.h265) "H.265" else "H.264")

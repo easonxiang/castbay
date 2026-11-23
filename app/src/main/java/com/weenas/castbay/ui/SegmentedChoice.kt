@@ -1,5 +1,6 @@
 package com.weenas.castbay.ui
 
+import android.app.ActivityManager
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -19,9 +20,7 @@ import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -33,6 +32,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType
@@ -42,6 +45,7 @@ import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.layout.positionInParent
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.role
@@ -51,6 +55,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+private const val HIGHLIGHT_DURATION_MS = 120
 private val SEGMENT_HEIGHT = 44.dp
 private val PILL = RoundedCornerShape(50)
 
@@ -70,6 +75,10 @@ fun <T> SegmentedChoice(
     val interaction = remember { MutableInteractionSource() }
     val focused by interaction.collectIsFocusedAsState()
     val density = LocalDensity.current
+    val context = LocalContext.current
+    val animateHighlight = remember(context) {
+        context.getSystemService(ActivityManager::class.java)?.isLowRamDevice != true
+    }
     // Each segment's x and width, measured, for the sliding highlight.
     val bounds = remember(choices) { mutableStateMapOf<Int, Pair<Dp, Dp>>() }
     val selected = choices.indexOf(value).coerceAtLeast(0)
@@ -81,7 +90,7 @@ fun <T> SegmentedChoice(
     val placed = bounds[selected] != null
     var slide by remember { mutableStateOf(false) }
     LaunchedEffect(placed) {
-        if (placed) {
+        if (placed && animateHighlight) {
             withFrameNanos { }
             slide = true
         }
@@ -96,12 +105,13 @@ fun <T> SegmentedChoice(
             requesters.getOrNull(selected)?.bringIntoView()
         }
     }
-    val motion = if (slide) tween<Dp>(220) else snap()
+    val motion = if (slide) tween<Dp>(HIGHLIGHT_DURATION_MS) else snap()
     val thumbX by animateDpAsState(bounds[selected]?.first ?: 0.dp, motion, label = "thumbX")
     val thumbWidth by animateDpAsState(bounds[selected]?.second ?: 0.dp, motion, label = "thumbWidth")
     // Unfocused, the choice stays visible but quieter, so the focused row stands out.
     val thumbColor by animateColorAsState(
         if (focused) MaterialTheme.colorScheme.primary else Color(0xFF5A5470),
+        animationSpec = if (animateHighlight) tween(HIGHLIGHT_DURATION_MS) else snap(),
         label = "thumbColor"
     )
 
@@ -120,17 +130,21 @@ fun <T> SegmentedChoice(
             .background(Color(0x26FFFFFF))
             .border(3.dp, if (focused) Color.White else Color.Transparent, PILL)
             .padding(4.dp)
+            .drawWithContent {
+                // Read animated values during drawing so each frame only redraws the highlight.
+                val width = thumbWidth.toPx()
+                val height = SEGMENT_HEIGHT.toPx()
+                if (width > 0) {
+                    drawRoundRect(
+                        color = thumbColor,
+                        topLeft = Offset(thumbX.toPx(), 0f),
+                        size = Size(width, height),
+                        cornerRadius = CornerRadius(minOf(width, height) / 2)
+                    )
+                }
+                drawContent()
+            }
     ) {
-        if (bounds[selected] != null) {
-            Box(
-                Modifier
-                    .offset(x = thumbX)
-                    .width(thumbWidth)
-                    .height(SEGMENT_HEIGHT)
-                    .clip(PILL)
-                    .background(thumbColor)
-            )
-        }
         Row {
             choices.forEachIndexed { index, choice ->
                 Box(
