@@ -1,0 +1,4 @@
+• Find the casting quick menu from the waiting-screen hint, and see the selected picture mode after changing it.
+• Improve TV settings responsiveness and reduce receiver restart delays.
+• Add a start-on-boot setting, enabled by default.
+• Improve DLNA shutdown reliability.
