@@ -1,0 +1,88 @@
+---
+// 用户评价：真实用户的话，每条都链到原帖或原评论。加一条只需往 src/voices.ts 里
+// 追加一个条目——中英文页面都从这一个列表渲染，引言保持它原本的语言。
+import Page from '../../layouts/Page.astro';
+import { formatDate } from '../../i18n';
+import { voices, type Voice } from '../../voices';
+
+const groups: { platform: Voice['platform']; heading: string }[] = [
+  { platform: 'Threads', heading: 'Threads' },
+  { platform: 'ZNDS', heading: 'ZNDS · 智能电视网' },
+  { platform: 'GitHub', heading: 'GitHub' },
+];
+const byPlatform = (p: Voice['platform']) => voices.filter((v) => v.platform === p);
+const initial = (name: string) => name.trim().charAt(0);
+const date = (iso: string) => formatDate('zh', new Date(iso + 'T00:00:00Z'));
+---
+<Page lang="zh" page="voices" title="用户评价 · 映湾 CastBay" description="映湾用户的真实评价：Threads 与 ZNDS 上的推荐，以及 GitHub 上确认问题已修好的反馈。每条都链到原帖或原评论。">
+<main class="wrap doc voices">
+  <h1>用户评价</h1>
+  <p class="lead">
+    用映湾的人的真实评价——有推荐，也有确认问题已修好的反馈。
+    每条都链到原帖或原评论，可以自己点进去核对。
+  </p>
+
+  {groups.map(({ platform, heading }) => (
+    <section>
+      <h2>{heading}</h2>
+      <div class="voice-grid">
+        {byPlatform(platform).map((v) => (
+          <article class="voice-card">
+            <header>
+              {v.avatar
+                ? <img class="avatar" src={v.avatar} alt="" width="44" height="44" loading="lazy">
+                : <span class="avatar avatar-initial" aria-hidden="true">{initial(v.name)}</span>}
+              <div>
+                <div class="voice-name">{v.name}{v.handle ? <span class="voice-handle"> {v.handle}</span> : null}</div>
+                <div class="voice-meta">{date(v.date)}{v.device ? ` · ${v.device}` : ''}</div>
+              </div>
+            </header>
+            <blockquote>{v.quote}</blockquote>
+            {v.context ? <p class="voice-context">{v.context}</p> : null}
+            <p class="voice-source"><a href={v.url}>查看原文 ↗</a></p>
+          </article>
+        ))}
+      </div>
+    </section>
+  ))}
+
+  <section class="voice-cta">
+    <h2>你也来试试</h2>
+    <p>免费开源，没有广告。几分钟装到电视上，不用 root——用得顺手的话，也欢迎替映湾说句话。</p>
+    <p class="actions"><a class="btn btn-primary" href="/zh/download">下载映湾</a></p>
+  </section>
+</main>
+</Page>
+<style>
+  .voices .lead { color: var(--text-2); margin: 0 0 8px; }
+  .voices section { margin: 30px 0; }
+  .voices h2 { font-size: 22px; margin: 0 0 16px; }
+  .voice-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+  .voice-card {
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: var(--radius); padding: 20px 22px;
+    display: flex; flex-direction: column;
+  }
+  .voice-card header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .avatar { width: 44px; height: 44px; border-radius: 50%; flex: none; object-fit: cover; }
+  .avatar-initial {
+    display: flex; align-items: center; justify-content: center;
+    background: var(--accent-strong); color: #fff; font-size: 20px; font-weight: 700;
+  }
+  .voice-name { font-weight: 700; }
+  .voice-handle { color: var(--text-3); font-weight: 400; font-size: 14px; }
+  .voice-meta { color: var(--text-3); font-size: 13px; margin-top: 2px; }
+  .voice-card blockquote {
+    margin: 0 0 12px; padding: 0; border: 0;
+    font-size: 16px; line-height: 1.7; white-space: pre-line;
+  }
+  .voice-context { color: var(--text-3); font-size: 13px; margin: 0 0 12px; }
+  .voice-source { margin: auto 0 0; font-size: 14px; }
+  .voice-cta {
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: var(--radius); padding: 24px 26px; text-align: center;
+  }
+  .voice-cta h2 { margin: 0 0 8px; }
+  .voice-cta p { color: var(--text-2); margin: 0 0 18px; }
+  .voice-cta .actions { margin: 0; justify-content: center; }
+</style>
