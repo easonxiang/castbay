@@ -1,7 +1,9 @@
+<p align="right"><a href="README.md">English</a> · <a href="README.zh-CN.md">简体中文</a></p>
+
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="branding/castbay-signal-final/inline-dark.png">
-    <img src="branding/castbay-signal-final/inline-light.png" alt="CastBay 映湾" width="480">
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/weenas/castbay/main/branding/castbay-signal-final/inline-dark.png">
+    <img src="https://raw.githubusercontent.com/weenas/castbay/main/branding/castbay-signal-final/inline-light.png" alt="CastBay 映湾" width="480">
   </picture>
 </p>
 
@@ -27,6 +29,12 @@
 </p>
 
 CastBay (Chinese: 映湾) turns an Android TV, TV box, car display or tablet into a receiver for iPhone, iPad and Mac: AirPlay screen mirroring, music and video, plus the cast button in video and music apps (DLNA). **CastBay Desktop** casts a Windows or Linux computer's screen or a window to it too ([download](https://castbay.weenas.com/download) · [guide](https://castbay.weenas.com/desktop-guide) · [source](desktop/)). Free, open source, no ads.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/weenas/castbay/main/web/src/assets/screens/home.webp" alt="CastBay on a TV: receiver home screen" width="32%">
+  <img src="https://raw.githubusercontent.com/weenas/castbay/main/web/src/assets/screens/mirror.webp" alt="CastBay displaying iPhone screen mirroring" width="32%">
+  <img src="https://raw.githubusercontent.com/weenas/castbay/main/web/src/assets/screens/music.webp" alt="CastBay playing AirPlay music" width="32%">
+</p>
 
 ## Features
 
