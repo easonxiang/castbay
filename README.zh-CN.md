@@ -29,11 +29,14 @@
 
 CastBay（中文名：映湾）可以把 Android TV、电视盒子、车载屏幕或平板变成接收端，让 iPhone、iPad 和 Mac 投屏、播放音乐和视频，也能接收视频及音乐 App 内置的投屏按钮（DLNA）。**CastBay 桌面版**还可以把 Windows 或 Linux 电脑的屏幕或窗口投到电视上（[下载](https://castbay.weenas.com/zh/download) · [使用指南](https://castbay.weenas.com/zh/desktop-guide) · [源码](desktop/)）。免费、开源、无广告。
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/weenas/castbay/main/web/src/assets/screens/home.webp" alt="CastBay 电视主界面" width="32%">
-  <img src="https://raw.githubusercontent.com/weenas/castbay/main/web/src/assets/screens/mirror.webp" alt="CastBay 正在接收 iPhone 屏幕镜像" width="32%">
-  <img src="https://raw.githubusercontent.com/weenas/castbay/main/web/src/assets/screens/music.webp" alt="CastBay 正在播放 AirPlay 音乐" width="32%">
-</p>
+<p align="center"><img src="https://raw.githubusercontent.com/weenas/castbay/main/web/src/assets/screens/home.webp" alt="CastBay 电视主界面" width="100%"></p>
+<p align="center"><em>主界面：随时等待投屏，显示手机上看到的名称和网络。</em></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/weenas/castbay/main/web/src/assets/screens/music.webp" alt="CastBay 正在播放 AirPlay 音乐" width="100%"></p>
+<p align="center"><em>音乐：模糊的封面背景和同步歌词。（歌曲：Jonathan Coulton《Code Monkey》，CC BY-NC 授权。）</em></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/weenas/castbay/main/web/src/assets/screens/mirror.webp" alt="CastBay 正在接收 iPhone 屏幕镜像" width="100%"></p>
+<p align="center"><em>屏幕镜像（H.265），打开了播放统计：电视端和手机端的数据。</em></p>
 
 ## 功能
 
