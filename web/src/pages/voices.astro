@@ -8,6 +8,7 @@ import { voices, type Voice } from '../voices';
 
 const groups: { platform: Voice['platform']; heading: string }[] = [
   { platform: 'Threads', heading: 'Threads' },
+  { platform: 'X', heading: 'X' },
   { platform: 'ZNDS', heading: 'ZNDS · 智能电视网' },
   { platform: 'GitHub', heading: 'GitHub' },
 ];
@@ -15,7 +16,7 @@ const byPlatform = (p: Voice['platform']) => voices.filter((v) => v.platform ===
 const initial = (name: string) => name.trim().charAt(0);
 const date = (iso: string) => formatDate('en', new Date(iso + 'T00:00:00Z'));
 ---
-<Page lang="en" page="voices" title="User reviews · CastBay" description="Real words from CastBay users: recommendations on Threads and ZNDS, and confirmations on GitHub that a fix works. Every card links to the original post or comment.">
+<Page lang="en" page="voices" title="User reviews · CastBay" description="Real words from CastBay users: recommendations on Threads, X and ZNDS, and confirmations on GitHub that a fix works. Every card links to the original post or comment.">
 <main class="wrap doc voices">
   <h1>User reviews</h1>
   <p class="lead">
