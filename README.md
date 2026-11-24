@@ -30,11 +30,14 @@
 
 CastBay (Chinese: 映湾) turns an Android TV, TV box, car display or tablet into a receiver for iPhone, iPad and Mac: AirPlay screen mirroring, music and video, plus the cast button in video and music apps (DLNA). **CastBay Desktop** casts a Windows or Linux computer's screen or a window to it too ([download](https://castbay.weenas.com/download) · [guide](https://castbay.weenas.com/desktop-guide) · [source](desktop/)). Free, open source, no ads.
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/weenas/castbay/main/web/src/assets/screens/home.webp" alt="CastBay on a TV: receiver home screen" width="32%">
-  <img src="https://raw.githubusercontent.com/weenas/castbay/main/web/src/assets/screens/mirror.webp" alt="CastBay displaying iPhone screen mirroring" width="32%">
-  <img src="https://raw.githubusercontent.com/weenas/castbay/main/web/src/assets/screens/music.webp" alt="CastBay playing AirPlay music" width="32%">
-</p>
+<p align="center"><img src="https://raw.githubusercontent.com/weenas/castbay/main/web/src/assets/screens/home.webp" alt="CastBay on a TV: receiver home screen" width="100%"></p>
+<p align="center"><em>The home screen: ready for a cast, with the name phones see and the network.</em></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/weenas/castbay/main/web/src/assets/screens/music.webp" alt="CastBay playing AirPlay music" width="100%"></p>
+<p align="center"><em>Music, with the blurred cover behind and lyrics in sync. (“Code Monkey” by Jonathan Coulton, CC BY-NC.)</em></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/weenas/castbay/main/web/src/assets/screens/mirror.webp" alt="CastBay displaying iPhone screen mirroring" width="100%"></p>
+<p align="center"><em>Screen mirroring in H.265, with the playback stats: the TV’s and the phone’s.</em></p>
 
 ## Features
 
