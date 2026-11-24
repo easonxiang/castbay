@@ -6,7 +6,7 @@ page: guide
 title: 'User guide – CastBay'
 description: 'How to use CastBay: installing and updating it, casting from iPhone, iPad, Mac and Android, the remote, touch screens and the quick menu, and every setting.'
 heading: 'User guide'
-intro: 'Everything about using CastBay, from installing it to each setting. For problems, see the <a href="/faq">FAQ</a>; for how it works, see <a href="/tech">How it works</a>. Casting from a Windows or Linux computer: the <a href="/desktop-guide">Desktop guide</a>.'
+intro: 'Everything about using CastBay, from installing it to each setting. For problems, see the <a href="/faq">FAQ</a>; for how it works, see <a href="/tech">How it works</a>. Casting from a Windows or Linux computer: the <a href="/desktop-guide">PC guide</a>.'
 ---
 
 ## What you need

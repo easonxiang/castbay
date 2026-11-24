@@ -7,7 +7,7 @@ import DesktopChangelog from '../components/DesktopChangelog.astro';
 import { releases, desktopReleases } from '../releases';
 
 const desktop = (await desktopReleases('en')).map((r) => ({ depth: 3, slug: `desktop-v${r.data.version}`, text: r.data.version }));
-const entries = [{ depth: 2, slug: 'desktop', text: 'CastBay Desktop' }, ...desktop, { depth: 2, slug: 'android', text: 'Android' }, ...(await releases('en')).map((r) => ({ depth: 2, slug: `v${r.data.version}`, text: r.data.version }))];
+const entries = [{ depth: 2, slug: 'desktop', text: 'CastBay for PC' }, ...desktop, { depth: 2, slug: 'android', text: 'CastBay' }, ...(await releases('en')).map((r) => ({ depth: 2, slug: `v${r.data.version}`, text: r.data.version }))];
 ---
 <Page lang="en" page="changelog" title="Changelog – CastBay" description="What's new in each version of CastBay.">
 <TocPage lang="en" entries={entries}>
@@ -22,7 +22,7 @@ const entries = [{ depth: 2, slug: 'desktop', text: 'CastBay Desktop' }, ...desk
     </details>
   </Fragment>
   <DesktopChangelog lang="en" />
-  <h2 id="android">Android</h2>
+  <h2 id="android">CastBay</h2>
   <Changelog lang="en" />
 </TocPage>
 </Page>
