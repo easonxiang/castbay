@@ -8,7 +8,7 @@ import CarAudio from '../../components/CarAudio.astro';
 // The newest release, shown under the download button.
 const [latest] = await releases('zh');
 ---
-<Page lang="zh" page="index" title='映湾 CastBay：安卓电视、车机 AirPlay 投屏接收器，iPhone 投屏到大屏' description='免费开源的安卓大屏投屏 App：把 iPhone、iPad、Mac 的屏幕镜像、音乐和视频通过 AirPlay 投到安卓电视、电视盒子、车机和平板，也支持哔哩哔哩、爱奇艺等 App 的 DLNA 投屏。无广告，无需账号。配合映湾桌面端，Windows 和 Linux 电脑也能投屏。'>
+<Page lang="zh" page="index" title='映湾 CastBay：安卓电视、车机 AirPlay 投屏接收器，iPhone 投屏到大屏' description='免费开源的安卓大屏投屏 App：把 iPhone、iPad、Mac 的屏幕镜像、音乐和视频通过 AirPlay 投到安卓电视、电视盒子、车机和平板，也支持哔哩哔哩、爱奇艺等 App 的 DLNA 投屏。无广告，无需账号。配合映湾电脑端，Windows 和 Linux 电脑也能投屏。'>
 <main>
   <section class="hero">
     <div class="wrap">
@@ -17,7 +17,7 @@ const [latest] = await releases('zh');
         把 iPhone、Mac 和<wbr>电脑的画面和声音，<wbr>投到你的<wbr>安卓大屏上
       </h1>
       <p class="lead">
-        映湾（CastBay）让安卓电视、车机和平板接收来自 iPhone、iPad、Mac 的 AirPlay 屏幕镜像、音乐和视频，也支持视频和音乐 App 自带的投屏按钮（DLNA）。配合<a href="/zh/download">映湾桌面端</a>，Windows 和 Linux 电脑也能把屏幕或指定窗口投过来。免费、开源、无广告。
+        映湾投屏（CastBay）让安卓电视、车机和平板接收来自 iPhone、iPad、Mac 的 AirPlay 屏幕镜像、音乐和视频，也支持视频和音乐 App 自带的投屏按钮（DLNA）。配合<a href="/zh/download">映湾电脑端</a>，Windows 和 Linux 电脑也能把屏幕或指定窗口投过来。免费、开源、无广告。
       </p>
       <div class="actions">
         <a class="btn btn-primary" href={APK_URL}>
@@ -34,7 +34,7 @@ const [latest] = await releases('zh');
         适用于 Android 6.0 及以上的安卓电视、电视盒子、车机和平板
       </p>
       <p class="channels">
-        其他渠道：<a href="https://github.com/weenas/castbay/releases">GitHub 所有版本</a> · <a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/weenas/castbay">Obtainium</a> · <a href="https://f-droid.org/packages/com.weenas.castbay/">F-Droid</a> · <a href="/zh/faq#在哪里可以下载映湾不同渠道之间能互相升级吗">有什么区别？</a>
+        其他渠道：<a href="https://github.com/weenas/castbay/releases">GitHub 所有版本</a> · <a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/weenas/castbay">Obtainium</a> · <a href="https://f-droid.org/packages/com.weenas.castbay/">F-Droid</a> · <a href="/zh/faq#在哪里可以下载映湾投屏不同渠道之间能互相升级吗">有什么区别？</a>
       </p>
       <div class="chips">
         <span class="chip">屏幕镜像</span>
@@ -73,7 +73,7 @@ const [latest] = await releases('zh');
         <article class="card">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8.5a15 15 0 0 1 20 0M5.5 12a10 10 0 0 1 13 0M9 15.5a5 5 0 0 1 6 0"/><circle cx="12" cy="19" r="1.2" fill="currentColor"/></svg></div>
           <h3>App 自带投屏（DLNA）</h3>
-          <p>哔哩哔哩、爱奇艺、网易云音乐、QQ 音乐等 App 的投屏按钮都能直接投到映湾，iPhone 和 Android 手机都可以用。</p>
+          <p>哔哩哔哩、爱奇艺、网易云音乐、QQ 音乐等 App 的投屏按钮都能直接投到映湾投屏，iPhone 和 Android 手机都可以用。</p>
         </article>
         <article class="card">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="5"/><circle cx="12" cy="8" r="2"/><path d="M12 14v3"/></svg></div>
@@ -110,10 +110,10 @@ const [latest] = await releases('zh');
       <div class="steps">
         <div class="card step">
           <h3>在电视上安装</h3>
-          <p>从 GitHub 下载映湾的 APK，用 U 盘或电视上的文件管理器安装。</p>
+          <p>从 GitHub 下载映湾投屏的 APK，用 U 盘或电视上的文件管理器安装。</p>
         </div>
         <div class="card step">
-          <h3>打开映湾</h3>
+          <h3>打开映湾投屏</h3>
           <p>打开就开始接收投屏，以后电视一开机也会自动就绪，不用再手动打开。</p>
         </div>
         <div class="card step">
@@ -168,11 +168,11 @@ const [latest] = await releases('zh');
         </details>
         <details>
           <summary>手机上找不到电视怎么办？</summary>
-          <p>确认电视和手机在同一个 Wi-Fi 下，并且映湾已经打开并显示"等待投屏连接"。有些路由器开启了"AP 隔离"，会阻止设备互相发现，需要在路由器设置里关闭。也可以试试把手机的 Wi-Fi 关掉再打开。</p>
+          <p>确认电视和手机在同一个 Wi-Fi 下，并且映湾投屏已经打开并显示"等待投屏连接"。有些路由器开启了"AP 隔离"，会阻止设备互相发现，需要在路由器设置里关闭。也可以试试把手机的 Wi-Fi 关掉再打开。</p>
         </details>
         <details>
-          <summary>映湾会收集我的数据吗？</summary>
-          <p>不会，除非你主动选择。映湾不需要账号，没有广告，也没有第三方统计。歌词查询、问题报告和匿名使用统计都只有在你开启后才会发送数据，问题报告和统计里不会包含任何名称、歌名或网址。详见<a href="/zh/privacy">隐私政策</a>。</p>
+          <summary>映湾投屏会收集我的数据吗？</summary>
+          <p>不会，除非你主动选择。映湾投屏不需要账号，没有广告，也没有第三方统计。歌词查询、问题报告和匿名使用统计都只有在你开启后才会发送数据，问题报告和统计里不会包含任何名称、歌名或网址。详见<a href="/zh/privacy">隐私政策</a>。</p>
         </details>
       </div>
       <p class="faq-more"><a href="/zh/faq">查看全部常见问题：安装、连接、投屏、隐私 →</a></p>
@@ -202,13 +202,13 @@ const [latest] = await releases('zh');
         <a class="card" href="/zh/compatibility">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="m9 10.5 2 2 4-4M8 21h8"/></svg></div>
           <h3>设备兼容性</h3>
-          <p>映湾在你的电视、盒子或车机上能用吗？告诉我们型号和系统版本，帮更多人少走弯路。</p>
+          <p>映湾投屏在你的电视、盒子或车机上能用吗？告诉我们型号和系统版本，帮更多人少走弯路。</p>
           <span class="more">查看兼容性列表 →</span>
         </a>
         <a class="card" href="/zh/changelog.xml">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg></div>
           <h3>关注更新</h3>
-          <p>用 RSS 订阅更新日志；平板上也可以用 Obtainium 跟踪 GitHub 上的新版本。电视上的映湾会自己检查更新。</p>
+          <p>用 RSS 订阅更新日志；平板上也可以用 Obtainium 跟踪 GitHub 上的新版本。电视上的映湾投屏会自己检查更新。</p>
           <span class="more">订阅 RSS →</span>
         </a>
       </div>

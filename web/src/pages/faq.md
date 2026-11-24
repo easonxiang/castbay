@@ -18,11 +18,11 @@ Yes, it is free, with no ads, no time limit and no account. CastBay is open sour
 
 ### Which devices are supported?
 
-Android devices on Android 6.0 or later receive: TVs, TV boxes, car displays and tablets, worked with a remote or a touch screen. They receive from iPhone, iPad and Mac (AirPlay), from the cast button of apps (DLNA) and from Windows and Linux computers (CastBay Desktop). Tested on Xiaomi (Android 6), TCL (Android 9) and Sony (Android 12) TVs, a Google TV Streamer and a BYD DiLink 5.0 car display (Android 12); see the [compatibility list](/compatibility).
+Android devices on Android 6.0 or later receive: TVs, TV boxes, car displays and tablets, worked with a remote or a touch screen. They receive from iPhone, iPad and Mac (AirPlay), from the cast button of apps (DLNA) and from Windows and Linux computers (CastBay for PC). Tested on Xiaomi (Android 6), TCL (Android 9) and Sony (Android 12) TVs, a Google TV Streamer and a BYD DiLink 5.0 car display (Android 12); see the [compatibility list](/compatibility).
 
 ### Can I cast from a Windows or Linux computer?
 
-Yes, with **CastBay Desktop**, a separate program for Windows 10/11 and Ubuntu or Debian. It casts the whole screen or a single window, with its sound, to a device running CastBay; turn on **Desktop casting** in that device's CastBay settings first. It uses CastBay's own encrypted connection rather than AirPlay, DLNA or Miracast, so it casts to CastBay receivers only, and the delay is low: about a quarter of a second on a home network. Get it on the [download page](/download); the [Desktop guide](/desktop-guide) explains the rest. A Mac needs nothing extra: it casts with AirPlay.
+Yes, with **CastBay for PC**, a separate program for Windows 10/11 and Ubuntu or Debian. It casts the whole screen or a single window, with its sound, to a device running CastBay; turn on **Desktop casting** in that device's CastBay settings first. It uses CastBay's own encrypted connection rather than AirPlay, DLNA or Miracast, so it casts to CastBay receivers only, and the delay is low: about a quarter of a second on a home network. Get it on the [download page](/download); the [PC guide](/desktop-guide) explains the rest. A Mac needs nothing extra: it casts with AirPlay.
 
 ### How do I install the APK on a TV?
 

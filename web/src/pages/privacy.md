@@ -57,9 +57,9 @@ A problem report is sent in two cases, both your choice:
 
 The report is sent over HTTPS to this website (castbay.weenas.com, hosted by Cloudflare) and kept in its storage for 90 days, then deleted automatically. Only the developer can read it: there is no public link to it. You get a short report ID (such as CB-7K3F9Q) to give in your problem report; nothing else ties the report to you. Your network's address is used only to limit how many reports can be sent in a row and is not stored with the report. To have a report deleted sooner, open an issue on [GitHub](https://github.com/weenas/castbay/issues) with its ID.
 
-## CastBay Desktop (the computer program)
+## CastBay for PC (the computer program)
 
-CastBay Desktop, the Windows and Linux program that casts a computer's screen to a CastBay receiver, has no account and no tracking code either. Beyond what the TV app does for casting, it asks the network for two things on its own, both to find a newer version: GitHub's list of releases (and, where GitHub can't be reached, this website's note on the newest one) when it starts, and, when you press **Update**, the installer, from this website or GitHub. Nothing about you or your computer is sent with them (the servers see a network address, as for any web page).
+CastBay for PC, the Windows and Linux program that casts a computer's screen to a CastBay receiver, has no account and no tracking code either. Beyond what the TV app does for casting, it asks the network for two things on its own, both to find a newer version: GitHub's list of releases (and, where GitHub can't be reached, this website's note on the newest one) when it starts, and, when you press **Update**, the installer, from this website or GitHub. Nothing about you or your computer is sent with them (the servers see a network address, as for any web page).
 
 The one thing it can send of its own kind is a **problem report**, in these cases only:
 
@@ -69,7 +69,7 @@ The one thing it can send of its own kind is a **problem report**, in these case
 
 The report holds:
 
-- This computer's operating system and architecture, the web view's version, which video encoders (graphics card or CPU) open on it, and CastBay Desktop's settings (frame rate, bitrate, encoder, sound on or off, language) and the number of receivers paired. No names.
+- This computer's operating system and architecture, the web view's version, which video encoders (graphics card or CPU) open on it, and CastBay for PC's settings (frame rate, bitrate, encoder, sound on or off, language) and the number of receivers paired. No names.
 - The program's own recent log (at most about 400 KB): casts started and ended, the encoder used, errors.
 - For a report after a crash: the error and where in CastBay's code it happened (the call stack). For a failed cast: the kind of failure and its message.
 
@@ -96,12 +96,12 @@ It is kept and read as the TV app's reports are (see above): over HTTPS to this 
 
 Never sent: device names (the TV's or a phone's), song or video titles, links, network or hardware addresses, the Wi-Fi name, your location, exact times of casts, passwords or PINs. The website keeps one row per installation and day in its database (Cloudflare D1) and does not store your network's address; rows are deleted after a year. Only the developer can read them, to see which devices and Android versions to support and where CastBay fails. **Turning the switch off** stops counting, forgets the ID and asks the website to delete everything sent under it.
 
-**CastBay Desktop** has its own switch, **Send anonymous usage statistics** (Settings, off by default, nothing is counted while it is off), with its own random installation ID, made when you turn it on and forgotten, with its counts, when you turn it off (the website is then asked to delete its rows). Once a day it sends:
+**CastBay for PC** has its own switch, **Send anonymous usage statistics** (Settings, off by default, nothing is counted while it is off), with its own random installation ID, made when you turn it on and forgotten, with its counts, when you turn it off (the website is then asked to delete its rows). Once a day it sends:
 
 | Sent | Example |
 | --- | --- |
 | The random installation ID and the day (UTC) | 3f2a…, 2026-10-29 |
-| CastBay Desktop's version | 0.1.4 |
+| CastBay for PC's version | 0.1.4 |
 | The operating system (Windows build number, or Linux distribution and version), processor type, and on Linux whether the session is Wayland or X11 | 10.0.19045; ubuntu 26.04, x86_64, wayland |
 | The class of the biggest screen, and the program's language | 1080p, zh |
 | Which video encoders open on the computer | NVIDIA, CPU |

@@ -10,11 +10,11 @@ import { desktopReleases, releases } from '../releases';
 const [android] = await releases('en');
 const [desktop] = await desktopReleases('en');
 ---
-<Page lang="en" page="download" title='Download CastBay: Android app, CastBay Desktop for Windows and Linux' description='Download CastBay: the Android receiver for TVs, TV boxes, car displays and tablets, and CastBay Desktop to cast a Windows or Linux computer to it. Free and open source.'>
+<Page lang="en" page="download" title='Download CastBay: Android app, CastBay for PC for Windows and Linux' description='Download CastBay: the Android receiver for TVs, TV boxes, car displays and tablets, and CastBay for PC to cast a Windows or Linux computer to it. Free and open source.'>
 <main class="wrap doc download">
   <h1>Download CastBay</h1>
   <p class="lead">
-    CastBay has two parts. The <strong>Android app</strong> goes on the screen that shows the picture (a TV, TV box, car display or tablet) and receives from iPhone, iPad, Mac and video apps without anything else installed on them. <strong>CastBay Desktop</strong> goes on a Windows or Linux computer to cast its screen or a window to that Android app.
+    CastBay has two parts. The <strong>Android app</strong> goes on the screen that shows the picture (a TV, TV box, car display or tablet) and receives from iPhone, iPad, Mac and video apps without anything else installed on them. <strong>CastBay for PC</strong> goes on a Windows or Linux computer to cast its screen or a window to that Android app.
   </p>
 
   <section class="dl-card" id="android">
@@ -30,8 +30,8 @@ const [desktop] = await desktopReleases('en');
   </section>
 
   <section class="dl-card" id="windows">
-    <h2>Windows: CastBay Desktop</h2>
-    <p class="dl-meta">CastBay Desktop {desktop.data.version} · {formatDate('en', desktop.data.date)} · Windows 10 or 11, 64-bit · about 4 MB</p>
+    <h2>Windows: CastBay for PC</h2>
+    <p class="dl-meta">CastBay for PC {desktop.data.version} · {formatDate('en', desktop.data.date)} · Windows 10 or 11, 64-bit · about 4 MB</p>
     <p class="actions">
       <a class="btn btn-primary" href="/desktop/windows-en">Installer (English)</a>
       <a class="btn btn-ghost" href="/desktop/windows-zh">安装程序（中文）</a>
@@ -46,13 +46,13 @@ const [desktop] = await desktopReleases('en');
   </section>
 
   <section class="dl-card" id="linux">
-    <h2>Linux: CastBay Desktop</h2>
-    <p class="dl-meta">CastBay Desktop {desktop.data.version} · Ubuntu or Debian, 64-bit, Wayland with PipeWire · about 6 MB</p>
+    <h2>Linux: CastBay for PC</h2>
+    <p class="dl-meta">CastBay for PC {desktop.data.version} · Ubuntu or Debian, 64-bit, Wayland with PipeWire · about 6 MB</p>
     <p class="actions">
       <a class="btn btn-primary" href="/desktop/linux">Download .deb</a>
     </p>
     <p class="note">
-      Install it with <code>sudo apt install ./castbay-desktop_{desktop.data.version}_amd64.deb</code>. The system asks which screen or window to share when a cast starts. CastBay Desktop can then check for and install newer versions itself.
+      Install it with <code>sudo apt install ./castbay-desktop_{desktop.data.version}_amd64.deb</code>. The system asks which screen or window to share when a cast starts. CastBay for PC can then check for and install newer versions itself.
     </p>
   </section>
 
@@ -65,7 +65,7 @@ const [desktop] = await desktopReleases('en');
   </section>
 
   <p class="note">
-    How to use CastBay Desktop: the <a href="/desktop-guide">Desktop guide</a>. All versions, checksums and source code: <a href="https://github.com/weenas/castbay/releases">GitHub releases</a> · <a href="/changelog">Changelog</a> · CastBay is free and open source (GPL-3.0).
+    How to use CastBay for PC: the <a href="/desktop-guide">PC guide</a>. All versions, checksums and source code: <a href="https://github.com/weenas/castbay/releases">GitHub releases</a> · <a href="/changelog">Changelog</a> · CastBay is free and open source (GPL-3.0).
   </p>
 </main>
 </Page>

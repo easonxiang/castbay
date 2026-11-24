@@ -50,8 +50,8 @@ CastBay needs an Android device on Android 6.0 or later. A few TV boxes (an oper
 | iPad | iPadOS | ❔ Not yet confirmed; uses the same AirPlay as an iPhone |
 | MacBook: screen mirroring | macOS | ✅ Tested: mirroring in 1080p and 4K; for latency see the [FAQ](/faq) |
 | Mac: the Music app | macOS | ❌ Not supported: it uses an encryption the open-source AirPlay library can't handle |
-| Windows 11 PC, AMD graphics ([CastBay Desktop](/desktop-guide)) | Windows 11 | ✅ Tested: a screen and a window, with sound; about a quarter of a second of delay |
-| Ubuntu 26.04, GNOME on Wayland, NVIDIA graphics ([CastBay Desktop](/desktop-guide)) | Linux | ✅ Tested: a screen and a window, through the system's sharing dialog |
+| Windows 11 PC, AMD graphics ([CastBay for PC](/desktop-guide)) | Windows 11 | ✅ Tested: a screen and a window, with sound; about a quarter of a second of delay |
+| Ubuntu 26.04, GNOME on Wayland, NVIDIA graphics ([CastBay for PC](/desktop-guide)) | Linux | ✅ Tested: a screen and a window, through the system's sharing dialog |
 | Other Windows 10/11 and Ubuntu or Debian computers | Windows, Linux | ❔ Should work; not yet confirmed |
 
 ## Apps

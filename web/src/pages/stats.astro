@@ -46,13 +46,13 @@ import Page from '../layouts/Page.astro';
     ['checksPerDay', '每天的更新检查（所有用户，约等于每天打开过应用的设备）'],
     ['checksByApp', '更新检查，近 7 天（按版本，所有用户）'],
     ['apkPerDay', '每天的 APK 下载（GitHub，含应用内更新和爬虫）'],
-    ['installersPerDay', '每天的桌面端安装包下载（GitHub）'],
+    ['installersPerDay', '每天的电脑端安装包下载（GitHub）'],
     ['casts', '投屏方式', function (k) { return k.indexOf('cast.') === 0; }],
     ['lengths', '投屏时长', function (k) { return k.indexOf('length.') === 0; }],
     ['mirror', '镜像分辨率和编码', function (k) { return k.indexOf('mirror.') === 0; }],
     ['fails', '出错', function (k) { return k.indexOf('fail.') === 0; }],
     ['failuresByApp', '出错（按版本）'],
-    ['app', '映湾版本'],
+    ['app', '映湾投屏版本'],
     ['android', 'Android 版本'],
     ['model', '设备型号'],
     ['device', '设备类型'],
@@ -124,7 +124,7 @@ import Page from '../layouts/Page.astro';
         link.rel = 'noopener';
         link.textContent = r.id;
         var cells = [link, new Date(r.received).toLocaleString('zh-CN'), r.version,
-          (r.app === 'desktop' ? '桌面端' : '') + (r.kind === 'crash' ? '崩溃' : r.kind === 'failure' ? '投屏失败' : '手动'), Math.max(1, Math.round(r.size / 1024)) + ' KB'];
+          (r.app === 'desktop' ? '电脑端' : '') + (r.kind === 'crash' ? '崩溃' : r.kind === 'failure' ? '投屏失败' : '手动'), Math.max(1, Math.round(r.size / 1024)) + ' KB'];
         var labels = ['编号', '时间', '版本', '类型', '大小'];
         cells.forEach(function (c, i) {
           var td = document.createElement('td');
@@ -147,9 +147,9 @@ import Page from '../layouts/Page.astro';
         var head = document.createElement('h2');
         head.className = 'stats-heading';
         head.style.gridColumn = '1 / -1';
-        head.textContent = '桌面端（近 30 天设备 ' + dt.devices30 + '）';
+        head.textContent = '电脑端（近 30 天设备 ' + dt.devices30 + '）';
         grid.appendChild(head);
-        [['app', '桌面端版本'], ['os', '操作系统'], ['session', '显示方式'], ['screen', '最大屏幕'], ['lang', '语言'],
+        [['app', '电脑端版本'], ['os', '操作系统'], ['session', '显示方式'], ['screen', '最大屏幕'], ['lang', '语言'],
           ['encoders', '可用的编码器']].forEach(function (s) { grid.appendChild(section(s[1], dt[s[0]] || [])); });
         [['cast.', '投屏对象'], ['length.', '投屏时长'], ['encoder.', '实际使用的编码器'], ['fps.', '帧率'], ['bitrate.', '码率'],
           ['sound.', '声音'], ['fail.', '出错'], ['update.', '更新']].forEach(function (g) {
