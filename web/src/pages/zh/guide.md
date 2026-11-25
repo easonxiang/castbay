@@ -3,7 +3,7 @@ layout: ../../layouts/Doc.astro
 lang: zh
 toc: true
 page: guide
-title: '使用说明 – 映湾投屏 CastBay'
+title: '使用说明 – 映湾投屏'
 description: '映湾投屏的使用说明：安装与更新、从 iPhone、iPad、Mac 和安卓手机投屏、遥控器、触摸屏和快捷菜单，以及每一个设置项。'
 heading: '使用说明'
 intro: '从安装到每一个设置，映湾投屏的完整用法。遇到问题可以看<a href="/zh/faq">常见问题</a>，想了解原理可以看<a href="/zh/tech">技术原理</a>。从 Windows 或 Linux 电脑投屏见<a href="/zh/desktop-guide">电脑端使用说明</a>。'

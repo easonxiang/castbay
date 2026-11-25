@@ -1,4 +1,4 @@
-# CastBay Desktop
+# CastBay for PC
 
 Casts a computer's screen or a single window to CastBay receivers (the Android app in this
 repository). Windows and Linux; no macOS version (a Mac already mirrors to CastBay through
@@ -9,7 +9,7 @@ MSI installers in English and Chinese for Windows, unsigned until the SignPath a
 approved; a `.deb` for Ubuntu/Debian).
 `core/` builds on Windows: `castbay-sender` is the casting engine (capture, scaling, in-process
 H.264 encoding with AMD, NVIDIA or x264, sound over AAC, CastBay Link, reconnect, bitrate that
-follows the connection), `castbay-cast` is its command line, and `app/` is the CastBay Desktop
+follows the connection), `castbay-cast` is its command line, and `app/` is the CastBay for PC
 window (Tauri 2 over the engine, a plain HTML page, no Node needed): pick a receiver, a screen or
 window and a quality, type the pairing code once, and cast; tray, start with Windows and in-app
 update included. The receiver side is in the Android app (`service/desktop/`).

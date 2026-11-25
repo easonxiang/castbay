@@ -2,15 +2,15 @@
 layout: ../../layouts/Doc.astro
 lang: zh
 page: compare
-title: 'CastBay 与 AirScreen、乐播、当贝对比 – 映湾投屏 CastBay'
+title: '映湾投屏与 AirScreen、乐播、当贝对比 – 映湾投屏'
 description: '映湾投屏与 AirScreen、乐播、当贝对比：价格、广告、时长限制、账号、开源与协议。'
-heading: 'CastBay 与 AirScreen、乐播、当贝对比'
-intro: 'CastBay 是一款免费开源的投屏接收端，装在安卓电视、电视盒子、车机和安卓平板上（Android 6.0 及以上）。它接收 iPhone、iPad、Mac 的 AirPlay，以及各 App 的 DLNA 投屏。不用注册账号，没有广告，没有时长限制，不收集观看数据。'
+heading: '映湾投屏与 AirScreen、乐播、当贝对比'
+intro: '映湾投屏是一款免费开源的投屏接收端，装在安卓电视、电视盒子、车机和安卓平板上（Android 6.0 及以上）。它接收 iPhone、iPad、Mac 的 AirPlay，以及各 App 的 DLNA 投屏。不用注册账号，没有广告，没有时长限制，不收集观看数据。'
 ---
 
 ## 一眼看完
 
-|  | CastBay | AirScreen（免费版） | 乐播 | 当贝投屏 |
+|  | 映湾投屏 | AirScreen（免费版） | 乐播 | 当贝投屏 |
 |---|---|---|---|---|
 | 价格 | 免费 | 收费 | 收费 | 收费 |
 | 广告 | 无 | 免费版有广告（据用户反馈） | 未核实 | 未核实 |
@@ -22,13 +22,13 @@ intro: 'CastBay 是一款免费开源的投屏接收端，装在安卓电视、�
 
 价格与免费额度会变，决定前请以各应用当前商店页面为准；上表为 2026 年 11 月的用户反馈与公开资料。
 
-## 适合选 CastBay 的人
+## 适合使用映湾投屏的人
 
 - 想把 iPhone、iPad、Mac 投到安卓电视，又受够了广告、会员和看到一半被掐断。
 - 想要一个不用账号、不上传观看数据的接收端。
-- 能接受只用 AirPlay 或 DLNA。如果你主要用 Google Cast（Chromecast）或 Miracast，CastBay 目前还不支持，见 FAQ。
+- 能接受只用 AirPlay 或 DLNA。如果你主要用 Google Cast（Chromecast）或 Miracast，映湾投屏目前还不支持，见 FAQ。
 
-## 不适合选 CastBay 的人
+## 不适合使用映湾投屏的人
 
 - 主要用安卓手机、且用的 App 只支持 Google Cast 投屏（比如安卓版 YouTube）。映湾投屏不支持 Google Cast；请直接用电视自带的 App，或用支持 AirPlay、DLNA 的接收端。
 - 需要 Miracast。映湾投屏不支持。

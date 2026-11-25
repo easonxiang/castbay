@@ -13,7 +13,7 @@
             -o out.msi castbay-desktop.wxs
 -->
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
-  <Package Name="CastBay Desktop" Manufacturer="CastBay" Version="$(Version)" Language="$(Lcid)"
+  <Package Name="!(loc.AppName)" Manufacturer="CastBay" Version="$(Version)" Language="$(Lcid)"
            UpgradeCode="7C3D6A52-4B1E-4F0B-9D52-6E1A0B8F2C47" Scope="perUser" InstallerVersion="500">
     <MajorUpgrade DowngradeErrorMessage="!(loc.Downgrade)" />
     <MediaTemplate EmbedCab="yes" CompressionLevel="high" />
@@ -28,7 +28,7 @@
       </Directory>
     </StandardDirectory>
 
-    <Feature Id="Main" Title="CastBay Desktop" Level="1" AllowAbsent="no">
+    <Feature Id="Main" Title="!(loc.AppName)" Level="1" AllowAbsent="no">
       <ComponentRef Id="AppFiles" />
       <ComponentRef Id="StartMenuShortcut" />
     </Feature>
@@ -42,7 +42,7 @@
     </DirectoryRef>
     <StandardDirectory Id="ProgramMenuFolder">
       <Component Id="StartMenuShortcut" Guid="EAF0AB37-ABFD-47BD-A98C-7499D00076B4">
-        <Shortcut Id="StartShortcut" Name="CastBay Desktop" Target="[#AppExe]" WorkingDirectory="INSTALLFOLDER" Icon="AppIcon" />
+        <Shortcut Id="StartShortcut" Name="!(loc.AppName)" Target="[#AppExe]" WorkingDirectory="INSTALLFOLDER" Icon="AppIcon" />
         <RegistryValue Root="HKCU" Key="Software\CastBay Desktop" Name="StartMenu" Type="integer" Value="1" KeyPath="yes" />
       </Component>
     </StandardDirectory>

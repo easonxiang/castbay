@@ -19,7 +19,7 @@ CastBay for PC uses its own encrypted connection, not AirPlay or DLNA, so the de
 ## Install
 
 - **Windows installer** (the .msi, in Chinese or English): double-click, next, finish. No administrator rights needed. It adds a Start menu entry and an entry in Settings → Apps for uninstalling. A newer installer updates in place and keeps your pairings.
-- **Windows portable** (the .zip): unzip anywhere and run **CastBay Desktop.exe**. Nothing is installed; delete the folder to remove it.
+- **Windows portable** (the .zip): unzip anywhere and run **CastBay for PC.exe**. Nothing is installed; delete the folder to remove it.
 - **Linux** (the .deb): `sudo apt install ./castbay-desktop_<version>_amd64.deb`, then start **CastBay for PC** from the applications menu. It was tested on Ubuntu 26.04 with GNOME.
 
 All of them are on the <a href="/download">download page</a>.

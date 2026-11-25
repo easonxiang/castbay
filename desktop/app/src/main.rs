@@ -72,9 +72,9 @@ struct TraySources(Mutex<Vec<(&'static str, String)>>);
 /// Open, Settings, Switch, Stop, About, Quit.
 fn tray_words(zh: bool) -> [&'static str; 6] {
     if zh {
-        ["打开 CastBay Desktop", "设置", "切换投屏内容", "停止投屏", "关于", "退出"]
+        ["打开映湾电脑端", "设置", "切换投屏内容", "停止投屏", "关于", "退出"]
     } else {
-        ["Open CastBay Desktop", "Settings", "Switch what is cast", "Stop casting", "About", "Quit"]
+        ["Open CastBay for PC", "Settings", "Switch what is cast", "Stop casting", "About", "Quit"]
     }
 }
 
@@ -976,7 +976,7 @@ mod autostart {
         if on {
             let exe = std::env::current_exe().map_err(|e| e.to_string())?;
             let text = format!(
-                "[Desktop Entry]\nType=Application\nName=CastBay Desktop\nExec=\"{}\" --minimized\nX-GNOME-Autostart-enabled=true\n",
+                "[Desktop Entry]\nType=Application\nName=CastBay for PC\nName[zh_CN]=映湾电脑端\nName[zh_TW]=映灣電腦端\nExec=\"{}\" --minimized\nX-GNOME-Autostart-enabled=true\n",
                 exe.display()
             );
             std::fs::create_dir_all(path.parent().unwrap()).map_err(|e| e.to_string())?;
@@ -1019,9 +1019,9 @@ fn webview2_missing() {
     use windows::core::HSTRING;
     use windows::Win32::UI::WindowsAndMessaging::{MessageBoxW, IDYES, MB_ICONWARNING, MB_YESNO};
     let (title, text) = if chinese() {
-        ("CastBay Desktop", "需要先安装 Microsoft Edge WebView2 运行库才能显示窗口（Windows 11 和较新的 Windows 10 已自带）。\n\n现在打开下载页面吗？")
+        ("映湾电脑端", "需要先安装 Microsoft Edge WebView2 运行库才能显示窗口（Windows 11 和较新的 Windows 10 已自带）。\n\n现在打开下载页面吗？")
     } else {
-        ("CastBay Desktop", "The Microsoft Edge WebView2 runtime is needed to show the window (it is part of Windows 11 and recent Windows 10).\n\nOpen the download page now?")
+        ("CastBay for PC", "The Microsoft Edge WebView2 runtime is needed to show the window (it is part of Windows 11 and recent Windows 10).\n\nOpen the download page now?")
     };
     let answer = unsafe { MessageBoxW(None, &HSTRING::from(text), &HSTRING::from(title), MB_YESNO | MB_ICONWARNING) };
     if answer == IDYES {
@@ -1084,7 +1084,7 @@ fn main() {
                 let quit_item = MenuItem::with_id(app, "quit", quit_text, true, None::<&str>)?;
                 let menu = Menu::with_items(app, &[&open, &settings_item, &PredefinedMenuItem::separator(app)?, &switch, &stop, &PredefinedMenuItem::separator(app)?, &about_item, &quit_item])?;
                 let mut tray = TrayIconBuilder::new()
-                    .tooltip("CastBay Desktop")
+                    .tooltip(if zh { "映湾电脑端" } else { "CastBay for PC" })
                     .menu(&menu)
                     .show_menu_on_left_click(false)
                     .on_menu_event(|app, event| match event.id.as_ref() {

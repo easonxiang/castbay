@@ -66,29 +66,35 @@ def svg(view_box, label, content, palette):
     )
 
 
-def vertical(palette):
+def vertical_zh(palette):
     return f"""{mark('translate(269 116) scale(3.8)')}
 <text x="512" y="690" text-anchor="middle" fill="{palette['primary_text']}" font-family="PingFang SC, Noto Sans SC, sans-serif" font-size="200" font-weight="700" letter-spacing="8">映湾投屏</text>
-<text x="512" y="818" text-anchor="middle" fill="{palette['secondary_text']}" font-family="Avenir Next, Inter, sans-serif" font-size="84" font-weight="650" letter-spacing="3">CASTBAY</text>"""
+"""
 
 
-def horizontal_zh(palette):
-    return f"""{mark('translate(18 14) scale(1.5)')}
-<text x="210" y="91" fill="{palette['primary_text']}" font-family="PingFang SC, Noto Sans SC, sans-serif" font-size="72" font-weight="700" letter-spacing="2">映湾投屏</text>
-<text x="213" y="150" fill="{palette['secondary_text']}" font-family="Avenir Next, Inter, sans-serif" font-size="43" font-weight="650" letter-spacing="1.5">CASTBAY</text>"""
+def vertical_en(palette):
+    return f"""{mark('translate(269 116) scale(3.8)')}
+<text x="512" y="750" text-anchor="middle" fill="{palette['primary_text']}" font-family="Avenir Next, Inter, sans-serif" font-size="112" font-weight="650" letter-spacing="3">CASTBAY</text>"""
+
+
+def vertical_zh_tw(palette):
+    return f"""{mark('translate(269 116) scale(3.8)')}
+<text x="512" y="690" text-anchor="middle" fill="{palette['primary_text']}" font-family="PingFang TC, Noto Sans TC, sans-serif" font-size="200" font-weight="700" letter-spacing="8">映灣投屏</text>"""
 
 
 def horizontal_en(palette):
-    return f"""{mark('translate(18 14) scale(1.5)')}
-<text x="210" y="88" fill="{palette['primary_text']}" font-family="Avenir Next, Inter, sans-serif" font-size="62" font-weight="650" letter-spacing="1.5">CASTBAY</text>
-<text x="212" y="150" fill="{palette['secondary_text']}" font-family="PingFang SC, Noto Sans SC, sans-serif" font-size="42" font-weight="600" letter-spacing="2">映湾投屏</text>"""
-
-
-def inline(palette):
     return f"""{mark('translate(10 14) scale(1.25)')}
-<text x="177" y="103" fill="{palette['primary_text']}" font-family="Avenir Next, Inter, sans-serif" font-size="49" font-weight="650" letter-spacing="1">CASTBAY</text>
-<path d="M447 58v57" stroke="{palette['divider']}" stroke-width="2" stroke-linecap="round"/>
-<text x="452" y="102" fill="{palette['secondary_text']}" font-family="PingFang SC, Noto Sans SC, sans-serif" font-size="38" font-weight="600" letter-spacing="0">映湾投屏</text>"""
+<text x="177" y="105" fill="{palette['primary_text']}" font-family="Avenir Next, Inter, sans-serif" font-size="54" font-weight="650" letter-spacing="1">CASTBAY</text>"""
+
+
+def horizontal_zh(palette):
+    return f"""{mark('translate(10 14) scale(1.25)')}
+<text x="177" y="105" fill="{palette['primary_text']}" font-family="PingFang SC, Noto Sans SC, sans-serif" font-size="48" font-weight="700" letter-spacing="1">映湾投屏</text>"""
+
+
+def horizontal_zh_tw(palette):
+    return f"""{mark('translate(10 14) scale(1.25)')}
+<text x="177" y="105" fill="{palette['primary_text']}" font-family="PingFang TC, Noto Sans TC, sans-serif" font-size="48" font-weight="700" letter-spacing="1">映灣投屏</text>"""
 
 
 def app_icon(palette):
@@ -101,10 +107,12 @@ def app_icon(palette):
 
 LAYOUTS = {
     "symbol": ("0 -12 128 128", lambda palette: mark()),
-    "vertical": ("0 0 1024 1024", vertical),
-    "horizontal-zh": ("0 0 540 190", horizontal_zh),
-    "horizontal-en": ("0 0 540 190", horizontal_en),
-    "inline": ("0 0 610 156", inline),
+    "vertical-zh": ("0 0 1024 1024", vertical_zh),
+    "vertical-en": ("0 0 1024 1024", vertical_en),
+    "vertical-zh-TW": ("0 0 1024 1024", vertical_zh_tw),
+    "horizontal-zh": ("0 0 610 146", horizontal_zh),
+    "horizontal-en": ("0 0 610 146", horizontal_en),
+    "horizontal-zh-TW": ("0 0 610 146", horizontal_zh_tw),
     "app-icon": ("0 0 1024 1024", app_icon),
     "adaptive-foreground": ("0 0 1024 1024", lambda palette: mark("translate(128 220) scale(6)")),
 }
@@ -113,7 +121,15 @@ LAYOUTS = {
 def main():
     for theme, palette in PALETTES.items():
         for name, (view_box, layout) in LAYOUTS.items():
-            label = f"映湾投屏 CASTBAY {name} {theme}"
+            if name == "symbol":
+                brand_name = "CastBay symbol"
+            elif "zh-TW" in name:
+                brand_name = "映灣投屏"
+            elif "zh" in name:
+                brand_name = "映湾投屏"
+            else:
+                brand_name = "CastBay"
+            label = f"{brand_name} {theme} logo"
             content = svg(view_box, label, layout(palette), palette)
             (OUT / f"{name}-{theme}.svg").write_text(content, encoding="utf-8")
 

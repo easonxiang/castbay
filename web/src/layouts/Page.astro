@@ -111,7 +111,11 @@ const structuredData =
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href={s.prefix}><img class="wm-dark" src="/assets/wordmark@2x.png?v=3" srcset="/assets/wordmark@2x.png?v=3 2x, /assets/wordmark@3x.png?v=3 3x" alt="CastBay 映湾投屏" width="250" height="60"><img class="wm-light" src="/assets/wordmark-light@2x.png?v=3" srcset="/assets/wordmark-light@2x.png?v=3 2x, /assets/wordmark-light@3x.png?v=3 3x" alt="CastBay 映湾投屏" width="250" height="60"></a>
+    <a class="brand" href={s.prefix}>
+      {lang === 'zh'
+        ? <><img class="wm-dark" src="/assets/wordmark-zh-dark@2x.png?v=4" srcset="/assets/wordmark-zh-dark@2x.png?v=4 2x, /assets/wordmark-zh-dark@3x.png?v=4 3x" alt="映湾投屏" width="250" height="64"><img class="wm-light" src="/assets/wordmark-zh-light@2x.png?v=4" srcset="/assets/wordmark-zh-light@2x.png?v=4 2x, /assets/wordmark-zh-light@3x.png?v=4 3x" alt="映湾投屏" width="250" height="64"></>
+        : <><img class="wm-dark" src="/assets/wordmark-en-dark@2x.png?v=4" srcset="/assets/wordmark-en-dark@2x.png?v=4 2x, /assets/wordmark-en-dark@3x.png?v=4 3x" alt="CastBay" width="250" height="64"><img class="wm-light" src="/assets/wordmark-en-light@2x.png?v=4" srcset="/assets/wordmark-en-light@2x.png?v=4 2x, /assets/wordmark-en-light@3x.png?v=4 3x" alt="CastBay" width="250" height="64"></>}
+    </a>
     <nav class="nav" id="site-nav">
       {nav.map(({ href, text }) => <a href={href} aria-current={href === current ? 'page' : undefined}>{text}</a>)}
     </nav>
@@ -131,7 +135,7 @@ const structuredData =
     <div>
       {lang === 'en'
         ? <div>© 2026 CastBay · A <a href="https://weenas.com">Weenas</a> project</div>
-        : <div>© 2026 映湾投屏 CastBay · <a href="https://weenas.com">Weenas</a> 出品</div>}
+        : <div>© 2026 映湾投屏 · <a href="https://weenas.com">Weenas</a> 出品</div>}
       <div style="margin-top:6px;max-width:44em">{s.trademarks}</div>
     </div>
     <div class="links">

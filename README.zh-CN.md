@@ -2,8 +2,8 @@
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/weenas/castbay/main/branding/castbay-signal-final/inline-dark.png">
-    <img src="https://raw.githubusercontent.com/weenas/castbay/main/branding/castbay-signal-final/inline-light.png" alt="CastBay 映湾投屏" width="480">
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/weenas/castbay/main/branding/castbay-signal-final/horizontal-zh-dark.png">
+    <img src="https://raw.githubusercontent.com/weenas/castbay/main/branding/castbay-signal-final/horizontal-zh-light.png" alt="映湾投屏" width="480">
   </picture>
 </p>
 
@@ -16,9 +16,9 @@
   <a href="https://github.com/weenas/castbay/commits/main"><img src="https://img.shields.io/github/last-commit/weenas/castbay" alt="最近提交"></a>
 </p>
 
-# 映湾投屏 CastBay：适用于 Android TV、车载屏幕和平板的 AirPlay 与 DLNA 接收器
+# 映湾投屏：适用于 Android TV、车载屏幕和平板的 AirPlay 与 DLNA 接收器
 
-**一投即达，自在映湾投屏。** · *Cast it, it's there. Kick back with CastBay.*
+**一投即达，自在映湾投屏。**
 
 **官网：[castbay.weenas.com](https://castbay.weenas.com)** · [使用指南](https://castbay.weenas.com/zh/guide) · [下载页面](https://castbay.weenas.com/zh/download) · [工作原理](https://castbay.weenas.com/zh/tech) · **下载：[CastBay.apk](https://github.com/weenas/castbay/releases/latest/download/CastBay.apk)**（[全部版本](https://github.com/weenas/castbay/releases)） · [隐私政策](https://castbay.weenas.com/zh/privacy)
 
@@ -27,15 +27,15 @@
   <a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/weenas/castbay"><img src="https://raw.githubusercontent.com/ImranR98/Obtainium/main/assets/graphics/badge_obtainium.png" alt="通过 Obtainium 获取更新" height="60"></a>
 </p>
 
-CastBay（中文名：映湾投屏）可以把 Android TV、电视盒子、车载屏幕或平板变成接收端，让 iPhone、iPad 和 Mac 投屏、播放音乐和视频，也能接收视频及音乐 App 内置的投屏按钮（DLNA）。**CastBay 桌面版**还可以把 Windows 或 Linux 电脑的屏幕或窗口投到电视上（[下载](https://castbay.weenas.com/zh/download) · [使用指南](https://castbay.weenas.com/zh/desktop-guide) · [源码](desktop/)）。免费、开源、无广告。
+映湾投屏可以把 Android TV、电视盒子、车载屏幕或平板变成接收端，让 iPhone、iPad 和 Mac 投屏、播放音乐和视频，也能接收视频及音乐 App 内置的投屏按钮（DLNA）。**映湾电脑端**还可以把 Windows 或 Linux 电脑的屏幕或窗口投到电视上（[下载](https://castbay.weenas.com/zh/download) · [使用指南](https://castbay.weenas.com/zh/desktop-guide) · [源码](desktop/)）。免费、开源、无广告。
 
-<p align="center"><img src="https://raw.githubusercontent.com/weenas/castbay/main/web/src/assets/screens/home.webp" alt="CastBay 电视主界面" width="100%"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/weenas/castbay/main/web/src/assets/screens/home.webp" alt="映湾投屏电视主界面" width="100%"></p>
 <p align="center"><em>主界面：随时等待投屏，显示手机上看到的名称和网络。</em></p>
 
-<p align="center"><img src="https://raw.githubusercontent.com/weenas/castbay/main/web/src/assets/screens/music.webp" alt="CastBay 正在播放 AirPlay 音乐" width="100%"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/weenas/castbay/main/web/src/assets/screens/music.webp" alt="映湾投屏正在播放 AirPlay 音乐" width="100%"></p>
 <p align="center"><em>音乐：模糊的封面背景和同步歌词。（歌曲：Jonathan Coulton《Code Monkey》，CC BY-NC 授权。）</em></p>
 
-<p align="center"><img src="https://raw.githubusercontent.com/weenas/castbay/main/web/src/assets/screens/mirror.webp" alt="CastBay 正在接收 iPhone 屏幕镜像" width="100%"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/weenas/castbay/main/web/src/assets/screens/mirror.webp" alt="映湾投屏正在接收 iPhone 屏幕镜像" width="100%"></p>
 <p align="center"><em>屏幕镜像（H.265），打开了播放统计：电视端和手机端的数据。</em></p>
 
 ## 功能
@@ -46,16 +46,16 @@ CastBay（中文名：映湾投屏）可以把 Android TV、电视盒子、车�
 - **DLNA**：接收哔哩哔哩、爱奇艺、网易云音乐、QQ 音乐等 App 内置的投屏按钮，支持 iPhone 和 Android 手机；可投放视频（MP4、MKV、WebM、FLV、HLS、DASH 等）和音乐（MP3、AAC、FLAC 等），不支持图片。详见[兼容性说明](https://castbay.weenas.com/zh/compatibility)。
 - **遥控器或触摸屏操作**：播放时按遥控器下键或触摸屏幕打开快捷菜单，可调整画面比例、查看播放统计、选择音轨和字幕、暂停或快进视频。媒体按键（例如方向盘上的按键）可暂停和切换曲目；连按两次返回键可结束投放，按 Home 可让播放继续。
 - **注重隐私**：可选择允许任何设备、仅允许电视上已授权的设备、首次输入电视显示的 PIN 码或输入密码；也可单独允许或屏蔽设备，以及决定是否接受另一台设备接管。无需账号；只有用户主动选择时才会发送问题报告（发送前会移除个人信息）或匿名使用统计。
-- **多语言**：应用支持英语、简体中文和繁体中文；CastBay 桌面版支持英语和简体中文。欢迎在 [Hosted Weblate](https://hosted.weblate.org/engage/castbay/) 参与翻译。新语言达到较完整的翻译进度后会加入应用的语言列表；尚未翻译的文本会显示为英语。
+- **多语言**：应用支持英语、简体中文和繁体中文；映湾电脑端支持英语和简体中文。欢迎在 [Hosted Weblate](https://hosted.weblate.org/engage/castbay/) 参与翻译。新语言达到较完整的翻译进度后会加入应用的语言列表；尚未翻译的文本会显示为英语。
 
 ## 系统要求与兼容性
 
 - Android 6.0（API 23）或更高版本的设备：电视、电视盒子、车载屏幕或平板。
-- 发送设备和 CastBay 接收设备需要处于同一个本地网络。
+- 发送设备和映湾投屏接收设备需要处于同一个本地网络。
 
 已在 TCL（Android 9）、Sony BRAVIA（Android 12）电视和比亚迪车载屏幕上与 iPhone 测试。更多设备和 App 的测试结果见[兼容性列表](https://castbay.weenas.com/zh/compatibility)。
 
-Mac 屏幕镜像可用，但 Mac「音乐」App 的音乐无法投到 CastBay：该 App 使用 UxPlay 尚不支持的 FairPlay type 2（详见 [UxPlay#570](https://github.com/FDH2/UxPlay/issues/570)）。
+Mac 屏幕镜像可用，但 Mac「音乐」App 的音乐无法投到映湾投屏：该 App 使用 UxPlay 尚不支持的 FairPlay type 2（详见 [UxPlay#570](https://github.com/FDH2/UxPlay/issues/570)）。
 
 AirPlay 和 DLNA 视频由电视直接从网络获取（类似 Apple TV），因此电视本身必须能够访问视频源。以 YouTube 为例，需要电视能连接 `googlevideo.com`；如果手机只能通过代理或 VPN 访问，电视也需要相同的网络条件。
 
@@ -90,7 +90,7 @@ git submodule update --init
 
 ## 不用手机进行测试
 
-Debug 版本使用独立包名 `com.weenas.castbay.debug`，应用名称为「CastBay Dev」，可与正式版同时安装，并内置模拟 AirPlay 发送端。它通过与协议库相同的回调向应用发送数据，因此接收许可、解码、定时音乐播放、页面、菜单和统计都是真实运行；只有网络、配对和加密环节被模拟（这些仍需用真实 iPhone 或 Mac 测试）。`tools/sim` 可通过 adb 控制测试流程和电视遥控器：
+Debug 版本使用独立包名 `com.weenas.castbay.debug`，应用名称为「映湾投屏开发版」，可与正式版同时安装，并内置模拟 AirPlay 发送端。它通过与协议库相同的回调向应用发送数据，因此接收许可、解码、定时音乐播放、页面、菜单和统计都是真实运行；只有网络、配对和加密环节被模拟（这些仍需用真实 iPhone 或 Mac 测试）。`tools/sim` 可通过 adb 控制测试流程和电视遥控器：
 
 ```bash
 tools/sim install              # 构建、安装并打开 Debug 版
@@ -102,7 +102,7 @@ tools/sim stop                 # 模拟发送端断开
 tools/sim crash                # 模拟应用崩溃，以测试错误报告
 tools/sim key down right ok    # 模拟遥控器按键：up/down/left/right/ok/back/home/menu/playpause
 tools/sim shot screen.png      # 截取屏幕
-tools/sim log                  # 查看 CastBay 最近日志
+tools/sim log                  # 查看映湾投屏最近日志
 ```
 
 使用 `-s SERIAL`（或设置 `ANDROID_SERIAL`）选择电视或模拟器。Debug 版不会开机自启，只会在测试时运行。
@@ -122,7 +122,7 @@ castbay/
 │   │   ├── java/com/weenas/castbay/
 │   │   │   ├── MainActivity.kt
 │   │   │   ├── service/       # 接收器生命周期、AirPlay 桥接、播放器和歌词
-│   │   │   │   └── desktop/   # CastBay 桌面版投屏接收端
+│   │   │   │   └── desktop/   # 电脑投屏协议接收端
 │   │   │   ├── dlna/          # DLNA 渲染器
 │   │   │   ├── ui/            # Compose 页面
 │   │   │   ├── viewmodel/     # MVVM ViewModel
@@ -132,7 +132,7 @@ castbay/
 │   ├── src/debug/          # tools/sim 使用的模拟 AirPlay 发送端
 │   └── build.gradle.kts
 ├── airplay/                # Android 库、JNI 桥接和原生协议构建
-├── desktop/                # CastBay 桌面版（Rust；Windows 和 Linux）
+├── desktop/                # 映湾电脑端（Rust；Windows 和 Linux）
 ├── third_party/            # 固定版本的 UxPlay、libplist、ALAC 和 OpenSSL 子模块
 ├── tools/                  # sim、link-send、device-stats.mjs、build-openssl.sh、ci 等工具
 ├── web/                    # Astro 官网 castbay.weenas.com，由 Cloudflare 构建和发布

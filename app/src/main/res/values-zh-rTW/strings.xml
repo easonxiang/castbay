@@ -21,7 +21,7 @@
     <string name="picture_mode_notice">畫面模式：%1$s</string>
     <string name="starting">啟動中…</string>
     <string name="stopping">停止中…</string>
-    <string name="advertising_only_title">區域網路上的裝置已可找到CastBay</string>
+    <string name="advertising_only_title">區域網路上的裝置已可找到映灣投屏</string>
     <string name="advertising_only_detail">目前僅提供裝置探索預覽，尚無法透過 AirPlay 投放。</string>
     <string name="connecting">正在連線…</string>
     <string name="connected">已連線</string>
@@ -58,7 +58,7 @@
     <string name="press_back_again">再按一次返回鍵結束投放</string>
     <string name="awaiting_next_video">等待下一部影片…</string>
     <string name="awaiting_next_video_help">按返回鍵結束投放</string>
-    <string name="press_back_to_quit">再按一次返回鍵即可結束CastBay，手機將無法再投放</string>
+    <string name="press_back_to_quit">再按一次返回鍵即可結束映灣投屏，手機將無法再投放</string>
     <string name="airplay_audio">AirPlay 音訊</string>
     <string name="cover_art">封面</string>
     <string name="music_play">播放</string>
@@ -93,17 +93,17 @@
     <string name="setting_start_on_boot">開機自啟</string>
     <string name="setting_start_on_boot_note">開啟後，電視開機後不用打開映灣投屏就能投屏。關閉後，只有打開映灣投屏時才會開始接收。</string>
     <string name="setting_error_reports">自動傳送錯誤報告</string>
-    <string name="setting_error_reports_note">CastBay意外結束後，下次啟動時自動傳送問題報告，內容包含錯誤資訊與應用程式近期紀錄；歌名、裝置名稱及網址會先移除。關閉此選項時，每次都會先詢問你。</string>
+    <string name="setting_error_reports_note">映灣投屏意外結束後，下次啟動時自動傳送問題報告，內容包含錯誤資訊與應用程式近期紀錄；歌名、裝置名稱及網址會先移除。關閉此選項時，每次都會先詢問你。</string>
     <string name="setting_usage_stats">傳送匿名使用統計</string>
     <string name="setting_usage_stats_note">每天一次：各類投放的次數與持續時間區間、鏡像解析度與編碼、失敗次數、裝置型號與 Android 版本，以及使用中的設定。不包含任何名稱、歌名、網址或位址。關閉後會刪除已傳送的資料。</string>
     <string name="update_notes">更新內容</string>
-    <string name="changelog_title">CastBay %1$s 更新內容</string>
+    <string name="changelog_title">映灣投屏 %1$s 更新內容</string>
     <string name="changelog_installed">目前安裝的版本是 %1$s。以下列出之後各版本的變更：</string>
     <string name="setting_screen_saver">音樂畫面閒置時的行為</string>
     <string name="setting_screen_saver_note">防烙印：10 分鐘未操作時，音樂畫面會調暗並略微移動。關閉螢幕：2 分鐘後畫面變黑，音樂繼續播放。按任意鍵、點一下螢幕或開始新的投放即可恢復；媒體按鍵仍可切歌、暫停。顯示歌詞時不會進入閒置模式。</string>
     <string name="screen_saver_burn_in">防烙印</string>
     <string name="screen_saver_music_off">關閉螢幕</string>
-    <string name="crash_ask">CastBay上次意外結束。要傳送問題報告，協助我們修正嗎？</string>
+    <string name="crash_ask">映灣投屏上次意外結束。要傳送問題報告，協助我們修正嗎？</string>
     <string name="crash_send">傳送</string>
     <string name="crash_dismiss">忽略</string>
     <string name="crash_sending">正在傳送報告…</string>
@@ -113,7 +113,7 @@
     <string name="setting_reset">還原預設設定</string>
     <string name="setting_reset_action">還原</string>
     <string name="setting_reset_confirm">再按一次即可還原</string>
-    <string name="setting_reset_note">裝置名稱、投放驗證及其他設定都會還原成剛安裝CastBay時的狀態。</string>
+    <string name="setting_reset_note">裝置名稱、投放驗證及其他設定都會還原成剛安裝映灣投屏時的狀態。</string>
     <string name="section_playback">播放</string>
     <string name="section_playback_note">立即生效。投放時也可按遙控器的下鍵或選單鍵修改。</string>
     <string name="setting_device_name">裝置名稱</string>
@@ -121,7 +121,7 @@
     <string name="setting_frame_rate">最高影格率</string>
     <string name="setting_codec">視訊編碼</string>
     <string name="setting_codec_h264_only">僅限 H.264</string>
-    <string name="setting_desktop">電腦投放（CastBay Desktop）</string>
+    <string name="setting_desktop">電腦投放（映灣電腦端）</string>
     <string name="setting_dlna">DLNA 投放（App 內建投放按鈕）</string>
     <string name="setting_password_field">密碼</string>
     <string name="setting_password_too_short">至少 %1$d 位數字。</string>
@@ -147,7 +147,7 @@
     <string name="about_source">原始碼</string>
     <string name="about_licenses">開放原始碼授權</string>
     <string name="licenses_title">開放原始碼授權</string>
-    <string name="licenses_intro">CastBay是以 GPL-3.0 授權釋出的自由軟體，使用下列開放原始碼專案建置。選擇項目即可查看完整授權條款。</string>
+    <string name="licenses_intro">映灣投屏是以 GPL-3.0 授權釋出的自由軟體，使用下列開放原始碼專案建置。選擇項目即可查看完整授權條款。</string>
     <string name="licenses_castbay">本應用程式</string>
     <string name="licenses_uxplay">AirPlay 接收器</string>
     <string name="licenses_raop">AirPlay 連線和音訊（UxPlay 內）</string>
@@ -164,22 +164,22 @@
     <string name="about_license">以 GPL-3.0 授權開放原始碼，使用 UxPlay、libplist、Apple ALAC 與 Media3 建置。</string>
     <string name="about_update">有新版本 %1$s 可以更新</string>
     <string name="about_scan_update">用手機掃描 QR Code 下載新版本</string>
-    <string name="about_scan">用手機掃描 QR Code 下載CastBay</string>
+    <string name="about_scan">用手機掃描 QR Code 下載映灣投屏</string>
     <string name="about_scan_link">本機沒有瀏覽器，請用手機掃描 QR Code 開啟 %1$s</string>
     <string name="update_install">下載並安裝 %1$s</string>
     <string name="update_downloading">正在下載… %1$d%%</string>
     <string name="update_downloading_unknown">正在下載…</string>
-    <string name="update_installing">請在安裝畫面中確認更新。第一次更新時，需要允許CastBay安裝應用程式。</string>
+    <string name="update_installing">請在安裝畫面中確認更新。第一次更新時，需要允許映灣投屏安裝應用程式。</string>
     <string name="update_failed_download">下載失敗，請檢查網路後重試。</string>
     <string name="update_failed_checksum">下載檔案的校驗碼與官方發行版本不符，因此未安裝。請重試。</string>
-    <string name="update_failed_installer">這台電視沒有CastBay可開啟的安裝程式，請掃描 QR Code 下載更新。</string>
+    <string name="update_failed_installer">這台電視沒有映灣投屏可開啟的安裝程式，請掃描 QR Code 下載更新。</string>
     <string name="update_retry">重試</string>
     <string name="about_diagnostics">診斷資訊</string>
     <string name="diagnostics_title">診斷資訊</string>
     <string name="diagnostics_note">紀錄保存在本機，只有選擇「上傳紀錄」時才會傳送。回報問題時，請上傳紀錄或拍下這個畫面，並附上報告編號。</string>
     <string name="report_upload">上傳紀錄</string>
     <string name="report_preparing">正在收集紀錄…</string>
-    <string name="report_confirm">將把本機資訊、下方事件與應用程式近期紀錄（約 %1$d KB）上傳至CastBay網站，保存 90 天。歌曲與影片名稱、網址、裝置名稱及公用 IP 位址會先在本機移除。</string>
+    <string name="report_confirm">將把本機資訊、下方事件與應用程式近期紀錄（約 %1$d KB）上傳至映灣投屏網站，保存 90 天。歌曲與影片名稱、網址、裝置名稱及公用 IP 位址會先在本機移除。</string>
     <string name="report_send">上傳</string>
     <string name="report_cancel">取消</string>
     <string name="report_sending">正在上傳…</string>
@@ -250,7 +250,7 @@
     <string name="update_check_failed">檢查失敗，請檢查網路後重試。</string>
 
     <!-- Notification -->
-    <string name="notification_channel">CastBay接收服務</string>
+    <string name="notification_channel">映灣投屏接收服務</string>
     <string name="notification_starting">正在啟動接收器</string>
     <string name="notification_waiting">等待 AirPlay 或 DLNA 投放</string>
     <string name="notification_discovery_only">正在廣播 AirPlay 服務</string>
@@ -300,7 +300,7 @@
     <string name="menu_seconds">%1$d 秒</string>
     <string name="section_playback_note_touch">立即生效。投放時點一下螢幕也可以修改。</string>
     <string name="help_not_found_title">手機找不到這台電視？</string>
-    <string name="help_not_found">• 手機與電視必須連上相同的 Wi-Fi 網路，請勿使用訪客網路。\n• 確認CastBay已開啟，首頁顯示「等待投放連線」。\n• 若路由器啟用了「AP 隔離」，裝置將無法互相探索，請將其關閉。\n• 重新開啟CastBay或重新啟動電視後再試一次。</string>
+    <string name="help_not_found">• 手機與電視必須連上相同的 Wi-Fi 網路，請勿使用訪客網路。\n• 確認映灣投屏已開啟，首頁顯示「等待投放連線」。\n• 若路由器啟用了「AP 隔離」，裝置將無法互相探索，請將其關閉。\n• 重新開啟映灣投屏或重新啟動電視後再試一次。</string>
     <string name="help_video_title">影片無法播放？</string>
     <string name="help_video">AirPlay 與 DLNA 影片由電視直接從網路取得。如果手機需要透過代理伺服器或 VPN 才能播放，例如 YouTube，電視也需要相同的網路條件。</string>
     <string name="info_access">驗證方式</string>
@@ -328,7 +328,7 @@
     <string name="help_access_title">誰可以投放</string>
     <string name="help_access">在設定 → 連線 → 投放驗證中選擇：\n• 在電視上確認：新裝置第一次投放時，電視會詢問是否允許。允許後，請從裝置重新投放。\n• PIN 碼：新裝置第一次投放時，請在裝置上輸入電視顯示的 4 位數 PIN 碼。\n• 密碼：每台裝置都需輸入設定中的密碼。\nApp 內建的投放按鈕（DLNA）無法輸入 PIN 碼或密碼。選擇上述任一方式後，手機首次從 App 投放時，電視都會詢問是否允許。\n在「曾投放的裝置」中，可以封鎖個別裝置或移除全部裝置。</string>
     <string name="connecting_from">正在連線 %1$s…</string>
-    <string name="consent_title">願意幫 CastBay 變得更好嗎？</string>
+    <string name="consent_title">願意幫映灣投屏變得更好嗎？</string>
     <string name="consent_stats">匿名統計：%1$s</string>
     <string name="consent_errors">錯誤報告：%1$s</string>
     <string name="consent_note">預設關閉，開啟後才會傳送，不包含名稱、歌名、網址或位址。詳見「關於 → 隱私權政策」，隨時可在設定中變更。</string>
@@ -338,7 +338,7 @@
     <string name="now_playing_untitled">AirPlay 音訊</string>
     <string name="track_untitled">音軌 %1$d</string>
     <string name="setting_open_on_cast">投放時自動開啟</string>
-    <string name="setting_open_on_cast_note">有裝置開始鏡像或播放影片時，如果電視停在主畫面、其他應用程式或螢幕保護程式，會自動喚醒電視並開啟 CastBay。需要允許 CastBay「顯示在其他應用程式上層」（開啟開關會跳到對應的設定頁）。電視沒有這個設定頁時，可以用電腦授權：adb shell appops set com.weenas.castbay SYSTEM_ALERT_WINDOW allow</string>
-    <string name="open_on_cast_toast">請在電視上開啟 CastBay 查看投放內容</string>
-    <string name="open_on_cast_off_toast">有裝置正在投放，但 CastBay 不在畫面上。可在 設定 → 播放 → 投放時自動開啟 中開啟自動開啟</string>
+    <string name="setting_open_on_cast_note">有裝置開始鏡像或播放影片時，如果電視停在主畫面、其他應用程式或螢幕保護程式，會自動喚醒電視並開啟 映灣投屏。需要允許 映灣投屏「顯示在其他應用程式上層」（開啟開關會跳到對應的設定頁）。電視沒有這個設定頁時，可以用電腦授權：adb shell appops set com.weenas.castbay SYSTEM_ALERT_WINDOW allow</string>
+    <string name="open_on_cast_toast">請在電視上開啟映灣投屏查看投放內容</string>
+    <string name="open_on_cast_off_toast">有裝置正在投放，但映灣投屏不在畫面上。可在 設定 → 播放 → 投放時自動開啟 中開啟自動開啟</string>
 </resources>

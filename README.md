@@ -2,8 +2,8 @@
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/weenas/castbay/main/branding/castbay-signal-final/inline-dark.png">
-    <img src="https://raw.githubusercontent.com/weenas/castbay/main/branding/castbay-signal-final/inline-light.png" alt="CastBay 映湾投屏" width="480">
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/weenas/castbay/main/branding/castbay-signal-final/horizontal-en-dark.png">
+    <img src="https://raw.githubusercontent.com/weenas/castbay/main/branding/castbay-signal-final/horizontal-en-light.png" alt="CastBay" width="480">
   </picture>
 </p>
 
@@ -17,9 +17,9 @@
   <a href="https://scorecard.dev/viewer/?uri=github.com/weenas/castbay"><img src="https://api.scorecard.dev/projects/github.com/weenas/castbay/badge" alt="OpenSSF Scorecard"></a>
 </p>
 
-# 映湾投屏 CastBay: AirPlay and DLNA Receiver for Android TVs, Car Displays and Tablets
+# CastBay: AirPlay and DLNA Receiver for Android TVs, Car Displays and Tablets
 
-**Cast it, it's there. Kick back with CastBay.** · 一投即达，自在映湾投屏
+**Cast it, it's there. Kick back with CastBay.**
 
 **Website: [castbay.weenas.com](https://castbay.weenas.com)** · [User guide](https://castbay.weenas.com/guide) · [All downloads](https://castbay.weenas.com/download) · [How it works](https://castbay.weenas.com/tech) · **Download: [CastBay.apk](https://github.com/weenas/castbay/releases/latest/download/CastBay.apk)** ([all releases](https://github.com/weenas/castbay/releases)) · [Privacy policy](https://castbay.weenas.com/privacy)
 
@@ -28,7 +28,7 @@
   <a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/weenas/castbay"><img src="https://raw.githubusercontent.com/ImranR98/Obtainium/main/assets/graphics/badge_obtainium.png" alt="Get it on Obtainium" height="60"></a>
 </p>
 
-CastBay (Chinese: 映湾投屏) turns an Android TV, TV box, car display or tablet into a receiver for iPhone, iPad and Mac: AirPlay screen mirroring, music and video, plus the cast button in video and music apps (DLNA). **CastBay Desktop** casts a Windows or Linux computer's screen or a window to it too ([download](https://castbay.weenas.com/download) · [guide](https://castbay.weenas.com/desktop-guide) · [source](desktop/)). Free, open source, no ads.
+CastBay turns an Android TV, TV box, car display or tablet into a receiver for iPhone, iPad and Mac: AirPlay screen mirroring, music and video, plus the cast button in video and music apps (DLNA). **CastBay for PC** casts a Windows or Linux computer's screen or a window to it too ([download](https://castbay.weenas.com/download) · [guide](https://castbay.weenas.com/desktop-guide) · [source](desktop/)). Free, open source, no ads.
 
 <p align="center"><img src="https://raw.githubusercontent.com/weenas/castbay/main/web/src/assets/screens/home.webp" alt="CastBay on a TV: receiver home screen" width="100%"></p>
 <p align="center"><em>The home screen: ready for a cast, with the name phones see and the network.</em></p>
@@ -47,7 +47,7 @@ CastBay (Chinese: 映湾投屏) turns an Android TV, TV box, car display or tabl
 - **DLNA**: the cast button in apps such as Bilibili, iQiyi, NetEase Cloud Music and QQ Music, from iPhone and Android phones: video (MP4, MKV, WebM, FLV, HLS, DASH, …) and music (MP3, AAC, FLAC, …); not pictures. See [the formats](https://castbay.weenas.com/compatibility).
 - **Remote or touch screen**: a quick menu while playing (picture fit, playback stats, audio/subtitles, pause and skip for videos), opened with Down on a remote or a tap on a touch screen; media keys (a steering wheel's too) pause and change tracks; Back twice to stop, Home keeps playing. For mirroring, the stats include the phone's own report: frames sent and dropped, round trip, packet loss and bandwidth.
 - **Private**: choose who can cast (anyone, devices allowed on the TV, a PIN shown on the TV the first time as on an Apple TV, or a password), allow or block each device, refuse or allow a second device; no account, and nothing is collected unless you choose to: problem reports (personal details taken out first) and anonymous usage statistics are both opt-in.
-- **Languages**: English, 简体中文 and 繁體中文 (CastBay Desktop: English and 简体中文). Missing a language? Translate it on [Hosted Weblate](https://hosted.weblate.org/engage/castbay/): a language joins the app's language list once it is mostly done. A string not translated yet shows in English.
+- **Languages**: English, 简体中文 and 繁體中文 (CastBay for PC: English and 简体中文). Missing a language? Translate it on [Hosted Weblate](https://hosted.weblate.org/engage/castbay/): a language joins the app's language list once it is mostly done. A string not translated yet shows in English.
 
 ## Requirements
 
@@ -129,7 +129,7 @@ castbay/
 │   │   ├── java/com/weenas/castbay/
 │   │   │   ├── MainActivity.kt
 │   │   │   ├── service/       # Receiver lifecycle, AirPlay bridge, players, lyrics
-│   │   │   │   └── desktop/   # CastBay Link receiver (casts from CastBay Desktop)
+│   │   │   │   └── desktop/   # CastBay Link receiver (casts from CastBay for PC)
 │   │   │   ├── dlna/          # DLNA renderer
 │   │   │   ├── ui/            # Compose UI screens
 │   │   │   ├── viewmodel/     # MVVM ViewModels
@@ -139,7 +139,7 @@ castbay/
 │   ├── src/debug/          # Simulated AirPlay sender for tools/sim
 │   └── build.gradle.kts
 ├── airplay/                # Android library, JNI bridge, and native protocol build
-├── desktop/                # CastBay Desktop (Rust; Windows and Linux)
+├── desktop/                # CastBay for PC (Rust; Windows and Linux)
 ├── third_party/            # Pinned UxPlay, libplist, ALAC and OpenSSL submodules
 ├── tools/                  # sim (drive the debug app over adb), link-send (test CastBay Link sender),
 │                           # device-stats.mjs (usage stats per model), build-openssl.sh, ci/
