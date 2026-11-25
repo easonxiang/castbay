@@ -1,6 +1,6 @@
 name: Desktop installer
 
-# Builds the CastBay Desktop installers (MSI) from the already released portable program and runs
+# Builds the CastBay for PC installers (MSI) from the already released portable program and runs
 # them on the runner: install, install over, start, uninstall (desktop/installer/test-install.ps1). Quick,
 # so changes to the installer script are tried without rebuilding FFmpeg and the app.
 on:
@@ -32,24 +32,31 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release download desktop-v0.1.0 --repo $env:GITHUB_REPOSITORY --pattern '*windows-x64.zip' --dir "$env:RUNNER_TEMP\release"
+          $tag = gh release list --repo $env:GITHUB_REPOSITORY --limit 100 --json tagName |
+            ConvertFrom-Json |
+            Where-Object { $_.tagName -like 'desktop-v*' } |
+            Select-Object -First 1 -ExpandProperty tagName
+          if (-not $tag) { throw 'No desktop release found' }
+          $version = $tag.Substring('desktop-v'.Length)
+          "APP_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          gh release download $tag --repo $env:GITHUB_REPOSITORY --pattern '*windows-x64.zip' --dir "$env:RUNNER_TEMP\release"
           Expand-Archive "$env:RUNNER_TEMP\release\*.zip" -DestinationPath "$env:RUNNER_TEMP\release\unzipped"
           $dir = Get-ChildItem "$env:RUNNER_TEMP\release\unzipped" -Directory | Select-Object -First 1
           Copy-Item "$($dir.FullName)\CastBay Desktop.exe" "$env:RUNNER_TEMP\app.exe"
           Copy-Item "$($dir.FullName)\LICENSE" "$env:RUNNER_TEMP\LICENSE"
 
       - name: Build the installers
-        run: ./desktop/installer/build-msi.ps1 -Version 0.1.0 -AppExe "$env:RUNNER_TEMP\app.exe" -LicenseTxt "$env:RUNNER_TEMP\LICENSE" -OutDir "$env:RUNNER_TEMP\msi" -NameStem CastBay-Desktop-0.1.0-windows-x64
+        run: ./desktop/installer/build-msi.ps1 -Version $env:APP_VERSION -AppExe "$env:RUNNER_TEMP\app.exe" -LicenseTxt "$env:RUNNER_TEMP\LICENSE" -OutDir "$env:RUNNER_TEMP\msi" -NameStem "CastBay-for-PC-$env:APP_VERSION-windows-x64"
 
       - name: Install, install over, start, uninstall (each language)
         run: |
           foreach ($m in Get-ChildItem "$env:RUNNER_TEMP\msi\*.msi") {
             "== $($m.Name)"
-            ./desktop/installer/test-install.ps1 -Msi $m.FullName -Version 0.1.0
+            ./desktop/installer/test-install.ps1 -Msi $m.FullName -Version $env:APP_VERSION
           }
 
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: CastBay-Desktop-installer-test
+          name: CastBay-for-PC-installer-test
           path: ${{ runner.temp }}\msi\*.msi
           retention-days: 7
