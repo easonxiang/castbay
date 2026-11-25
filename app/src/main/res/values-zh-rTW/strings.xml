@@ -2,7 +2,7 @@
     <!-- The Chinese name; senders still see the device name, "CastBay" by default. -->
     <string name="app_name">映灣投屏</string>
     <string name="app_tagline">適用於 Android 電視、車載螢幕與平板電腦的 AirPlay 與 DLNA 接收器</string>
-    <string name="app_slogan">一投即達，自在映灣投屏</string>
+    <string name="app_slogan">一投即達，自在映灣</string>
 
     <!-- Common -->
     <string name="action_start">開始</string>

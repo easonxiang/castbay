@@ -18,7 +18,7 @@
 
 # 映湾投屏：适用于 Android TV、车载屏幕和平板的 AirPlay 与 DLNA 接收器
 
-**一投即达，自在映湾投屏。**
+**一投即达，自在映湾。**
 
 **官网：[castbay.weenas.com](https://castbay.weenas.com)** · [使用指南](https://castbay.weenas.com/zh/guide) · [下载页面](https://castbay.weenas.com/zh/download) · [工作原理](https://castbay.weenas.com/zh/tech) · **下载：[CastBay.apk](https://github.com/weenas/castbay/releases/latest/download/CastBay.apk)**（[全部版本](https://github.com/weenas/castbay/releases)） · [隐私政策](https://castbay.weenas.com/zh/privacy)
 

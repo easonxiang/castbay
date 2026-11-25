@@ -5,7 +5,7 @@ const $ = (id) => document.getElementById(id);
 // ---------------------------------------------------------------- text
 const TEXT = {
   zh: {
-    app_name: "映湾电脑端", still_note: "画面静止，已自动降低帧率；画面一动就恢复。", tray_no_receiver: "找不到上次投屏用的接收端。请在列表里选一台，再点开始投屏。", tray_needs_password: "上次的接收端需要密码。请在这里输入密码，再点开始投屏。", about_close: "关闭", slogan: "一投即达，自在映湾投屏", settings: "设置", download: "下载", update_now: "更新", update_ignore: "忽略此版本", update_notes: "更新内容", got_it: "知道了", ok: "确定", search_again: "重新查找",
+    app_name: "映湾电脑端", still_note: "画面静止，已自动降低帧率；画面一动就恢复。", tray_no_receiver: "找不到上次投屏用的接收端。请在列表里选一台，再点开始投屏。", tray_needs_password: "上次的接收端需要密码。请在这里输入密码，再点开始投屏。", about_close: "关闭", slogan: "一投即达，自在映湾", settings: "设置", download: "下载", update_now: "更新", update_ignore: "忽略此版本", update_notes: "更新内容", got_it: "知道了", ok: "确定", search_again: "重新查找",
     aria_back: "返回", aria_settings: "设置", aria_refresh: "刷新", aria_what: "投什么", aria_source: "选择要投的内容", aria_code: "配对码",
     aria_s_quality: "画质", aria_s_bitrate: "码率", aria_s_fps: "帧率", aria_s_audio: "同时传声音", aria_s_autostart: "开机自动启动",
     w_title: "开始使用", w_1: "在电视或平板上打开映湾投屏，在设置里开启“电脑投屏”。",
