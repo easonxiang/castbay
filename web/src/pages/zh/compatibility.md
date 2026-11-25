@@ -50,8 +50,8 @@ intro: '映湾投屏目前已测试过的设备和 App。在列表之外的设�
 | iPad | iPadOS | ❔ 尚未确认，和 iPhone 使用相同的 AirPlay |
 | MacBook：屏幕镜像 | macOS | ✅ 已测试：1080p 和 4K 屏幕镜像；延迟见[常见问题](/zh/faq) |
 | Mac："音乐"App | macOS | ❌ 不支持：它使用的加密方式，开源 AirPlay 库无法兼容 |
-| Windows 11 电脑，AMD 显卡（[映湾投屏电脑端](/zh/desktop-guide)） | Windows 11 | ✅ 已测试：屏幕和窗口，带声音；延迟约四分之一秒 |
-| Ubuntu 26.04，Wayland 上的 GNOME，NVIDIA 显卡（[映湾投屏电脑端](/zh/desktop-guide)） | Linux | ✅ 已测试：屏幕和窗口，通过系统的共享对话框 |
+| Windows 11 电脑，AMD 显卡（[映湾电脑端（CastBay for PC）](/zh/desktop-guide)） | Windows 11 | ✅ 已测试：屏幕和窗口，带声音；延迟约四分之一秒 |
+| Ubuntu 26.04，Wayland 上的 GNOME，NVIDIA 显卡（[映湾电脑端（CastBay for PC）](/zh/desktop-guide)） | Linux | ✅ 已测试：屏幕和窗口，通过系统的共享对话框 |
 | 其他 Windows 10/11 和 Ubuntu、Debian 电脑 | Windows、Linux | ❔ 应该可以用，尚未确认 |
 
 ## App

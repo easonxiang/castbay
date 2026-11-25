@@ -10,11 +10,11 @@ import { desktopReleases, releases } from '../../releases';
 const [android] = await releases('zh');
 const [desktop] = await desktopReleases('zh');
 ---
-<Page lang="zh" page="download" title='下载映湾投屏 CastBay：安卓电视、车机接收端，Windows 与 Linux 电脑端' description='下载映湾投屏：安卓电视、电视盒子、车机和平板上的接收端 App，以及把 Windows 或 Linux 电脑投到接收端的映湾投屏电脑端。免费开源。'>
+<Page lang="zh" page="download" title='下载映湾投屏 CastBay：安卓电视、车机接收端，Windows 与 Linux 电脑端' description='下载映湾投屏：安卓电视、电视盒子、车机和平板上的接收端 App，以及把 Windows 或 Linux 电脑投到接收端的映湾电脑端（CastBay for PC）。免费开源。'>
 <main class="wrap doc download">
   <h1>下载映湾投屏</h1>
   <p class="lead">
-    映湾投屏分两部分。<strong>安卓 App</strong> 装在显示画面的屏幕上（电视、电视盒子、车机或平板），iPhone、iPad、Mac 和各种视频 App 不用装任何东西就能投过来。<strong>映湾投屏电脑端</strong>装在 Windows 或 Linux 电脑上，把电脑的屏幕或指定窗口投到那个安卓 App。
+    映湾投屏分两部分。<strong>安卓 App</strong> 装在显示画面的屏幕上（电视、电视盒子、车机或平板），iPhone、iPad、Mac 和各种视频 App 不用装任何东西就能投过来。<strong>映湾电脑端（CastBay for PC）</strong>装在 Windows 或 Linux 电脑上，把电脑的屏幕或指定窗口投到那个安卓 App。
   </p>
 
   <section class="dl-card" id="android">
@@ -30,8 +30,8 @@ const [desktop] = await desktopReleases('zh');
   </section>
 
   <section class="dl-card" id="windows">
-    <h2>Windows：映湾投屏电脑端</h2>
-    <p class="dl-meta">映湾投屏电脑端 {desktop.data.version} · {formatDate('zh', desktop.data.date)} · Windows 10 或 11（64 位）· 约 4 MB</p>
+    <h2>Windows：映湾电脑端（CastBay for PC）</h2>
+    <p class="dl-meta">映湾电脑端（CastBay for PC） {desktop.data.version} · {formatDate('zh', desktop.data.date)} · Windows 10 或 11（64 位）· 约 4 MB</p>
     <p class="actions">
       <a class="btn btn-primary" href="/desktop/windows-zh">安装程序（中文）</a>
       <a class="btn btn-ghost" href="/desktop/windows-en">Installer (English)</a>
@@ -46,13 +46,13 @@ const [desktop] = await desktopReleases('zh');
   </section>
 
   <section class="dl-card" id="linux">
-    <h2>Linux：映湾投屏电脑端</h2>
-    <p class="dl-meta">映湾投屏电脑端 {desktop.data.version} · Ubuntu 或 Debian（64 位），Wayland 加 PipeWire · 约 6 MB</p>
+    <h2>Linux：映湾电脑端（CastBay for PC）</h2>
+    <p class="dl-meta">映湾电脑端（CastBay for PC） {desktop.data.version} · Ubuntu 或 Debian（64 位），Wayland 加 PipeWire · 约 6 MB</p>
     <p class="actions">
       <a class="btn btn-primary" href="/desktop/linux">下载 .deb</a>
     </p>
     <p class="note">
-      用 <code>sudo apt install ./castbay-desktop_{desktop.data.version}_amd64.deb</code> 安装。开始投屏时系统会询问要共享哪个屏幕或窗口。装好之后，映湾投屏电脑端可以自己检查并安装新版本。
+      用 <code>sudo apt install ./castbay-desktop_{desktop.data.version}_amd64.deb</code> 安装。开始投屏时系统会询问要共享哪个屏幕或窗口。装好之后，映湾电脑端（CastBay for PC）可以自己检查并安装新版本。
     </p>
   </section>
 
@@ -65,7 +65,7 @@ const [desktop] = await desktopReleases('zh');
   </section>
 
   <p class="note">
-    映湾投屏电脑端怎么用：<a href="/zh/desktop-guide">电脑端使用说明</a>。所有版本、校验值和源码：<a href="https://github.com/weenas/castbay/releases">GitHub 发布页</a> · <a href="/zh/changelog">更新日志</a> · 映湾投屏免费开源（GPL-3.0）。
+    映湾电脑端（CastBay for PC）怎么用：<a href="/zh/desktop-guide">电脑端使用说明</a>。所有版本、校验值和源码：<a href="https://github.com/weenas/castbay/releases">GitHub 发布页</a> · <a href="/zh/changelog">更新日志</a> · 映湾投屏免费开源（GPL-3.0）。
   </p>
 </main>
 </Page>
