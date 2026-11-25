@@ -84,7 +84,7 @@ def vertical_zh_tw(palette):
 
 def horizontal_en(palette):
     return f"""{mark('translate(10 14) scale(1.25)')}
-<text x="177" y="105" fill="{palette['primary_text']}" font-family="Avenir Next, Inter, sans-serif" font-size="54" font-weight="650" letter-spacing="1">CASTBAY</text>"""
+<text x="177" y="105" fill="{palette['primary_text']}" font-family="Avenir Next, Inter, sans-serif" font-size="70" font-weight="650" letter-spacing="1">CASTBAY</text>"""
 
 
 def horizontal_zh(palette):
@@ -111,7 +111,7 @@ LAYOUTS = {
     "vertical-en": ("0 0 1024 1024", vertical_en),
     "vertical-zh-TW": ("0 0 1024 1024", vertical_zh_tw),
     "horizontal-zh": ("0 0 610 146", horizontal_zh),
-    "horizontal-en": ("0 0 610 146", horizontal_en),
+    "horizontal-en": ("0 0 525 146", horizontal_en),
     "horizontal-zh-TW": ("0 0 610 146", horizontal_zh_tw),
     "app-icon": ("0 0 1024 1024", app_icon),
     "adaptive-foreground": ("0 0 1024 1024", lambda palette: mark("translate(128 220) scale(6)")),
