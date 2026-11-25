@@ -1,16 +1,20 @@
 # Installs, installs over, starts and uninstalls the MSI silently, checking what it leaves behind.
 # Usage: test-install.ps1 <path to the .msi> <expected version>
-param([Parameter(Mandatory)] [string] $Msi, [Parameter(Mandatory)] [string] $Version)
+param(
+  [Parameter(Mandatory)] [string] $Msi,
+  [Parameter(Mandatory)] [string] $Version,
+  [Parameter(Mandatory)] [string] $AppName
+)
 $ErrorActionPreference = 'Stop'
 $dir = Join-Path $env:LOCALAPPDATA 'Programs\CastBay Desktop'
 $exe = Join-Path $dir 'CastBay Desktop.exe'
-$lnk = Join-Path $env:APPDATA 'Microsoft\Windows\Start Menu\Programs\CastBay Desktop.lnk'
+$lnk = Join-Path $env:APPDATA "Microsoft\Windows\Start Menu\Programs\$AppName.lnk"
 $log = Join-Path $env:TEMP 'castbay-msi.log'
 function Check($ok, $what) { if ($ok) { "ok: $what" } else { throw "FAILED: $what" } }
 # Where Windows Installer registers the entry for Settings > Apps depends on the install scope.
 function Arp {
   foreach ($root in 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall', 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall', 'HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall') {
-    $hit = Get-ItemProperty "$root\*" -ErrorAction SilentlyContinue | Where-Object { $_.DisplayName -eq 'CastBay Desktop' } | Select-Object -First 1
+    $hit = Get-ItemProperty "$root\*" -ErrorAction SilentlyContinue | Where-Object { $_.DisplayName -eq $AppName } | Select-Object -First 1
     if ($hit) { $hit | Add-Member -NotePropertyName Where -NotePropertyValue $root -Force; return $hit }
   }
 }
