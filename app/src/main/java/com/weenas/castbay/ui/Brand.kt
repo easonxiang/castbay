@@ -38,7 +38,7 @@ fun BrandTitle(modifier: Modifier = Modifier) {
     }
 }
 
-/** The slogan (一投即达，自在映湾投屏), in the app's lighter purple, under [BrandTitle]. */
+/** The slogan (一投即达，自在映湾), in the app's lighter purple, under [BrandTitle]. */
 @Composable
 fun BrandSlogan(
     modifier: Modifier = Modifier,
