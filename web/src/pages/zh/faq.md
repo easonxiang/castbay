@@ -4,7 +4,7 @@ lang: zh
 page: faq
 toc: true
 faq: true
-title: '常见问题 – 映湾投屏 CastBay'
+title: '常见问题 – 映湾投屏'
 description: '映湾投屏常见问题：支持哪些设备、如何安装、手机找不到电视、投屏和播放、隐私和安全。'
 heading: '常见问题'
 intro: '找不到答案？看看<a href="/zh/guide">使用说明</a>，或者<a href="/zh/feedback">告诉我们</a>。'
@@ -12,17 +12,17 @@ intro: '找不到答案？看看<a href="/zh/guide">使用说明</a>，或者<a 
 
 ## 开始使用
 
-### CastBay 免费吗？有广告或时长限制吗？
+### 映湾投屏免费吗？有广告或时长限制吗？
 
-免费，没有广告，没有时长限制，也不用注册账号。CastBay 是开源软件（GPL-3.0-or-later），没有付费版和订阅。唯一会离开电视的数据是你自己选的：开歌词时把歌名和歌手发给 lrclib.net 查歌词，以及你自己上传的问题报告。详见[隐私政策](/zh/privacy)。
+免费，没有广告，没有时长限制，也不用注册账号。映湾投屏是开源软件（GPL-3.0-or-later），没有付费版和订阅。唯一会离开电视的数据是你自己选的：开歌词时把歌名和歌手发给 lrclib.net 查歌词，以及你自己上传的问题报告。详见[隐私政策](/zh/privacy)。
 
 ### 支持哪些设备？
 
-Android 6.0 及以上的安卓设备都可以接收：电视、电视盒子、车机和平板，用遥控器或触摸屏操作。它们可以接收来自 iPhone、iPad、Mac（AirPlay）、App 自带投屏按钮（DLNA）和 Windows、Linux 电脑（映湾电脑端（CastBay for PC））的内容。已在小米（Android 6）、TCL（Android 9）和索尼（Android 12）电视、Google TV Streamer 以及比亚迪 DiLink 5.0 车机（Android 12）上测试，详见[兼容性列表](/zh/compatibility)。
+Android 6.0 及以上的安卓设备都可以接收：电视、电视盒子、车机和平板，用遥控器或触摸屏操作。它们可以接收来自 iPhone、iPad、Mac（AirPlay）、App 自带投屏按钮（DLNA）和 Windows、Linux 电脑（映湾电脑端）的内容。已在小米（Android 6）、TCL（Android 9）和索尼（Android 12）电视、Google TV Streamer 以及比亚迪 DiLink 5.0 车机（Android 12）上测试，详见[兼容性列表](/zh/compatibility)。
 
 ### 可以从 Windows 或 Linux 电脑投屏吗？
 
-可以，用**映湾电脑端（CastBay for PC）**：一个单独的程序，适用于 Windows 10/11 和 Ubuntu、Debian。它把整个屏幕或指定窗口连同声音投到运行映湾投屏的设备上；先在那台设备的映湾投屏设置里打开**电脑投屏**。它用映湾投屏自己的加密连接，不是 AirPlay、DLNA 或 Miracast，所以只能投到映湾投屏，延迟很低：家庭网络里约四分之一秒。在<a href="/zh/download">下载页</a>获取，其余见<a href="/zh/desktop-guide">电脑端使用说明</a>。Mac 不需要额外安装：它用 AirPlay 投屏。
+可以，用**映湾电脑端**：一个单独的程序，适用于 Windows 10/11 和 Ubuntu、Debian。它把整个屏幕或指定窗口连同声音投到运行映湾投屏的设备上；先在那台设备的映湾投屏设置里打开**电脑投屏**。它用映湾投屏自己的加密连接，不是 AirPlay、DLNA 或 Miracast，所以只能投到映湾投屏，延迟很低：家庭网络里约四分之一秒。在<a href="/zh/download">下载页</a>获取，其余见<a href="/zh/desktop-guide">电脑端使用说明</a>。Mac 不需要额外安装：它用 AirPlay 投屏。
 
 ### 如何把 APK 安装到电视上？
 

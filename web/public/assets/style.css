@@ -64,9 +64,9 @@ img { max-width: 100%; display: block; }
   border-bottom: 1px solid var(--line);
 }
 .top .wrap { display: flex; align-items: center; gap: 28px; height: 84px; }
-/* The bilingual wordmark (mark, CastBay | 映湾投屏) as an image: its fonts aren't on every system. */
+/* A single-language wordmark; its fonts aren't on every system. */
 .brand { display: flex; align-items: center; }
-.brand img { width: auto; height: 60px; }
+.brand img { width: 250px; height: 60px; object-fit: contain; }
 .nav { display: flex; gap: 22px; margin-left: auto; }
 .nav a { color: var(--text-2); font-size: 15px; white-space: nowrap; }
 .nav a:hover { color: var(--text); text-decoration: none; }
@@ -321,7 +321,7 @@ footer .links { display: flex; gap: 20px; flex-wrap: wrap; }
 @media (max-width: 720px) {
   .top:not(.menu-open) .nav { display: none; }
   .top .wrap { gap: 12px; height: 72px; }
-  .brand img { height: 48px; } /* leaves room for the language button on phones */
+  .brand img { width: 200px; height: 48px; } /* leaves room for the language button on phones */
   .theme { margin-left: auto; }
   .hero .wrap { padding-top: 72px; padding-bottom: 96px; }
   .hero::after { background: linear-gradient(0deg, var(--bg) 0%, rgba(var(--veil), 0.85) 60%, rgba(var(--veil), 0.7) 100%); }

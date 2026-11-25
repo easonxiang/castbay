@@ -3,13 +3,13 @@ layout: ../../layouts/Doc.astro
 lang: zh
 toc: true
 page: desktop-guide
-title: '电脑端使用说明 – 映湾投屏 CastBay'
-description: '映湾电脑端（CastBay for PC）的使用说明：把 Windows 或 Linux 电脑的屏幕或指定窗口投到映湾投屏、托盘菜单、每一个设置、更新，以及它会往网络上发送什么。'
-heading: '映湾电脑端（CastBay for PC）使用说明'
-intro: '映湾电脑端（CastBay for PC）把电脑的屏幕或指定窗口连同声音投到运行映湾投屏的设备上。在<a href="/zh/download">下载页</a>获取。接收端一侧的用法见<a href="/zh/guide">使用说明</a>。'
+title: '电脑端使用说明 – 映湾投屏'
+description: '映湾电脑端的使用说明：把 Windows 或 Linux 电脑的屏幕或指定窗口投到映湾投屏、托盘菜单、每一个设置、更新，以及它会往网络上发送什么。'
+heading: '映湾电脑端使用说明'
+intro: '映湾电脑端把电脑的屏幕或指定窗口连同声音投到运行映湾投屏的设备上。在<a href="/zh/download">下载页</a>获取。接收端一侧的用法见<a href="/zh/guide">使用说明</a>。'
 ---
 
-映湾电脑端（CastBay for PC）使用自己的加密连接，不是 AirPlay 或 DLNA，所以延迟很低：家庭网络里约四分之一秒。
+映湾电脑端使用自己的加密连接，不是 AirPlay 或 DLNA，所以延迟很低：家庭网络里约四分之一秒。
 
 ## 准备
 
@@ -20,7 +20,7 @@ intro: '映湾电脑端（CastBay for PC）把电脑的屏幕或指定窗口连�
 
 - **Windows 安装程序**（.msi，有中文和英文两个）：双击、下一步、完成，不需要管理员权限。它会添加开始菜单项和“设置 → 应用”里的卸载入口。运行新版安装程序会原地升级并保留配对记录。
 - **Windows 免安装版**（.zip）：解压到任意位置，运行 **CastBay Desktop.exe**。不安装任何东西，删掉文件夹就卸载了。
-- **Linux**（.deb）：`sudo apt install ./castbay-desktop_<版本>_amd64.deb`，然后在应用程序菜单里打开 **CastBay for PC**。已在装有 GNOME 的 Ubuntu 26.04 上测试。
+- **Linux**（.deb）：`sudo apt install ./castbay-desktop_<版本>_amd64.deb`，然后在应用程序菜单里打开 **映湾电脑端**。已在装有 GNOME 的 Ubuntu 26.04 上测试。
 
 都可以在<a href="/zh/download">下载页</a>找到。
 
@@ -45,7 +45,7 @@ intro: '映湾电脑端（CastBay for PC）把电脑的屏幕或指定窗口连�
 
 点托盘图标打开窗口；右键打开菜单：
 
-- **打开 CastBay for PC** 和**设置**。
+- **打开 映湾电脑端** 和**设置**。
 - **开始投屏**（没有投屏时，Windows）：列出可以选的屏幕和窗口，选一项就投到你上次用的接收端，不用打开窗口。如果那台接收端找不到或需要密码，窗口会打开并说明原因；第一次配对的配对码也要在窗口里输入。
 - **切换投屏内容**（投屏时，Windows）：同样的列表，窗口打开或关闭时保持最新。
 - **停止投屏**、**关于**和**退出**（退出会先结束正在进行的投屏）。
@@ -81,9 +81,9 @@ intro: '映湾电脑端（CastBay for PC）把电脑的屏幕或指定窗口连�
 
 ## Linux 说明
 
-- **投什么**：窗口里没有屏幕和窗口的列表，点**开始投屏**时由系统询问要共享屏幕还是窗口。勾选“记住此选择”后不再询问；主界面的**重新选择**会让下一次投屏时重新询问。记住的选择失效时，映湾电脑端（CastBay for PC）会在 15 秒后忘掉它，系统的对话框重新出现，再选一次即可。（保存在 `~/.local/share/castbay-desktop/screencast-token`，删除该文件效果相同。）
+- **投什么**：窗口里没有屏幕和窗口的列表，点**开始投屏**时由系统询问要共享屏幕还是窗口。勾选“记住此选择”后不再询问；主界面的**重新选择**会让下一次投屏时重新询问。记住的选择失效时，映湾电脑端会在 15 秒后忘掉它，系统的对话框重新出现，再选一次即可。（保存在 `~/.local/share/castbay-desktop/screencast-token`，删除该文件效果相同。）
 - **更换投屏内容**：投屏页的**更换投屏内容…**会再次打开系统的对话框，不用结束投屏。取消的话，仍投原来的内容。托盘菜单里的切换项在 Linux 上是灰的，因为只有系统的对话框能选。
-- **托盘**：投屏中关闭窗口，投屏会继续在托盘里运行。GNOME 默认不显示托盘图标（安装 AppIndicator 扩展即可）；没有扩展时，再次从应用程序菜单打开 **CastBay for PC**，正在运行的窗口会回到前台。
+- **托盘**：投屏中关闭窗口，投屏会继续在托盘里运行。GNOME 默认不显示托盘图标（安装 AppIndicator 扩展即可）；没有扩展时，再次从应用程序菜单打开 **映湾电脑端**，正在运行的窗口会回到前台。
 - **登录后自动启动**会写入 `~/.config/autostart/castbay-desktop.desktop`。
 - **编码**：NVIDIA 显卡用 NVENC，其他用 CPU 的 x264（AMD、Intel 硬件编码暂未支持）。
 
@@ -93,7 +93,7 @@ intro: '映湾电脑端（CastBay for PC）把电脑的屏幕或指定窗口连�
 
 投**整个屏幕**时，如果在浏览器或播放器里把视频**全屏**播放，电视上的画面可能定格，而电脑自己的屏幕照常播放。这不是网络问题，也不是视频格式的问题。
 
-- **原因**：全屏窗口盖住整个屏幕时，GNOME 会把这个窗口直接送到显示器（“直接扫描输出”），同时不再给录屏的程序提供新画面，直到别的东西重新绘制。这是 GNOME（mutter）自己的行为，在 Wayland 加 NVIDIA 显卡上会遇到，映湾电脑端（CastBay for PC）无法从外部改变；相关报告见 [mutter 问题 3074](https://gitlab.gnome.org/GNOME/mutter/-/issues/3074)，KDE 也有类似的问题（[KDE bug 495287](https://bugs.kde.org/show_bug.cgi?id=495287)）。
+- **原因**：全屏窗口盖住整个屏幕时，GNOME 会把这个窗口直接送到显示器（“直接扫描输出”），同时不再给录屏的程序提供新画面，直到别的东西重新绘制。这是 GNOME（mutter）自己的行为，在 Wayland 加 NVIDIA 显卡上会遇到，映湾电脑端无法从外部改变；相关报告见 [mutter 问题 3074](https://gitlab.gnome.org/GNOME/mutter/-/issues/3074)，KDE 也有类似的问题（[KDE bug 495287](https://bugs.kde.org/show_bug.cgi?id=495287)）。
 - **办法**：改投**窗口**，不要投整个屏幕。系统询问共享什么时，选浏览器或播放器的窗口，这样全屏时画面也照常更新。如果系统没有询问，先点主界面的**重新选择**。已经在投屏幕的话，点投屏页的**更换投屏内容…**。
 
 <a id="linux-sound"></a>
@@ -102,7 +102,7 @@ intro: '映湾电脑端（CastBay for PC）把电脑的屏幕或指定窗口连�
 
 **Windows** 上投某个窗口，只传这个窗口的声音。**Linux** 上即使投的是窗口，传的也是整台电脑的声音：别的程序在放的音乐也会传到电视上。
 
-- **原因**：Wayland 下系统的共享对话框只把画面交给程序，不会说明这个窗口属于哪个程序，映湾电脑端（CastBay for PC）没法知道该配哪一路声音。（Windows 能查出窗口属于哪个程序，所以能只取这个程序的声音。）
+- **原因**：Wayland 下系统的共享对话框只把画面交给程序，不会说明这个窗口属于哪个程序，映湾电脑端没法知道该配哪一路声音。（Windows 能查出窗口属于哪个程序，所以能只取这个程序的声音。）
 - **办法**：投屏时把别的声音停掉或静音，或者在设置里关掉**同时传声音**，让电视保持无声。
 
 ## 出问题时
@@ -123,4 +123,4 @@ intro: '映湾电脑端（CastBay for PC）把电脑的屏幕或指定窗口连�
 
 ## 卸载
 
-Windows：设置 → 应用 → CastBay for PC → 卸载，会询问是否同时删除配对记录和日志；免安装版直接删文件夹（设置保存在 `%APPDATA%\com.weenas.castbay.desktop`）。Linux：`sudo apt remove castbay-desktop`。
+Windows：设置 → 应用 → 映湾电脑端 → 卸载，会询问是否同时删除配对记录和日志；免安装版直接删文件夹（设置保存在 `%APPDATA%\com.weenas.castbay.desktop`）。Linux：`sudo apt remove castbay-desktop`。

@@ -2,4 +2,5 @@
 <WixLocalization Culture="zh-CN" xmlns="http://wixtoolset.org/schemas/v4/wxl">
   <String Id="Downgrade" Value="已安装了更新版本的 CastBay Desktop。" />
   <String Id="LaunchText" Value="运行 CastBay Desktop" />
+  <String Id="AppName" Value="映湾电脑端" />
 </WixLocalization>
