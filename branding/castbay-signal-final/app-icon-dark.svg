@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="CastBay dark logo">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="映湾投屏 CASTBAY app-icon dark">
 <defs><linearGradient id="outer" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E5DAFF"/><stop offset="1" stop-color="#CDBDF5"/></linearGradient><linearGradient id="middle" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D0B6F5"/><stop offset="1" stop-color="#AE8BE8"/></linearGradient><linearGradient id="inner" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B286E2"/><stop offset="1" stop-color="#9264CF"/></linearGradient><linearGradient id="base" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9E74DB"/><stop offset="1" stop-color="#BD99ED"/></linearGradient></defs>
 <rect width="1024" height="1024" rx="224" fill="#181225"/>
 <g transform="translate(128 220) scale(6)" fill="none" stroke-linecap="round" stroke-linejoin="round">
