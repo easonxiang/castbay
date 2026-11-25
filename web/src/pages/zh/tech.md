@@ -49,9 +49,9 @@ DLNA（Digital Living Network Alliance，数字生活网络联盟）制定了让
 - **在 App 里用 AirPlay 投送**：兼容的地址式视频投送会把视频*在哪里*告诉电视，由电视直接获取。接收端必须能访问媒体源，手机上的 VPN 或登录权限不会自动共享；其他 App 或内容可能采用不同播放路径，或限制投送。音乐接收使用音频流，映湾投屏支持 ALAC 解码，但实际格式与音质取决于会话和输出链路。
 - **App 自带的投屏按钮（DLNA）**，如哔哩哔哩、爱奇艺、网易云音乐、QQ 音乐：同样是把播放地址交给电视，iPhone 和安卓手机都能用。画质由 App 决定，比如哔哩哔哩把 1080P 留给它的官方电视 App，投到其他设备最高 720P；屏幕镜像则没有这个限制。
 
-## 从电脑投屏：映湾投屏电脑端
+## 从电脑投屏：映湾电脑端（CastBay for PC）
 
-Windows 和 Linux 电脑没有 AirPlay 可用，所以映湾投屏电脑端使用映湾投屏自己的连接，只有映湾投屏能听懂。接收端会在网络上公布自己（`_castbay._tcp`，和 AirPlay 的做法类似），双方建立一条 TLS 连接，各自用自己的密钥证明身份。第一次连接时，接收端会显示一个由双方密钥算出的 6 位数字，在电脑上输入即可；之后接收端会被记住，密钥变化会被拒绝。连接里传的是 H.264 视频（能用显卡就用显卡编码：AMD、NVIDIA，否则用 CPU 的 x264），每 2 秒有一帧完整的画面（关键帧），丢帧之后的损伤不会一直留在屏幕上（走的是一条 TCP 连接，路上不会丢数据；发送端在连接装不下时会主动丢掉一些画面，连同依赖它们的后续画面，然后立刻发一个关键帧），还有 AAC 声音。电视照样用硬件解码，和屏幕镜像一样。协议写在<a href="https://github.com/weenas/castbay/blob/main/desktop/docs/protocol.md">源码</a>里。
+Windows 和 Linux 电脑没有 AirPlay 可用，所以映湾电脑端（CastBay for PC）使用映湾投屏自己的连接，只有映湾投屏能听懂。接收端会在网络上公布自己（`_castbay._tcp`，和 AirPlay 的做法类似），双方建立一条 TLS 连接，各自用自己的密钥证明身份。第一次连接时，接收端会显示一个由双方密钥算出的 6 位数字，在电脑上输入即可；之后接收端会被记住，密钥变化会被拒绝。连接里传的是 H.264 视频（能用显卡就用显卡编码：AMD、NVIDIA，否则用 CPU 的 x264），每 2 秒有一帧完整的画面（关键帧），丢帧之后的损伤不会一直留在屏幕上（走的是一条 TCP 连接，路上不会丢数据；发送端在连接装不下时会主动丢掉一些画面，连同依赖它们的后续画面，然后立刻发一个关键帧），还有 AAC 声音。电视照样用硬件解码，和屏幕镜像一样。协议写在<a href="https://github.com/weenas/castbay/blob/main/desktop/docs/protocol.md">源码</a>里。
 
 ## 手机是怎么找到电视的
 
@@ -106,4 +106,4 @@ iPhone 投音乐时，并不是"放到哪里就发到哪里"。它会提前约�
 
 ## 基于开源
 
-映湾投屏以 GPL-3.0 协议开源，AirPlay 协议基于 [UxPlay](https://github.com/FDH2/UxPlay)，并使用了 [libplist](https://github.com/libimobiledevice/libplist)、[Apple ALAC 解码器](https://github.com/macosforge/alac)和 [Media3 ExoPlayer](https://developer.android.com/media/media3)，视频由安卓的硬件解码器播放。映湾投屏电脑端还使用了 [FFmpeg](https://ffmpeg.org) 和 [x264](https://www.videolan.org/developers/x264.html) 做视频编码，用 [Tauri](https://tauri.app) 做窗口。完整源代码在 [GitHub](https://github.com/weenas/castbay) 上。
+映湾投屏以 GPL-3.0 协议开源，AirPlay 协议基于 [UxPlay](https://github.com/FDH2/UxPlay)，并使用了 [libplist](https://github.com/libimobiledevice/libplist)、[Apple ALAC 解码器](https://github.com/macosforge/alac)和 [Media3 ExoPlayer](https://developer.android.com/media/media3)，视频由安卓的硬件解码器播放。映湾电脑端（CastBay for PC）还使用了 [FFmpeg](https://ffmpeg.org) 和 [x264](https://www.videolan.org/developers/x264.html) 做视频编码，用 [Tauri](https://tauri.app) 做窗口。完整源代码在 [GitHub](https://github.com/weenas/castbay) 上。

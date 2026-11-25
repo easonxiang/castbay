@@ -11,12 +11,12 @@ const entries = await Promise.all(
 );
 const intro =
   lang === 'zh'
-    ? '映湾投屏电脑端（Windows 和 Linux）的更新内容。程序里有新版本时，点"更新"即可安装；也可以在<a href="/zh/download">下载页</a>下载。'
+    ? '映湾电脑端（CastBay for PC，适用于 Windows 和 Linux）的更新内容。程序里有新版本时，点"更新"即可安装；也可以在<a href="/zh/download">下载页</a>下载。'
     : 'What changed in CastBay for PC (Windows and Linux). When a new version is out, the Update button in the program installs it; the installers are on the <a href="/download">download page</a>.';
 const page = lang === 'zh' ? '发布页' : 'Release page';
 ---
 <section id="desktop">
-  <h2>{lang === 'zh' ? '映湾投屏电脑端' : 'CastBay for PC'}</h2>
+  <h2>{lang === 'zh' ? '映湾电脑端（CastBay for PC）' : 'CastBay for PC'}</h2>
   <p set:html={intro} />
   {entries.map(({ entry, Content }) => (
     <section class="release" id={`desktop-v${entry.data.version}`}>

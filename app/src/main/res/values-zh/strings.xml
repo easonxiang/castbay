@@ -127,7 +127,7 @@
     <string name="setting_frame_rate">最大帧率</string>
     <string name="setting_codec">编码</string>
     <string name="setting_codec_h264_only">仅 H.264</string>
-    <string name="setting_desktop">电脑投屏（映湾投屏桌面端）</string>
+    <string name="setting_desktop">电脑投屏（映湾电脑端，CastBay for PC）</string>
     <string name="setting_dlna">DLNA 投屏（App 自带投屏按钮）</string>
     <string name="setting_password_field">密码</string>
     <string name="setting_password_too_short">至少 %1$d 位数字。</string>

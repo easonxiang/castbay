@@ -7,7 +7,7 @@ import DesktopChangelog from '../../components/DesktopChangelog.astro';
 import { releases, desktopReleases } from '../../releases';
 
 const desktop = (await desktopReleases('zh')).map((r) => ({ depth: 3, slug: `desktop-v${r.data.version}`, text: r.data.version }));
-const entries = [{ depth: 2, slug: 'desktop', text: '映湾投屏电脑端' }, ...desktop, { depth: 2, slug: 'android', text: '映湾投屏' }, ...(await releases('zh')).map((r) => ({ depth: 2, slug: `v${r.data.version}`, text: r.data.version }))];
+const entries = [{ depth: 2, slug: 'desktop', text: '映湾电脑端（CastBay for PC）' }, ...desktop, { depth: 2, slug: 'android', text: '映湾投屏' }, ...(await releases('zh')).map((r) => ({ depth: 2, slug: `v${r.data.version}`, text: r.data.version }))];
 ---
 <Page lang="zh" page="changelog" title="更新日志 – 映湾投屏 CastBay" description="映湾投屏每个版本的更新内容。">
 <TocPage lang="zh" entries={entries}>

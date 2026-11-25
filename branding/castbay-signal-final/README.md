@@ -12,6 +12,6 @@
 | `app-icon-{light,dark}` | 带圆角背景的应用图标预览/导出 | SVG，1024 / 512 / 192 px PNG |
 | `adaptive-foreground-{light,dark}` | Android 自适应图标透明前景层 | SVG，1024 / 432 px PNG |
 
-`preview-light-dark.png` 展示两种主题的竖排版。Android 自适应图标的建议背景色：浅色 `#F7F3FF`，深色 `#181225`；前景层已留出安全边距。本站/APP 尚未自动替换为这些资源。
+`preview-light-dark.png` 展示两种主题的竖排版。Android 自适应图标的建议背景色：浅色 `#F7F3FF`，深色 `#181225`；前景层已留出安全边距。网页、README 和应用中的字标与图标使用此目录的正式资源。
 
 文字 SVG 使用 PingFang SC / Noto Sans SC 与 Avenir Next / Inter 字体栈，其他系统的字形或宽度可能略有不同；PNG 可用于固定外观。正式发布前如需跨平台完全一致，建议将最终文字转为路径。`generate.py` 可重新生成全部 SVG；PNG 是从这些 SVG 导出的。
