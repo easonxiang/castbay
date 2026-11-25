@@ -1,5 +1,5 @@
 name: Feature request / 功能建议
-description: An idea for CastBay. / 对映湾的建议。
+description: An idea for CastBay. / 对映湾投屏的建议。
 labels: [enhancement]
 body:
   - type: textarea

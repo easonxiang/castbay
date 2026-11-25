@@ -2,7 +2,7 @@
 layout: ../../layouts/Doc.astro
 lang: zh
 page: compatibility
-title: '兼容性 – 映湾 CastBay'
+title: '兼容性 – 映湾投屏 CastBay'
 description: '映湾投屏已经测试过的电视、手机和 App，以及各自的支持情况。'
 heading: '兼容性'
 intro: '映湾投屏目前已测试过的设备和 App。在列表之外的设备上用过，或者发现哪里不能用？欢迎<a href="/zh/feedback">告诉我们</a>。'
@@ -50,8 +50,8 @@ intro: '映湾投屏目前已测试过的设备和 App。在列表之外的设�
 | iPad | iPadOS | ❔ 尚未确认，和 iPhone 使用相同的 AirPlay |
 | MacBook：屏幕镜像 | macOS | ✅ 已测试：1080p 和 4K 屏幕镜像；延迟见[常见问题](/zh/faq) |
 | Mac："音乐"App | macOS | ❌ 不支持：它使用的加密方式，开源 AirPlay 库无法兼容 |
-| Windows 11 电脑，AMD 显卡（[映湾电脑端](/zh/desktop-guide)） | Windows 11 | ✅ 已测试：屏幕和窗口，带声音；延迟约四分之一秒 |
-| Ubuntu 26.04，Wayland 上的 GNOME，NVIDIA 显卡（[映湾电脑端](/zh/desktop-guide)） | Linux | ✅ 已测试：屏幕和窗口，通过系统的共享对话框 |
+| Windows 11 电脑，AMD 显卡（[映湾投屏电脑端](/zh/desktop-guide)） | Windows 11 | ✅ 已测试：屏幕和窗口，带声音；延迟约四分之一秒 |
+| Ubuntu 26.04，Wayland 上的 GNOME，NVIDIA 显卡（[映湾投屏电脑端](/zh/desktop-guide)） | Linux | ✅ 已测试：屏幕和窗口，通过系统的共享对话框 |
 | 其他 Windows 10/11 和 Ubuntu、Debian 电脑 | Windows、Linux | ❔ 应该可以用，尚未确认 |
 
 ## App
@@ -70,7 +70,7 @@ intro: '映湾投屏目前已测试过的设备和 App。在列表之外的设�
 
 ## 媒体格式（DLNA）
 
-应用自带的投屏按钮（DLNA）会把一个链接发给电视，由电视播放。映湾投屏会告诉应用自己能播哪些格式，应用一般只在这些格式下才把映湾列为投屏目标：
+应用自带的投屏按钮（DLNA）会把一个链接发给电视，由电视播放。映湾投屏会告诉应用自己能播哪些格式，应用一般只在这些格式下才把映湾投屏列为投屏目标：
 
 | 类型 | 格式 | 状态 |
 | --- | --- | --- |

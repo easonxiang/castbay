@@ -6,7 +6,7 @@ import org.junit.Assert.assertNull
 import org.junit.Test
 
 class SubtitleFilesTest {
-    private val text = "1\n00:00:01,000 --> 00:00:03,000\n你好，映湾\n"
+    private val text = "1\n00:00:01,000 --> 00:00:03,000\n你好，映湾投屏\n"
 
     @Test
     fun readsGbkAsWellAsUnicode() {
@@ -25,7 +25,7 @@ class SubtitleFilesTest {
 
     @Test
     fun guessesTheLanguageFromTheScript() {
-        assertEquals("zh", SubtitleFiles.language("第一句中文字幕：映湾测试。第二句中文字幕。"))
+        assertEquals("zh", SubtitleFiles.language("第一句中文字幕：映湾投屏测试。第二句中文字幕。"))
         assertEquals("ja", SubtitleFiles.language("これは日本語の字幕です。ありがとうございます。"))
         assertEquals("ko", SubtitleFiles.language("이것은 한국어 자막입니다 감사합니다 안녕하세요"))
         assertNull(SubtitleFiles.language("1\n00:00:01,000 --> 00:00:02,000\nHello there, general Kenobi\n"))

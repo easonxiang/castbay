@@ -5,14 +5,14 @@ const $ = (id) => document.getElementById(id);
 // ---------------------------------------------------------------- text
 const TEXT = {
   zh: {
-    app_name: "映湾桌面端", still_note: "画面静止，已自动降低帧率；画面一动就恢复。", tray_no_receiver: "找不到上次投屏用的接收端。请在列表里选一台，再点开始投屏。", tray_needs_password: "上次的接收端需要密码。请在这里输入密码，再点开始投屏。", about_close: "关闭", slogan: "一投即达，自在映湾", settings: "设置", download: "下载", update_now: "更新", update_ignore: "忽略此版本", update_notes: "更新内容", got_it: "知道了", ok: "确定", search_again: "重新查找",
+    app_name: "映湾投屏桌面端", still_note: "画面静止，已自动降低帧率；画面一动就恢复。", tray_no_receiver: "找不到上次投屏用的接收端。请在列表里选一台，再点开始投屏。", tray_needs_password: "上次的接收端需要密码。请在这里输入密码，再点开始投屏。", about_close: "关闭", slogan: "一投即达，自在映湾投屏", settings: "设置", download: "下载", update_now: "更新", update_ignore: "忽略此版本", update_notes: "更新内容", got_it: "知道了", ok: "确定", search_again: "重新查找",
     aria_back: "返回", aria_settings: "设置", aria_refresh: "刷新", aria_what: "投什么", aria_source: "选择要投的内容", aria_code: "配对码",
     aria_s_quality: "画质", aria_s_bitrate: "码率", aria_s_fps: "帧率", aria_s_audio: "同时传声音", aria_s_autostart: "开机自动启动",
-    w_title: "开始使用", w_1: "在电视或平板上打开映湾，在设置里开启“电脑投屏”。",
+    w_title: "开始使用", w_1: "在电视或平板上打开映湾投屏，在设置里开启“电脑投屏”。",
     w_2: "如果 Windows 防火墙弹窗询问，请允许在专用网络上访问，否则找不到接收端。",
     w_3: "在下面选择接收端并开始投屏。第一次连接时接收端会显示 6 位配对码，在这里输入即可。",
     receivers: "接收端", what: "投什么", screen: "整个屏幕", window: "指定窗口",
-    scanning: "正在查找接收端…", refreshing: "正在刷新…", empty_title: "没有找到接收端", empty_body: "在电视或平板上打开映湾，开启“电脑投屏”；两者需在同一网络，Windows 防火墙要允许本程序访问专用网络。",
+    scanning: "正在查找接收端…", refreshing: "正在刷新…", empty_title: "没有找到接收端", empty_body: "在电视或平板上打开映湾投屏，开启“电脑投屏”；两者需在同一网络，Windows 防火墙要允许本程序访问专用网络。",
     password: "接收端密码", start: "开始投屏", stop: "停止投屏", change: "更改",
     system_picker: "开始投屏时，系统会询问要共享哪个屏幕或窗口。", reshare: "重新选择", reshare_done: "下次开始投屏时会重新询问。", with_audio: "带声音", no_audio: "不带声音", no_windows: "没有可投的窗口", no_screens: "没有可投的屏幕", screen_n: "屏幕 {0}",
     pair_open: "开放", pair_ask: "需要在接收端确认", pair_pin: "首次需要配对码", paired: "已配对", needs_password: "需要密码",
@@ -82,7 +82,7 @@ const TEXT_LINUX = {
   zh: {
     s_autostart: "登录后自动启动", aria_s_autostart: "登录后自动启动",
     w_2: "如果防火墙拦截了，请允许本程序在局域网内访问，否则找不到接收端。",
-    empty_body: "在电视或平板上打开映湾，开启“电脑投屏”；两者需在同一网络，防火墙要允许本程序访问局域网。",
+    empty_body: "在电视或平板上打开映湾投屏，开启“电脑投屏”；两者需在同一网络，防火墙要允许本程序访问局域网。",
   },
   en: {
     s_autostart: "Start at login", aria_s_autostart: "Start at login",

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 190" role="img" aria-label="映湾 CASTBAY horizontal-zh dark">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 190" role="img" aria-label="映湾投屏 CASTBAY horizontal-zh dark">
 <defs><linearGradient id="outer" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E5DAFF"/><stop offset="1" stop-color="#CDBDF5"/></linearGradient><linearGradient id="middle" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D0B6F5"/><stop offset="1" stop-color="#AE8BE8"/></linearGradient><linearGradient id="inner" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B286E2"/><stop offset="1" stop-color="#9264CF"/></linearGradient><linearGradient id="base" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9E74DB"/><stop offset="1" stop-color="#BD99ED"/></linearGradient></defs>
 <g transform="translate(18 14) scale(1.5)" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path d="M17 28C42-3 86-3 111 28" stroke="url(#outer)" stroke-width="11"/>
@@ -7,6 +7,6 @@
   <path d="M18 60c13 11 28 18 46 18s33-7 46-18" stroke="url(#base)" stroke-width="11"/>
   <path d="M18 60v22c0 8 6 14 14 14h64c8 0 14-6 14-14V60" stroke="url(#base)" stroke-width="11"/>
 </g>
-<text x="210" y="91" fill="#F6F0FF" font-family="PingFang SC, Noto Sans SC, sans-serif" font-size="80" font-weight="700" letter-spacing="3">映湾</text>
+<text x="210" y="91" fill="#F6F0FF" font-family="PingFang SC, Noto Sans SC, sans-serif" font-size="72" font-weight="700" letter-spacing="2">映湾投屏</text>
 <text x="213" y="150" fill="#D7C4F5" font-family="Avenir Next, Inter, sans-serif" font-size="43" font-weight="650" letter-spacing="1.5">CASTBAY</text>
 </svg>

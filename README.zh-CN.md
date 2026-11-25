@@ -3,7 +3,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/weenas/castbay/main/branding/castbay-signal-final/inline-dark.png">
-    <img src="https://raw.githubusercontent.com/weenas/castbay/main/branding/castbay-signal-final/inline-light.png" alt="CastBay 映湾" width="480">
+    <img src="https://raw.githubusercontent.com/weenas/castbay/main/branding/castbay-signal-final/inline-light.png" alt="CastBay 映湾投屏" width="480">
   </picture>
 </p>
 
@@ -16,9 +16,9 @@
   <a href="https://github.com/weenas/castbay/commits/main"><img src="https://img.shields.io/github/last-commit/weenas/castbay" alt="最近提交"></a>
 </p>
 
-# 映湾 CastBay：适用于 Android TV、车载屏幕和平板的 AirPlay 与 DLNA 接收器
+# 映湾投屏 CastBay：适用于 Android TV、车载屏幕和平板的 AirPlay 与 DLNA 接收器
 
-**一投即达，自在映湾。** · *Cast it, it's there. Kick back with CastBay.*
+**一投即达，自在映湾投屏。** · *Cast it, it's there. Kick back with CastBay.*
 
 **官网：[castbay.weenas.com](https://castbay.weenas.com)** · [使用指南](https://castbay.weenas.com/zh/guide) · [下载页面](https://castbay.weenas.com/zh/download) · [工作原理](https://castbay.weenas.com/zh/tech) · **下载：[CastBay.apk](https://github.com/weenas/castbay/releases/latest/download/CastBay.apk)**（[全部版本](https://github.com/weenas/castbay/releases)） · [隐私政策](https://castbay.weenas.com/zh/privacy)
 
@@ -27,7 +27,7 @@
   <a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/weenas/castbay"><img src="https://raw.githubusercontent.com/ImranR98/Obtainium/main/assets/graphics/badge_obtainium.png" alt="通过 Obtainium 获取更新" height="60"></a>
 </p>
 
-CastBay（中文名：映湾）可以把 Android TV、电视盒子、车载屏幕或平板变成接收端，让 iPhone、iPad 和 Mac 投屏、播放音乐和视频，也能接收视频及音乐 App 内置的投屏按钮（DLNA）。**CastBay 桌面版**还可以把 Windows 或 Linux 电脑的屏幕或窗口投到电视上（[下载](https://castbay.weenas.com/zh/download) · [使用指南](https://castbay.weenas.com/zh/desktop-guide) · [源码](desktop/)）。免费、开源、无广告。
+CastBay（中文名：映湾投屏）可以把 Android TV、电视盒子、车载屏幕或平板变成接收端，让 iPhone、iPad 和 Mac 投屏、播放音乐和视频，也能接收视频及音乐 App 内置的投屏按钮（DLNA）。**CastBay 桌面版**还可以把 Windows 或 Linux 电脑的屏幕或窗口投到电视上（[下载](https://castbay.weenas.com/zh/download) · [使用指南](https://castbay.weenas.com/zh/desktop-guide) · [源码](desktop/)）。免费、开源、无广告。
 
 <p align="center"><img src="https://raw.githubusercontent.com/weenas/castbay/main/web/src/assets/screens/home.webp" alt="CastBay 电视主界面" width="100%"></p>
 <p align="center"><em>主界面：随时等待投屏，显示手机上看到的名称和网络。</em></p>
