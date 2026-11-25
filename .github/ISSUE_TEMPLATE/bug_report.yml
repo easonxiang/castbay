@@ -10,7 +10,7 @@ body:
   - type: input
     id: version
     attributes:
-      label: CastBay version / 映湾版本
+      label: CastBay version / 映湾投屏版本
       description: On the About screen. / 在"关于"页里。
       placeholder: "1.0.80"
     validations:
@@ -50,7 +50,7 @@ body:
     id: report
     attributes:
       label: Report ID (if you uploaded one) / 报告编号（如果上传过）
-      description: From CastBay's About → Diagnostics → Upload log. / 在映湾的"关于 → 诊断信息 → 上传日志"里获得。
+      description: From CastBay's About → Diagnostics → Upload log. / 在映湾投屏的"关于 → 诊断信息 → 上传日志"里获得。
       placeholder: "CB-7K3F9Q"
   - type: textarea
     id: what

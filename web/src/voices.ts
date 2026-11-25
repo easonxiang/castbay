@@ -49,7 +49,7 @@ export const voices: Voice[] = [
     date: '2026-11-21',
     quote: '感谢分享！前一阵我还发帖推荐了没想到作者本人也来了',
     url: 'https://www.znds.com/tv-1275175-1-1.html',
-    context: '他曾在 2026-11-03 发帖推荐 CastBay（《【分享】映湾 CastBay：一款免费的开源 AirPlay 和 DLNA 接收器》，10,172 次浏览）。',
+    context: '他曾在 2026-11-03 发帖推荐 CastBay（《【分享】映湾投屏 CastBay：一款免费的开源 AirPlay 和 DLNA 接收器》，10,172 次浏览）。',
   },
   {
     name: 'miozx',

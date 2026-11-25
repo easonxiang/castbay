@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.weenas.castbay.R
 
-/** The CastBay mark beside the app's name (CastBay, or 映湾 in Chinese), as on the home and About screens. */
+/** The CastBay mark beside the app's name (CastBay, or 映湾投屏 in Chinese), as on the home and About screens. */
 @Composable
 fun BrandTitle(modifier: Modifier = Modifier) {
     Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
@@ -38,7 +38,7 @@ fun BrandTitle(modifier: Modifier = Modifier) {
     }
 }
 
-/** The slogan (一投即达，自在映湾), in the app's lighter purple, under [BrandTitle]. */
+/** The slogan (一投即达，自在映湾投屏), in the app's lighter purple, under [BrandTitle]. */
 @Composable
 fun BrandSlogan(
     modifier: Modifier = Modifier,

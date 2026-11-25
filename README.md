@@ -3,7 +3,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/weenas/castbay/main/branding/castbay-signal-final/inline-dark.png">
-    <img src="https://raw.githubusercontent.com/weenas/castbay/main/branding/castbay-signal-final/inline-light.png" alt="CastBay 映湾" width="480">
+    <img src="https://raw.githubusercontent.com/weenas/castbay/main/branding/castbay-signal-final/inline-light.png" alt="CastBay 映湾投屏" width="480">
   </picture>
 </p>
 
@@ -17,9 +17,9 @@
   <a href="https://scorecard.dev/viewer/?uri=github.com/weenas/castbay"><img src="https://api.scorecard.dev/projects/github.com/weenas/castbay/badge" alt="OpenSSF Scorecard"></a>
 </p>
 
-# 映湾 CastBay: AirPlay and DLNA Receiver for Android TVs, Car Displays and Tablets
+# 映湾投屏 CastBay: AirPlay and DLNA Receiver for Android TVs, Car Displays and Tablets
 
-**Cast it, it's there. Kick back with CastBay.** · 一投即达，自在映湾
+**Cast it, it's there. Kick back with CastBay.** · 一投即达，自在映湾投屏
 
 **Website: [castbay.weenas.com](https://castbay.weenas.com)** · [User guide](https://castbay.weenas.com/guide) · [All downloads](https://castbay.weenas.com/download) · [How it works](https://castbay.weenas.com/tech) · **Download: [CastBay.apk](https://github.com/weenas/castbay/releases/latest/download/CastBay.apk)** ([all releases](https://github.com/weenas/castbay/releases)) · [Privacy policy](https://castbay.weenas.com/privacy)
 
@@ -28,7 +28,7 @@
   <a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/weenas/castbay"><img src="https://raw.githubusercontent.com/ImranR98/Obtainium/main/assets/graphics/badge_obtainium.png" alt="Get it on Obtainium" height="60"></a>
 </p>
 
-CastBay (Chinese: 映湾) turns an Android TV, TV box, car display or tablet into a receiver for iPhone, iPad and Mac: AirPlay screen mirroring, music and video, plus the cast button in video and music apps (DLNA). **CastBay Desktop** casts a Windows or Linux computer's screen or a window to it too ([download](https://castbay.weenas.com/download) · [guide](https://castbay.weenas.com/desktop-guide) · [source](desktop/)). Free, open source, no ads.
+CastBay (Chinese: 映湾投屏) turns an Android TV, TV box, car display or tablet into a receiver for iPhone, iPad and Mac: AirPlay screen mirroring, music and video, plus the cast button in video and music apps (DLNA). **CastBay Desktop** casts a Windows or Linux computer's screen or a window to it too ([download](https://castbay.weenas.com/download) · [guide](https://castbay.weenas.com/desktop-guide) · [source](desktop/)). Free, open source, no ads.
 
 <p align="center"><img src="https://raw.githubusercontent.com/weenas/castbay/main/web/src/assets/screens/home.webp" alt="CastBay on a TV: receiver home screen" width="100%"></p>
 <p align="center"><em>The home screen: ready for a cast, with the name phones see and the network.</em></p>

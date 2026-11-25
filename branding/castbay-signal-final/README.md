@@ -1,14 +1,14 @@
-# 映湾 / CASTBAY 柔和渐变品牌资源
+# 映湾投屏 / CASTBAY 柔和渐变品牌资源
 
 基于选定的「海湾托起三道信号」方向制作。三道信号从内向外由较深紫色过渡到浅紫色；深色背景版另设更亮的紫色与文字，避免直接反白造成层次丢失。`light` 表示适用于浅色背景，`dark` 表示适用于深色背景。除 `app-icon-*` 和预览图外，SVG 与 PNG 背景透明。
 
 | 文件前缀 | 用途 | 导出 |
 | --- | --- | --- |
 | `symbol-{light,dark}` | 独立图标，网页 favicon / 小图标源文件 | SVG，1024 / 512 / 192 / 64 / 32 px PNG |
-| `vertical-{light,dark}` | 图标在上，映湾与 CASTBAY 在下；启动页、介绍页 | SVG，1024 px PNG |
+| `vertical-{light,dark}` | 图标在上，映湾投屏与 CASTBAY 在下；启动页、介绍页 | SVG，1024 px PNG |
 | `horizontal-zh-{light,dark}` | 图标在左，中文主标题在上 | SVG，1600 px 宽 PNG |
 | `horizontal-en-{light,dark}` | 图标在左，英文主标题在上 | SVG，1600 px 宽 PNG |
-| `inline-{light,dark}` | 图标、CASTBAY、映湾同一行；网页导航栏 | SVG，1600 px 宽 PNG |
+| `inline-{light,dark}` | 图标、CASTBAY、映湾投屏同一行；网页导航栏 | SVG，1600 px 宽 PNG |
 | `app-icon-{light,dark}` | 带圆角背景的应用图标预览/导出 | SVG，1024 / 512 / 192 px PNG |
 | `adaptive-foreground-{light,dark}` | Android 自适应图标透明前景层 | SVG，1024 / 432 px PNG |
 

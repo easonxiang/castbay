@@ -53,7 +53,7 @@ export const strings = {
     privacy: '隐私政策',
     releases: '版本下载',
     download: '下载',
-    trademarks: 'AirPlay、iPhone、iPad、Mac 是 Apple Inc. 的商标；Android TV、Google TV 是 Google LLC 的商标。映湾（CastBay）与 Apple、Google 均无关联。',
+    trademarks: 'AirPlay、iPhone、iPad、Mac 是 Apple Inc. 的商标；Android TV、Google TV 是 Google LLC 的商标。映湾投屏（CastBay）与 Apple、Google 均无关联。',
   },
 } as const;
 

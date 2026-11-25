@@ -68,27 +68,27 @@ def svg(view_box, label, content, palette):
 
 def vertical(palette):
     return f"""{mark('translate(269 116) scale(3.8)')}
-<text x="512" y="690" text-anchor="middle" fill="{palette['primary_text']}" font-family="PingFang SC, Noto Sans SC, sans-serif" font-size="200" font-weight="700" letter-spacing="8">映湾</text>
+<text x="512" y="690" text-anchor="middle" fill="{palette['primary_text']}" font-family="PingFang SC, Noto Sans SC, sans-serif" font-size="200" font-weight="700" letter-spacing="8">映湾投屏</text>
 <text x="512" y="818" text-anchor="middle" fill="{palette['secondary_text']}" font-family="Avenir Next, Inter, sans-serif" font-size="84" font-weight="650" letter-spacing="3">CASTBAY</text>"""
 
 
 def horizontal_zh(palette):
     return f"""{mark('translate(18 14) scale(1.5)')}
-<text x="210" y="91" fill="{palette['primary_text']}" font-family="PingFang SC, Noto Sans SC, sans-serif" font-size="80" font-weight="700" letter-spacing="3">映湾</text>
+<text x="210" y="91" fill="{palette['primary_text']}" font-family="PingFang SC, Noto Sans SC, sans-serif" font-size="72" font-weight="700" letter-spacing="2">映湾投屏</text>
 <text x="213" y="150" fill="{palette['secondary_text']}" font-family="Avenir Next, Inter, sans-serif" font-size="43" font-weight="650" letter-spacing="1.5">CASTBAY</text>"""
 
 
 def horizontal_en(palette):
     return f"""{mark('translate(18 14) scale(1.5)')}
 <text x="210" y="88" fill="{palette['primary_text']}" font-family="Avenir Next, Inter, sans-serif" font-size="62" font-weight="650" letter-spacing="1.5">CASTBAY</text>
-<text x="212" y="150" fill="{palette['secondary_text']}" font-family="PingFang SC, Noto Sans SC, sans-serif" font-size="42" font-weight="600" letter-spacing="2">映湾</text>"""
+<text x="212" y="150" fill="{palette['secondary_text']}" font-family="PingFang SC, Noto Sans SC, sans-serif" font-size="42" font-weight="600" letter-spacing="2">映湾投屏</text>"""
 
 
 def inline(palette):
     return f"""{mark('translate(10 14) scale(1.25)')}
 <text x="177" y="103" fill="{palette['primary_text']}" font-family="Avenir Next, Inter, sans-serif" font-size="49" font-weight="650" letter-spacing="1">CASTBAY</text>
 <path d="M447 58v57" stroke="{palette['divider']}" stroke-width="2" stroke-linecap="round"/>
-<text x="468" y="102" fill="{palette['secondary_text']}" font-family="PingFang SC, Noto Sans SC, sans-serif" font-size="45" font-weight="600" letter-spacing="1">映湾</text>"""
+<text x="452" y="102" fill="{palette['secondary_text']}" font-family="PingFang SC, Noto Sans SC, sans-serif" font-size="38" font-weight="600" letter-spacing="0">映湾投屏</text>"""
 
 
 def app_icon(palette):
@@ -113,7 +113,7 @@ LAYOUTS = {
 def main():
     for theme, palette in PALETTES.items():
         for name, (view_box, layout) in LAYOUTS.items():
-            label = f"映湾 CASTBAY {name} {theme}"
+            label = f"映湾投屏 CASTBAY {name} {theme}"
             content = svg(view_box, label, layout(palette), palette)
             (OUT / f"{name}-{theme}.svg").write_text(content, encoding="utf-8")
 

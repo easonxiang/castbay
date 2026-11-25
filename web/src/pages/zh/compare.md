@@ -2,7 +2,7 @@
 layout: ../../layouts/Doc.astro
 lang: zh
 page: compare
-title: 'CastBay 与 AirScreen、乐播、当贝对比 – 映湾 CastBay'
+title: 'CastBay 与 AirScreen、乐播、当贝对比 – 映湾投屏 CastBay'
 description: '映湾投屏与 AirScreen、乐播、当贝对比：价格、广告、时长限制、账号、开源与协议。'
 heading: 'CastBay 与 AirScreen、乐播、当贝对比'
 intro: 'CastBay 是一款免费开源的投屏接收端，装在安卓电视、电视盒子、车机和安卓平板上（Android 6.0 及以上）。它接收 iPhone、iPad、Mac 的 AirPlay，以及各 App 的 DLNA 投屏。不用注册账号，没有广告，没有时长限制，不收集观看数据。'

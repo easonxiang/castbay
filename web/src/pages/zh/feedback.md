@@ -2,15 +2,15 @@
 layout: ../../layouts/Doc.astro
 lang: zh
 page: feedback
-title: '反馈与参与 – 映湾 CastBay'
+title: '反馈与参与 – 映湾投屏 CastBay'
 description: '如何报告映湾投屏的问题、提出功能建议，或者告诉我们它在你的电视上可以用。'
 heading: '反馈与参与'
-intro: '映湾是开源项目，用户的反馈是它变得更好的原因。一切都在 <a href="https://github.com/weenas/castbay/issues">GitHub</a> 上进行（发帖需要一个免费账号）。'
+intro: '映湾投屏是开源项目，用户的反馈是它变得更好的原因。一切都在 <a href="https://github.com/weenas/castbay/issues">GitHub</a> 上进行（发帖需要一个免费账号）。'
 ---
 
 ## 报告问题
 
-**在映湾电脑端里**：设置 → 关于 → **诊断信息** → **上传日志**，会得到一个报告编号（形如 CB-7K3F9Q）；然后到 [GitHub](https://github.com/weenas/castbay/issues) 提一个 Issue，写上你做了什么、版本号（在设置 → 关于里）和这个编号。
+**在映湾投屏电脑端里**：设置 → 关于 → **诊断信息** → **上传日志**，会得到一个报告编号（形如 CB-7K3F9Q）；然后到 [GitHub](https://github.com/weenas/castbay/issues) 提一个 Issue，写上你做了什么、版本号（在设置 → 关于里）和这个编号。
 
 <p class="report-id" id="report-id" hidden>你的报告编号：<strong></strong>。打开下面的问题报告时会自动填入。</p>
 
@@ -36,4 +36,4 @@ intro: '映湾是开源项目，用户的反馈是它变得更好的原因。一
 
 ## 参与开发
 
-映湾以 GPL-3.0 协议开源，欢迎通过 Pull Request 贡献代码、翻译或修改这个网站；[README](https://github.com/weenas/castbay#readme) 里写了如何构建 App 和网站。
+映湾投屏以 GPL-3.0 协议开源，欢迎通过 Pull Request 贡献代码、翻译或修改这个网站；[README](https://github.com/weenas/castbay#readme) 里写了如何构建 App 和网站。

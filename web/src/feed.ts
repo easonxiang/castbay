@@ -5,7 +5,7 @@ import { releases } from './releases';
 
 const channel = {
   en: { title: 'CastBay changelog', description: "What's new in each version of CastBay, the AirPlay and DLNA receiver for Android TVs, car displays and tablets.", language: 'en' },
-  zh: { title: '映湾更新日志', description: '映湾投屏（安卓大屏上的 AirPlay 和 DLNA 接收器）每个版本的更新内容。', language: 'zh-CN' },
+  zh: { title: '映湾投屏更新日志', description: '映湾投屏（安卓大屏上的 AirPlay 和 DLNA 接收器）每个版本的更新内容。', language: 'zh-CN' },
 };
 
 export async function changelogFeed(lang: Lang) {

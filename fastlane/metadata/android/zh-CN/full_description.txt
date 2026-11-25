@@ -1,4 +1,4 @@
-<p>映湾（CastBay）让安卓大屏——电视、电视盒子、车机和平板——变成 AirPlay 和 DLNA 投屏接收器。把 iPhone、iPad、Mac 的屏幕、音乐和视频投上去，也可以用视频和音乐 App 自带的投屏按钮。</p>
+<p>映湾投屏（CastBay）让安卓大屏——电视、电视盒子、车机和平板——变成 AirPlay 和 DLNA 投屏接收器。把 iPhone、iPad、Mac 的屏幕、音乐和视频投上去，也可以用视频和音乐 App 自带的投屏按钮。</p>
 
 <p><b>功能</b></p>
 <ul>
@@ -15,4 +15,4 @@
 
 <p>手机和大屏需要在同一个局域网内。暂不支持 Mac"音乐"App 的 AirPlay 音乐（UxPlay 无法处理它使用的 FairPlay 模式）。</p>
 
-<p>映湾是自由软件（GPL-3.0），基于 UxPlay、libplist、Apple ALAC、OpenSSL 和 Media3 构建。使用说明和常见问题：https://castbay.weenas.com/zh/</p>
+<p>映湾投屏是自由软件（GPL-3.0），基于 UxPlay、libplist、Apple ALAC、OpenSSL 和 Media3 构建。使用说明和常见问题：https://castbay.weenas.com/zh/</p>

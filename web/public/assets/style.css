@@ -64,7 +64,7 @@ img { max-width: 100%; display: block; }
   border-bottom: 1px solid var(--line);
 }
 .top .wrap { display: flex; align-items: center; gap: 28px; height: 84px; }
-/* The bilingual wordmark (mark, CastBay | 映湾) as an image: its fonts aren't on every system. */
+/* The bilingual wordmark (mark, CastBay | 映湾投屏) as an image: its fonts aren't on every system. */
 .brand { display: flex; align-items: center; }
 .brand img { width: auto; height: 60px; }
 .nav { display: flex; gap: 22px; margin-left: auto; }
