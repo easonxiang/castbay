@@ -162,7 +162,8 @@ jobs:
         run: |
           foreach ($m in Get-ChildItem dist\*.msi) {
             "== $($m.Name)"
-            ./desktop/installer/test-install.ps1 -Msi $m.FullName -Version $env:APP_VERSION
+            $appName = if ($m.Name -like '*-en-US.msi') { 'CastBay for PC' } else { '映湾电脑端' }
+            ./desktop/installer/test-install.ps1 -Msi $m.FullName -Version $env:APP_VERSION -AppName $appName
           }
 
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
