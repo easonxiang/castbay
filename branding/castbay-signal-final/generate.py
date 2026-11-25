@@ -121,15 +121,16 @@ LAYOUTS = {
 def main():
     for theme, palette in PALETTES.items():
         for name, (view_box, layout) in LAYOUTS.items():
-            if name == "symbol":
-                brand_name = "CastBay symbol"
-            elif "zh-TW" in name:
-                brand_name = "映灣投屏"
-            elif "zh" in name:
-                brand_name = "映湾投屏"
+            if name in {"symbol", "app-icon", "adaptive-foreground"}:
+                label = f"映湾投屏 CASTBAY {name} {theme}"
             else:
-                brand_name = "CastBay"
-            label = f"{brand_name} {theme} logo"
+                if "zh-TW" in name:
+                    brand_name = "映灣投屏"
+                elif "zh" in name:
+                    brand_name = "映湾投屏"
+                else:
+                    brand_name = "CastBay"
+                label = f"{brand_name} {theme} logo"
             content = svg(view_box, label, layout(palette), palette)
             (OUT / f"{name}-{theme}.svg").write_text(content, encoding="utf-8")
 
