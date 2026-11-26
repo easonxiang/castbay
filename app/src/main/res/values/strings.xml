@@ -2,6 +2,8 @@
     <string name="app_name">CastBay</string>
     <string name="app_tagline">AirPlay, DLNA and PC receiver for Android\u00A0TVs, car\u00A0displays and tablets</string>
     <string name="app_slogan">Cast it, it\'s there. Kick back with CastBay.</string>
+    <string name="phone_not_supported_title">CastBay is for your TV</string>
+    <string name="phone_not_supported_body">CastBay turns a TV, TV box, car display or tablet into an AirPlay and DLNA receiver. This device is a phone — the sender, not the receiver — so the receiver doesn\'t run here. Install CastBay on your TV instead.</string>
 
     <!-- Common -->
     <string name="action_start">Start</string>

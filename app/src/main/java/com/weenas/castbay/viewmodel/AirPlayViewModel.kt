@@ -14,6 +14,7 @@ import com.weenas.castbay.BuildConfig
 import com.weenas.castbay.util.AppVersion
 import com.weenas.castbay.util.ConsentPrompt
 import com.weenas.castbay.util.CrashReports
+import com.weenas.castbay.util.DeviceType
 import com.weenas.castbay.util.Diagnostics
 import com.weenas.castbay.util.Log
 import com.weenas.castbay.util.UsageStats
@@ -118,6 +119,11 @@ class AirPlayViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun startServer() {
+        // A phone is the sender, not the receiver: the receiver never starts on one.
+        if (DeviceType.isPhone(getApplication())) {
+            Diagnostics.record("app", "Not starting the receiver: this is a phone")
+            return
+        }
         stoppedByPerson = false
         startChecks = 0
         startHandler.removeCallbacks(startCheck)

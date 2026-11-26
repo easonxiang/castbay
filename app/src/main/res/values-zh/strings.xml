@@ -3,6 +3,8 @@
     <string name="app_name">映湾投屏</string>
     <string name="app_tagline">安卓大屏上的 AirPlay、DLNA 和电脑投屏接收器</string>
     <string name="app_slogan">一投即达，自在映湾</string>
+    <string name="phone_not_supported_title">CastBay 是给电视用的</string>
+    <string name="phone_not_supported_body">CastBay 把电视、电视盒子、车机或平板变成 AirPlay 和 DLNA 接收器。这台设备是手机——是投屏的发送方，不是接收方——所以接收器不会在这里运行。请把 CastBay 装到电视上。</string>
 
     <!-- Common -->
     <string name="action_start">开始</string>

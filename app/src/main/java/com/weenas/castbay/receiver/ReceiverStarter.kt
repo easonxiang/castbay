@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat
 import com.weenas.castbay.BuildConfig
 import com.weenas.castbay.service.AirPlayService
 import com.weenas.castbay.service.ReceiverSettingsStore
+import com.weenas.castbay.util.DeviceType
 import com.weenas.castbay.util.Diagnostics
 import com.weenas.castbay.util.Log
 
@@ -20,6 +21,11 @@ object ReceiverStarter {
     private const val TAG = "CastBayStart"
 
     fun start(context: Context, why: String) {
+        // A phone is the sender, not the receiver: never start it in the background.
+        if (DeviceType.isPhone(context)) {
+            Diagnostics.record("start", "$why: a phone, not started")
+            return
+        }
         if (AirPlayService.isReceiving) {
             Diagnostics.record("start", "$why: already receiving")
             return

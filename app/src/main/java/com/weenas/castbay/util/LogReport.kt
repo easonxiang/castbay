@@ -94,6 +94,12 @@ object LogReport {
      * thread. A failure is recorded in Diagnostics, with its reason.
      */
     fun upload(context: Context, text: String, appVersion: String, crash: Boolean = false): Result<String> {
+        // A phone is the sender, not the receiver: a report from one is not sent. This
+        // also covers crash reports, which go through here ([CrashReports.send]).
+        if (DeviceType.isPhone(context)) {
+            Diagnostics.record("report", "Not uploaded: this is a phone, not a TV")
+            return Result.failure(PhoneNotSupported())
+        }
         var result: Result<String> = Result.failure(java.io.IOException("not sent"))
         for (attempt in 1..ATTEMPTS) {
             result = runCatching { send(context, text, appVersion, crash) }
@@ -108,6 +114,7 @@ object LogReport {
 
     /** A short reason for an upload failure, for the screen and Diagnostics. */
     fun reason(error: Throwable): String = when (error) {
+        is PhoneNotSupported -> "this device is a phone, not a TV"
         is TooManyReports -> "too many reports"
         is Refused -> "HTTP ${error.code}"
         is java.net.SocketTimeoutException -> "timed out"
@@ -149,6 +156,9 @@ object LogReport {
 
     /** The website answered, but not with a report ID (sending again wouldn't help). */
     open class Refused(code: Int) : Servers.HttpError(code)
+
+    /** This device is a phone: CastBay is a TV receiver, so a report from one is not sent. */
+    class PhoneNotSupported : Exception("a phone, not a TV")
 
     /** The website accepts a few reports a minute from one place. */
     class TooManyReports : Refused(429)

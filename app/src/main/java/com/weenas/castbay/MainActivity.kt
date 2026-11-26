@@ -4,16 +4,30 @@ import android.content.Context
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.MotionEvent
+import com.weenas.castbay.util.DeviceType
 import com.weenas.castbay.util.Diagnostics
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.weenas.castbay.service.AppLanguage
 import com.weenas.castbay.ui.LocalBackgroundImage
@@ -130,6 +144,11 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun Screens() {
+    // A phone is the sender, not the receiver: it gets an explanation, not the home screen.
+    if (DeviceType.isPhone(LocalContext.current)) {
+        PhoneNotSupportedScreen()
+        return
+    }
     // Saved, so recreating the activity for a new language stays in Settings.
     var currentScreen by rememberSaveable { mutableStateOf("mirror") }
     val viewModel: AirPlayViewModel = viewModel()
@@ -186,6 +205,32 @@ private fun Screens() {
         PairingPinDialog(pairingPin, onDismiss = viewModel::dismissPairingPin)
         val deviceRequest by viewModel.deviceRequest.collectAsState()
         DeviceRequestDialog(deviceRequest, onAnswer = viewModel::answerDeviceRequest, onDismiss = viewModel::dismissDeviceRequest)
+    }
+}
+
+/**
+ * A phone is the sender, not the receiver: instead of the home screen, it gets an
+ * explanation that CastBay belongs on the TV.
+ */
+@Composable
+private fun PhoneNotSupportedScreen() {
+    Box(
+        modifier = Modifier.fillMaxSize().padding(horizontal = 32.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(
+                stringResource(R.string.phone_not_supported_title),
+                fontSize = 28.sp, fontWeight = FontWeight.Bold, color = Color.White,
+                textAlign = TextAlign.Center
+            )
+            Text(
+                stringResource(R.string.phone_not_supported_body),
+                fontSize = 16.sp, color = Color.White.copy(alpha = 0.85f),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(top = 12.dp)
+            )
+        }
     }
 }
 
