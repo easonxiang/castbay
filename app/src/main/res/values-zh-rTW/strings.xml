@@ -338,7 +338,7 @@
     <string name="now_playing_untitled">AirPlay 音訊</string>
     <string name="track_untitled">音軌 %1$d</string>
     <string name="setting_open_on_cast">投放時自動開啟</string>
-    <string name="setting_open_on_cast_note">有裝置開始鏡像或播放影片時，如果電視停在主畫面、其他應用程式或螢幕保護程式，會自動喚醒電視並開啟 映灣投屏。需要允許 映灣投屏「顯示在其他應用程式上層」（開啟開關會跳到對應的設定頁）。電視沒有這個設定頁時，可以用電腦授權：adb shell appops set com.weenas.castbay SYSTEM_ALERT_WINDOW allow</string>
+    <string name="setting_open_on_cast_note">鏡像或影片投放時自動開啟映灣投屏。音樂投放僅在電視待機時喚醒；螢幕保護程式期間不會退出螢幕保護。需要允許映灣投屏「顯示在其他應用程式上層」（開啟開關會跳至對應設定頁）。電視沒有此設定頁時，可用電腦授權：adb shell appops set com.weenas.castbay SYSTEM_ALERT_WINDOW allow</string>
     <string name="open_on_cast_toast">請在電視上開啟映灣投屏查看投放內容</string>
     <string name="open_on_cast_off_toast">有裝置正在投放，但映灣投屏不在畫面上。可在 設定 → 播放 → 投放時自動開啟 中開啟自動開啟</string>
 </resources>

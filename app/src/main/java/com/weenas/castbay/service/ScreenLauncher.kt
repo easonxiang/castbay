@@ -27,6 +27,10 @@ object ScreenLauncher {
     fun allowed(context: Context): Boolean =
         Build.VERSION.SDK_INT < Build.VERSION_CODES.Q || Settings.canDrawOverlays(context)
 
+    /** Screen savers remain interactive; only doze/sleep should trigger a music wake-up. */
+    fun isInteractive(context: Context): Boolean =
+        context.getSystemService(PowerManager::class.java)?.isInteractive == true
+
     /**
      * Wakes the TV if it is asleep or showing its screen saver: an activity started over a screen saver
      * does not end it (the cast would play behind it), and a TV in standby shows nothing at all.

@@ -381,21 +381,27 @@ class AirPlayManager private constructor(private val context: Context) {
     // Added and removed on the main thread, called from protocol threads too.
     private val _stateCallbacks = java.util.concurrent.CopyOnWriteArrayList<(AirPlayConnectionState, StreamInfo, String?) -> Unit>()
 
-    /** A picture (mirroring, video) was on when the state last changed. */
-    private var pictureOn = false
+    /** A cast that should open the receiver was on when the state last changed. */
+    private var displayCastOn = false
 
     // Written from protocol threads too (a session ending), read on the main thread.
     @Volatile private var currentState: AirPlayConnectionState = AirPlayConnectionState.Idle
         set(value) {
             val was = field
             field = value
-            // A picture starting while the app is not on screen: bring the screen up.
-            val picture = value == AirPlayConnectionState.Streaming && currentStreamInfo.let { it.isMirroring || it.isVideoPlayback }
-            if (picture && !pictureOn) {
+            // Preserve mirror/video behavior. AirPlay music wakes the TV only from standby;
+            // a system screen saver remains interactive and can stay over the music playback.
+            val stream = currentStreamInfo
+            val picture = value == AirPlayConnectionState.Streaming && !stream.isDlna &&
+                (stream.isMirroring || stream.isVideoPlayback)
+            val sleepingMusic = value == AirPlayConnectionState.Streaming && !stream.isDlna &&
+                stream.isAudioOnly && !ScreenLauncher.isInteractive(context)
+            val displayCast = picture || sleepingMusic
+            if (displayCast && !displayCastOn) {
                 if (settingsStore.load().openOnCast) mainHandler.post { ScreenLauncher.show(context) }
-                else mainHandler.post { ScreenLauncher.hintSetting(context) }
+                else if (picture) mainHandler.post { ScreenLauncher.hintSetting(context) }
             }
-            pictureOn = picture
+            displayCastOn = displayCast
             // Usage statistics (counted only if the person turned them on).
             if (value == AirPlayConnectionState.Streaming && was != AirPlayConnectionState.Streaming) {
                 val stream = currentStreamInfo
